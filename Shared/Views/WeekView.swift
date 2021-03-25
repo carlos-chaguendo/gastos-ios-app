@@ -6,12 +6,31 @@
 //
 
 import SwiftUI
-
+import Combine
 
 extension AnyTransition {
     
-    static let top = AnyTransition.asymmetric(insertion: AnyTransition.move(edge: .top).combined(with: .opacity),  removal:  AnyTransition.move(edge: .top).combined(with: .opacity))
-    static let bottom = AnyTransition.asymmetric(insertion: .move(edge: .bottom),  removal: .move(edge: .bottom))
+    static let topX = AnyTransition.asymmetric(
+        insertion: AnyTransition.move(edge: .top).combined(with: .opacity),
+        removal:  AnyTransition.move(edge: .top).combined(with: .opacity)
+    )
+    
+    static let bottomX = AnyTransition.asymmetric(
+        insertion: .move(edge: .bottom),
+        removal: .move(edge: .bottom)
+    )
+    
+    static let equal = AnyTransition.asymmetric(
+        insertion: AnyTransition.move(edge: .bottom).combined(with: .opacity),
+        removal: AnyTransition.move(edge: .bottom).combined(with: .opacity)
+    )
+}
+
+extension Notification.Name {
+    
+    enum WeekView {
+        static var didSelectDate = Notification.Name(rawValue: "WeekViewDidSelectDate")
+    }
 }
 
 struct WeekView: View {
@@ -21,9 +40,18 @@ struct WeekView: View {
         case monthly
     }
     
+    /// El usuario seleciono una fecha
+    static var didSelectDate: AnyPublisher<Date, Never> {
+        NotificationCenter.default.publisher(for: Notification.Name.WeekView.didSelectDate)
+            .compactMap { $0.object as? Date }
+            .eraseToAnyPublisher()
+    }
+    
     public private(set) var names: [String] = {
         DateFormatter.day.shortStandaloneWeekdaySymbols
     }()
+    
+    @Environment(\.calendar) var calendar
     
     @Namespace private var currentDayID
     @State private var isScrollEnabled = false
@@ -34,6 +62,8 @@ struct WeekView: View {
     @State public private(set) var height: CGFloat = 0
     @Binding public var mode: Mode
     
+    @State private var selected = Date()
+    
     
     /// La altura de los dias de la semana, segun el tipo de fuente `caption`
     private let daysNamesHeight: CGFloat = 12
@@ -41,16 +71,51 @@ struct WeekView: View {
     /// El tamanio del una fila de dias
     private let daysRowHeight: CGFloat = 40
     
+
     
-    /// Numero de filas depende del tipo de vista y el mes que se este mostrando
-    @State private var numberOfRows: CGFloat = 1
+
+    private var today = Date()
+    private var datesByWeek: [[Date]] = []
+    
+
+    // MARK:  Rangos
+    private var month: DateInterval
+    private var firstWeek: DateInterval
+    private var lastWeek: DateInterval
+    
+    
+    /// El numero de la semana en el mes
+    private var currentWeekOfMonth: Int { selected.number(of: .weekOfMonth, since: firstWeek.start)}
+
     
     init() {
-        self._mode = .constant(.weekend)
+        self.init(mode: .constant(.monthly))
     }
     
-    init(mode: Binding<WeekView.Mode>) {
+    init(mode: Binding<WeekView.Mode> = .constant(.monthly), date: Date = Date()) {
         self._mode = mode
+        
+        self.month = Calendar.current.dateInterval(of: .month, for: date)!
+        self.firstWeek = Calendar.current.dateInterval(of: .weekOfMonth, for: month.start)!
+        self.lastWeek = Calendar.current.dateInterval(of: .weekOfMonth, for: month.end)!
+        
+        self.selected = Calendar.current.dateInterval(of: .day, for: date)!.start
+        self.today = Calendar.current.dateInterval(of: .day, for: date)!.start
+
+        let numberOfDays = lastWeek.end.number(of: .day, since: firstWeek.start)
+
+
+   
+        var week:[Date] = []
+        
+        for i in 0..<numberOfDays {
+            week.append(Calendar.gregorian.date(byAdding: .day, value: i, to: firstWeek.start)!)
+        }
+
+        datesByWeek = week.chunked(into: 7)
+            
+        
+        
     }
     
     var body: some View {
@@ -67,41 +132,31 @@ struct WeekView: View {
                         .frame(width: dayWidth)
                 }
             }
-            
+
             /// Weekend Day Numbers
             ScrollViewReader { scrollReader in
                 ScrollView(isScrollEnabled ? .horizontal : [] , showsIndicators: false) {
-                    
+            
                     Group {
-                        
-//
-//                                      if i == selectedIndex {}
-//                        }
-                        //ForEach(0..<5) { i in
-                            switch mode {
-                            case .weekend:
-                                // par abrir .identy
-                                // para cerra .bottom
-                               
-                                weekDayNumbers(dayWidth, offset: 15)
-                      
-                                    .transition(AnyTransition.asymmetric(
-                                                    insertion:  AnyTransition.offset(x: 0, y: daysRowHeight * 1).combined(with: .move(edge: .bottom)),
-                                                    removal: AnyTransition.offset(x: 0, y: daysRowHeight * 1).combined(with: .move(edge: .bottom)))
-                                    )
-                                    .animation(.default)
-                            case .monthly:
-                                weekDayNumbers(dayWidth, offset: 1).transition(.top).animation(.default)
-                                weekDayNumbers(dayWidth, offset: 8).transition(.top).animation(.default)
-                                weekDayNumbers(dayWidth, offset: 15).transition(
+                        switch mode {
+                        case .weekend:
+                       
+                            weekDayNumbers(dayWidth, dates: datesByWeek[currentWeekOfMonth])
+                                .transition(
                                     AnyTransition.asymmetric(
-                                        insertion:  AnyTransition.move(edge: .bottom).combined(with: .opacity),
-                                            removal: AnyTransition.move(edge: .bottom).combined(with: .opacity))
-                                ).animation(.default)
-                                weekDayNumbers(dayWidth, offset: 29).transition(.bottom).animation(.default)
-                                weekDayNumbers(dayWidth, offset: 43).transition(.bottom).animation(.default)
+                                        insertion:  AnyTransition.offset(x: 0, y: daysRowHeight * CGFloat(currentWeekOfMonth - 1)).combined(with: .move(edge: .bottom)),
+                                        removal: AnyTransition.offset(x: 0, y: daysRowHeight * CGFloat(currentWeekOfMonth - 1)).combined(with: .move(edge: .bottom))
+                                    )
+                                )
+                                .animation(.default)
+                        case .monthly:
+                            
+                            ForEach(0..<datesByWeek.count) { i in
+                                weekDayNumbers(dayWidth, dates: datesByWeek[i])
+                                    .transition(currentWeekOfMonth == i ? .equal : currentWeekOfMonth < i ? .bottomX : .topX )
+                                    .animation(.default)
                             }
-                       // }
+                        }
                         
                         
                     }.readOffset(named: "WeekendDayNumbers") { y in
@@ -114,8 +169,12 @@ struct WeekView: View {
                             pageChangeAnimation(screenWidth: width)
                         }
                     }.onAppear {
+                        withAnimation {
+                            self.selected = Calendar.current.dateInterval(of: .day, for: selected)!.start
+                        }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                             self.isScrollEnabled = true
+                           
                             print("On apera grpup")
                             /// No se necesita simpre y cuando aparezcan solo los 7 dias de la semana
                             /// scrollReader.scrollTo(currentDayID, anchor: .none)
@@ -131,9 +190,6 @@ struct WeekView: View {
         }
     }
     
-    func updateHeight() {
-        self.height = daysRowHeight * numberOfRows + daysNamesHeight
-    }
     
     /// Ejecuta la animacion de cambiar pagina
     /// - Parameter size: tancho de la pantalla
@@ -154,15 +210,13 @@ struct WeekView: View {
                 isAnimating = false
             }
         }
-        
-        self.height = daysRowHeight * numberOfRows + daysNamesHeight
     }
     
     @ViewBuilder
-    func weekDayNumbers(_ dayWidth: CGFloat, offset: Int) -> some View {
-        HStack(alignment: .center, spacing: 0) {
-            ForEach(0..<names.count) { i in
-                dayView(number: i + offset, size: dayWidth - 20)
+    func weekDayNumbers(_ dayWidth: CGFloat, dates: [Date]) -> some View {
+        HStack(alignment: VerticalAlignment.firstTextBaseline, spacing: 0) {
+            ForEach(dates, id: \.self) { date in
+                dayView(date: date, size: daysRowHeight - 6)
                     .frame(width: dayWidth, height: daysRowHeight)
                     .offset(x: self.offset, y: 0)
             }
@@ -176,25 +230,37 @@ struct WeekView: View {
     ///   - number: Numero del dia
     ///   - size: Tamanio del item selecionado
     /// - Returns: View
-    func dayView(number: Int, size: CGFloat) -> some View {
-        Text("\(number)")
+    func dayView(date: Date, size: CGFloat) -> some View {
+        Text("\(calendar.component(.day, from: date))")
+            .if(date == today) { text in
+                text.fontWeight(Font.Weight.bold)
+            }
             .font(.system(size: 15))
             .frame(width: size, height: size, alignment: .center)
-            .if(number == 20) { text in
-                text.background(.systemRed)
+            .if(date == selected) { text in
+                text.background(Colors.primary)
                     .foregroundColor(.white)
                     .id(currentDayID)
                 
+            }.if(!calendar.isDate(self.selected, equalTo: date, toGranularity: .month)) { text in
+                text.opacity(0.2)
             }.clipped()
             .cornerRadius(size/2)
+            .onTapGesture {
+                NotificationCenter.default.post(name: Notification.Name.WeekView.didSelectDate, object: date)
+                self.selected = date
+            }
     }
 }
 
 struct WeekView_Previews: PreviewProvider {
     static var previews: some View {
         VStack{
-            WeekView()
-            Text("Header")
+            
+            let date = Calendar.gregorian.date(byAdding: .month, value: -2, to: Date())!
+            
+            WeekView(date: date)
+            Text(DateFormatter.day.string(from: date))
             List {
                 Text("1")
                 Text("2")

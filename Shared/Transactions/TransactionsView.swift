@@ -52,7 +52,6 @@ struct TransactionsView: View {
                         .padding(.bottom, -20)
                         .shadow(color: Color(Colors.shadown),radius: 2, y: -3)
                     
-                    
                     /// Se muetra el resumen del dia
                     header(width: geometry.size.width)
                         .frame(width: geometry.size.width, alignment: .leading)
@@ -60,8 +59,6 @@ struct TransactionsView: View {
                         .padding(.top, -40)
                         .background(Color(systemBackground))
     
-
-                    
                     List {
                         ForEach(datasource) { item in
                             ExpenseItemView(model: item)
@@ -73,6 +70,8 @@ struct TransactionsView: View {
                 }.onReceive(Publishers.didAddNewTransaction) { item in
                     self.datasource.append(item)
                     Logger.info("Agrego una nueva transaccion", item)
+                }.onReceive(WeekView.didSelectDate) { date in
+                    Logger.info("Date selected", date)
                 }
                 .navigationBarTitle("", displayMode: .inline)
                 .navigationBarItems(trailing: showCalendarButton)

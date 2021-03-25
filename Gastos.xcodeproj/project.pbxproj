@@ -38,6 +38,9 @@
 		2F9500E42604061500C9ABFC /* View++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9500E32604061500C9ABFC /* View++.swift */; };
 		2FB5935D25FC012B005A1B93 /* PropertyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */; };
 		2FB5935E25FC012B005A1B93 /* PropertyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */; };
+		2FBEBBFA260CEE4E001C4FCD /* ExpenseItemFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B075C25F9A31500A1D516 /* ExpenseItemFormView.swift */; };
+		2FBEBBFE260CF9EA001C4FCD /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBEBBFD260CF9EA001C4FCD /* Date.swift */; };
+		2FBEBC02260D0DBE001C4FCD /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBEBC01260D0DBE001C4FCD /* Array.swift */; };
 		2FE51A1E25FAEB8F004518A0 /* TextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A1D25FAEB8F004518A0 /* TextColor.swift */; };
 		2FE51A1F25FAEB8F004518A0 /* TextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A1D25FAEB8F004518A0 /* TextColor.swift */; };
 		2FE51A2625FBE485004518A0 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A2525FBE485004518A0 /* DateFormatter.swift */; };
@@ -72,6 +75,9 @@
 		2F9500E32604061500C9ABFC /* View++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View++.swift"; sourceTree = "<group>"; };
 		2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyBuilder.swift; sourceTree = "<group>"; };
 		2FB5936325FC1231005A1B93 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		2FBEBBE7260BFD2F001C4FCD /* Gastos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gastos.entitlements; sourceTree = "<group>"; };
+		2FBEBBFD260CF9EA001C4FCD /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		2FBEBC01260D0DBE001C4FCD /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		2FE51A1D25FAEB8F004518A0 /* TextColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColor.swift; sourceTree = "<group>"; };
 		2FE51A2525FBE485004518A0 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		2FE51A2C25FBE4AA004518A0 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -99,6 +105,7 @@
 		2F6B070A25F976D800A1D516 = {
 			isa = PBXGroup;
 			children = (
+				2FBEBBE7260BFD2F001C4FCD /* Gastos.entitlements */,
 				2F6B070F25F976D900A1D516 /* Shared */,
 				2F6B071925F976DA00A1D516 /* iOS */,
 				2F6B072025F976DA00A1D516 /* macOS */,
@@ -153,7 +160,6 @@
 			children = (
 				2F6B073425F9791C00A1D516 /* FlexibleView.swift */,
 				2F6B073825F9793E00A1D516 /* ExpenseItemView.swift */,
-				2F6B075C25F9A31500A1D516 /* ExpenseItemFormView.swift */,
 				2FB5936325FC1231005A1B93 /* TabBar.swift */,
 				2F9500DF2603E38600C9ABFC /* WeekView.swift */,
 			);
@@ -182,6 +188,7 @@
 		2F91537F2601923D0092033E /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
+				2F6B075C25F9A31500A1D516 /* ExpenseItemFormView.swift */,
 				2F6B071125F976D900A1D516 /* TransactionsView.swift */,
 			);
 			path = Transactions;
@@ -205,6 +212,8 @@
 				2F915372260185010092033E /* ArrayBuilder.swift */,
 				2F9500D62603B04300C9ABFC /* Logger.swift */,
 				2F9500E32604061500C9ABFC /* View++.swift */,
+				2FBEBBFD260CF9EA001C4FCD /* Date.swift */,
+				2FBEBC01260D0DBE001C4FCD /* Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -312,6 +321,7 @@
 				2F6B076D25FA615D00A1D516 /* UIResponder+Current.swift in Sources */,
 				2F6B072525F976DA00A1D516 /* TransactionsView.swift in Sources */,
 				2FE51A1E25FAEB8F004518A0 /* TextColor.swift in Sources */,
+				2FBEBC02260D0DBE001C4FCD /* Array.swift in Sources */,
 				2F9500E42604061500C9ABFC /* View++.swift in Sources */,
 				2F6B073525F9791C00A1D516 /* FlexibleView.swift in Sources */,
 				2FE51A3225FBE4C6004518A0 /* NumberFormatter.swift in Sources */,
@@ -325,6 +335,7 @@
 				2F6B075925F99C8100A1D516 /* Colors.swift in Sources */,
 				2F9500E02603E38600C9ABFC /* WeekView.swift in Sources */,
 				2F6B073925F9793E00A1D516 /* ExpenseItemView.swift in Sources */,
+				2FBEBBFE260CF9EA001C4FCD /* Date.swift in Sources */,
 				2F9500D32603A7C400C9ABFC /* Service+Publishers.swift in Sources */,
 				2F6B072325F976DA00A1D516 /* GastosApp.swift in Sources */,
 			);
@@ -338,6 +349,7 @@
 				2FE51A3325FBE4C6004518A0 /* NumberFormatter.swift in Sources */,
 				2FE51A2E25FBE4AA004518A0 /* Font.swift in Sources */,
 				2F6B076925FA613900A1D516 /* KeyboardHeightPublisher.swift in Sources */,
+				2FBEBBFA260CEE4E001C4FCD /* ExpenseItemFormView.swift in Sources */,
 				2FE51A1F25FAEB8F004518A0 /* TextColor.swift in Sources */,
 				2F6B075225F980D700A1D516 /* FlexibleView.swift in Sources */,
 				2FE51A2725FBE485004518A0 /* DateFormatter.swift in Sources */,
@@ -472,6 +484,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Gastos.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5NWXU54BBD;
 				ENABLE_PREVIEWS = YES;
@@ -484,6 +497,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mayorgafirm.Gastos;
 				PRODUCT_NAME = Gastos;
 				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -494,6 +508,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Gastos.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5NWXU54BBD;
 				ENABLE_PREVIEWS = YES;
@@ -506,6 +521,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mayorgafirm.Gastos;
 				PRODUCT_NAME = Gastos;
 				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

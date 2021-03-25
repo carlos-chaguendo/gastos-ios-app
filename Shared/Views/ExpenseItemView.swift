@@ -18,13 +18,13 @@ struct ExpenseItemView: View {
                 Text(model.title)
              
                     .font(.system(size: 15))
-                    .fontWeight(.semibold)
+                    .fontWeight(.medium)
                     .foregroundColor(Colors.title)
                 
                 Spacer()
                 Text(NumberFormatter.currency.string(from: NSNumber(value: model.value)) ?? "")
                     .font(Font.menlo(size: 15))
-                    .fontWeight(.medium)
+                    .fontWeight(.regular)
                     .foregroundColor(Colors.title)
             }
 

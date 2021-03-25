@@ -13,6 +13,7 @@ extension DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
+        formatter.locale = Locale(identifier: "es_CO")
         
         if let preferred = Locale.preferredLanguages.first {
             formatter.locale = Locale(identifier: preferred)
