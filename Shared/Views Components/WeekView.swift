@@ -39,7 +39,7 @@ public struct WeekView: View {
     
     @Namespace private var currentDayID
     @State private var isScrollEnabled = false
-    @State private var isAnimating = false
+    @State private var isAnimatingPageChanged = false
     @State private var offset: CGFloat = 0
     @State private var dayOffset: CGFloat = 0
     
@@ -108,7 +108,7 @@ public struct WeekView: View {
                                     removal: AnyTransition.offset(x: 0, y: daysRowHeight * CGFloat(currentWeekOfMonth - 1)).combined(with: .move(edge: .bottom))
                                 )
                             )
-                            .animation(.default)
+                            .animation(isAnimatingPageChanged ? .none : .default)
                         
                     case .monthly:
                         ForEach(datesByWeek, id: \.i) { week in
@@ -124,7 +124,6 @@ public struct WeekView: View {
                         .foregroundColor(Color(#colorLiteral(red: 0.4156862745, green: 0.4666666667, blue: 0.5490196078, alpha: 1)))
                         .opacity(dayOffset == 0 ? 1 : 0)
                         .offset(x: dayOffset, y: 0)
-                        .animation(.none)
                         .frame(minWidth: 0, maxWidth: .infinity)
  
                     
@@ -158,18 +157,17 @@ public struct WeekView: View {
     /// Ejecuta la animacion de cambiar pagina
     /// - Parameter size: tancho de la pantalla
     func pageChangeAnimation(screenWidth size: CGFloat) {
-        guard !isAnimating else { return }
+        guard !isAnimatingPageChanged else { return }
         
         Logger.info("Page change", size)
         //isScrollEnabled = false
         
-        isAnimating = true
+        isAnimatingPageChanged = true
         withAnimation(.easeInOut)  {
             self.offset = size
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            withAnimation(.easeInOut) {
-                
+
                 self.offset = -size
                 let sign = size < 0 ? 1 : -1
                 switch mode {
@@ -179,9 +177,12 @@ public struct WeekView: View {
                 case .monthly: ()
                     self.viewModel.selected = Calendar.current.date(byAdding: .month, value: 1 * sign, to: viewModel.selected)!
                 }
-                
+            
+            withAnimation(.easeInOut) {
                 self.offset = 0
-                isAnimating = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                    isAnimatingPageChanged = false
+                }
             }
         }
     }

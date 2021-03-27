@@ -5,6 +5,8 @@
 //  Created by Carlos Andres Chaguendo Sanchez on 25/03/21.
 //
 
+import Foundation
+import CoreGraphics
 import SwiftUI
 
 public class WeekendViewModel: ObservableObject {
@@ -71,7 +73,9 @@ public class WeekendViewModel: ObservableObject {
             Row(i: $0.offset, dates: $0.element)
         }
 
+        withAnimation(.easeInOut) {
         calculateRowsHeight()
+        }
         
         Logger.info("Rango de fechas", firstWeek.start, lastWeek.end)
         Logger.info("Semanas", datesByWeek.count)
