@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -41,6 +41,10 @@
 		2FBEBBFA260CEE4E001C4FCD /* ExpenseItemFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B075C25F9A31500A1D516 /* ExpenseItemFormView.swift */; };
 		2FBEBBFE260CF9EA001C4FCD /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBEBBFD260CF9EA001C4FCD /* Date.swift */; };
 		2FBEBC02260D0DBE001C4FCD /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBEBC01260D0DBE001C4FCD /* Array.swift */; };
+		2FBEBC06260D2527001C4FCD /* AnyTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBEBC05260D2527001C4FCD /* AnyTransition.swift */; };
+		2FBEBC0A260D2ACA001C4FCD /* WeekView+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBEBC09260D2ACA001C4FCD /* WeekView+Model.swift */; };
+		2FBEBC33260E309D001C4FCD /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 2FBEBC32260E309D001C4FCD /* Realm */; };
+		2FBEBC35260E309D001C4FCD /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2FBEBC34260E309D001C4FCD /* RealmSwift */; };
 		2FE51A1E25FAEB8F004518A0 /* TextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A1D25FAEB8F004518A0 /* TextColor.swift */; };
 		2FE51A1F25FAEB8F004518A0 /* TextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A1D25FAEB8F004518A0 /* TextColor.swift */; };
 		2FE51A2625FBE485004518A0 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A2525FBE485004518A0 /* DateFormatter.swift */; };
@@ -78,6 +82,8 @@
 		2FBEBBE7260BFD2F001C4FCD /* Gastos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gastos.entitlements; sourceTree = "<group>"; };
 		2FBEBBFD260CF9EA001C4FCD /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		2FBEBC01260D0DBE001C4FCD /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		2FBEBC05260D2527001C4FCD /* AnyTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyTransition.swift; sourceTree = "<group>"; };
+		2FBEBC09260D2ACA001C4FCD /* WeekView+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeekView+Model.swift"; sourceTree = "<group>"; };
 		2FE51A1D25FAEB8F004518A0 /* TextColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColor.swift; sourceTree = "<group>"; };
 		2FE51A2525FBE485004518A0 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		2FE51A2C25FBE4AA004518A0 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -89,6 +95,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FBEBC35260E309D001C4FCD /* RealmSwift in Frameworks */,
+				2FBEBC33260E309D001C4FCD /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +170,7 @@
 				2F6B073825F9793E00A1D516 /* ExpenseItemView.swift */,
 				2FB5936325FC1231005A1B93 /* TabBar.swift */,
 				2F9500DF2603E38600C9ABFC /* WeekView.swift */,
+				2FBEBC09260D2ACA001C4FCD /* WeekView+Model.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -214,6 +223,7 @@
 				2F9500E32604061500C9ABFC /* View++.swift */,
 				2FBEBBFD260CF9EA001C4FCD /* Date.swift */,
 				2FBEBC01260D0DBE001C4FCD /* Array.swift */,
+				2FBEBC05260D2527001C4FCD /* AnyTransition.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -234,6 +244,10 @@
 			dependencies = (
 			);
 			name = "Gastos (iOS)";
+			packageProductDependencies = (
+				2FBEBC32260E309D001C4FCD /* Realm */,
+				2FBEBC34260E309D001C4FCD /* RealmSwift */,
+			);
 			productName = "Gastos (iOS)";
 			productReference = 2F6B071725F976DA00A1D516 /* Gastos.app */;
 			productType = "com.apple.product-type.application";
@@ -281,6 +295,9 @@
 				Base,
 			);
 			mainGroup = 2F6B070A25F976D800A1D516;
+			packageReferences = (
+				2FBEBC31260E309D001C4FCD /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+			);
 			productRefGroup = 2F6B071825F976DA00A1D516 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -332,6 +349,8 @@
 				2FE51A2D25FBE4AA004518A0 /* Font.swift in Sources */,
 				2F6B075D25F9A31500A1D516 /* ExpenseItemFormView.swift in Sources */,
 				2F6B073F25F97AE200A1D516 /* ExpenseItem.swift in Sources */,
+				2FBEBC0A260D2ACA001C4FCD /* WeekView+Model.swift in Sources */,
+				2FBEBC06260D2527001C4FCD /* AnyTransition.swift in Sources */,
 				2F6B075925F99C8100A1D516 /* Colors.swift in Sources */,
 				2F9500E02603E38600C9ABFC /* WeekView.swift in Sources */,
 				2F6B073925F9793E00A1D516 /* ExpenseItemView.swift in Sources */,
@@ -607,6 +626,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2FBEBC31260E309D001C4FCD /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = exactVersion;
+				version = 3.17.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2FBEBC32260E309D001C4FCD /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2FBEBC31260E309D001C4FCD /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		2FBEBC34260E309D001C4FCD /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2FBEBC31260E309D001C4FCD /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2F6B070B25F976D800A1D516 /* Project object */;
 }

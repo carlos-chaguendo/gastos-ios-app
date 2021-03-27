@@ -17,16 +17,28 @@ struct TransactionsView: View {
         ExpenseItem(title: "Perfume", value: 7800, tags: ["Varios"]),
         ExpenseItem(title: "Desayuno", value: 8900, tags: ["Comida","Marisol"]),
         ExpenseItem(title: "Tamal", value: 3500),
+      /*  ExpenseItem(title: "Tamal", value: 3500),
         ExpenseItem(title: "Tamal", value: 3500),
         ExpenseItem(title: "Tamal", value: 3500),
         ExpenseItem(title: "Tamal", value: 3500),
-        ExpenseItem(title: "Tamal", value: 3500),
+ */
     ]
     
-    @State private var calendarMode = WeekView.Mode.weekend
+    @State private var calendarMode = WeekView.Mode.monthly
+    @ObservedObject private var weekendViewModel: WeekendViewModel
     
     private let backcolor = Colors.groupedBackground
     private let systemBackground = Colors.background
+        
+    public private(set) var monthNames: [String] = {
+        DateFormatter.day.shortStandaloneMonthSymbols
+    }()
+    
+    init() {
+        weekendViewModel = WeekendViewModel(date: Date())
+        UITableView.appearance().separatorStyle = .none
+        UITableView.appearance().separatorInset = UIEdgeInsets(top: 0, left: 100, bottom: 0, right: 0)
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -37,8 +49,7 @@ struct TransactionsView: View {
                     Color(backcolor)
                         .frame(height: 100)
                     
-                    WeekView(mode: $calendarMode)
-                        //.padding(.top)
+                    WeekView(mode: $calendarMode, model: weekendViewModel)
                         .background(backcolor)
                         .foregroundColor(.primary)
                     
@@ -61,8 +72,17 @@ struct TransactionsView: View {
     
                     List {
                         ForEach(datasource) { item in
-                            ExpenseItemView(model: item)
-                                .listRowBackground(Color(Colors.background))
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color(systemBackground))
+
+                                    .padding(.bottom, -10)
+                                    .padding(.trailing, -20)
+                                
+                                ExpenseItemView(model: item)
+                                
+                    
+                            }.listRowBackground(Color(Colors.background))
                         }
                     }.listStyle(PlainListStyle())
                     
@@ -74,7 +94,7 @@ struct TransactionsView: View {
                     Logger.info("Date selected", date)
                 }
                 .navigationBarTitle("", displayMode: .inline)
-                .navigationBarItems(trailing: showCalendarButton)
+                .navigationBarItems(leading: currentMonthView, trailing: showCalendarButton)
                 .frame(height: geometry.size.height + 100)
                 .offset(x: 0, y: -30)
                 .background(Colors.background)
@@ -83,6 +103,16 @@ struct TransactionsView: View {
         }
     }
     
+    private var currentMonthView: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text(DateFormatter.month.string(from: weekendViewModel.selected))
+                .textCase(.uppercase)
+            
+            Text(DateFormatter.year.string(from: weekendViewModel.selected))
+                .font(.caption)
+                .fontWeight(.semibold)
+        }
+    }
     
     private var showCalendarButton: some View {
         Button(action: {
@@ -104,11 +134,6 @@ struct TransactionsView: View {
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(Colors.title)
-            
-            Text(DateFormatter.day.string(from: Date()))
-                .font(.subheadline)
-                .foregroundColor(Color(#colorLiteral(red: 0.4156862745, green: 0.4666666667, blue: 0.5490196078, alpha: 1)))
-            
         }
         .frame(width: width, alignment: .leading)
         .padding()
@@ -128,3 +153,5 @@ struct ContentView_Previews: PreviewProvider {
         
     }
 }
+
+
