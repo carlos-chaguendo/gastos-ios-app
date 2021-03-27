@@ -9,12 +9,25 @@ import SwiftUI
 
 public class WeekendViewModel: ObservableObject {
     
+    public struct Row: Hashable {
+        let i: Int
+        let dates: [Date]
+    }
+    
     // MARK:  Rangos
    
     @Published public private(set) var month: DateInterval = DateInterval()
     @Published public private(set) var firstWeek: DateInterval = DateInterval()
     @Published public private(set) var lastWeek: DateInterval = DateInterval()
-    @Published public private(set) var datesByWeek: [[Date]] = []
+    @Published public private(set) var datesByWeek: [Row] = []
+    
+    @Published public private(set) var rowsHeight: CGFloat = 0
+    
+    @Published public var mode: WeekView.Mode = .monthly {
+        didSet {
+            calculateRowsHeight()
+        }
+    }
     
     @Published public var selected = Date() {
         didSet {
@@ -32,12 +45,15 @@ public class WeekendViewModel: ObservableObject {
         }
     }
     
+    public let daysRowHeight: CGFloat = 40
+    
     
     /// El numero de la semana en el mes
     public var currentWeekOfMonth: Int { selected.number(of: .weekOfMonth, since: firstWeek.start)}
     
     init(date: Date) {
         self.selected = Calendar.current.dateInterval(of: .day, for: date)!.start
+        self.mode = .monthly
     }
     
     private func createDatesForMonth(in date: Date) {
@@ -51,7 +67,21 @@ public class WeekendViewModel: ObservableObject {
             week.append(Calendar.gregorian.date(byAdding: .day, value: i, to: firstWeek.start)!)
         }
 
-        datesByWeek = week.chunked(into: 7)
+        datesByWeek = week.chunked(into: 7).enumerated().map() {
+            Row(i: $0.offset, dates: $0.element)
+        }
+
+        calculateRowsHeight()
+        
+        Logger.info("Rango de fechas", firstWeek.start, lastWeek.end)
+        Logger.info("Semanas", datesByWeek.count)
+    }
+    
+    private func calculateRowsHeight() {
+        switch mode {
+        case .weekend: rowsHeight = daysRowHeight
+        case .monthly: rowsHeight = daysRowHeight * CGFloat(datesByWeek.count)
+        }
     }
     
 }

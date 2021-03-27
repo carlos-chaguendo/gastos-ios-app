@@ -113,6 +113,7 @@
 		2F6B070A25F976D800A1D516 = {
 			isa = PBXGroup;
 			children = (
+				2FBEBC70260F8E89001C4FCD /* Domain */,
 				2FBEBBE7260BFD2F001C4FCD /* Gastos.entitlements */,
 				2F6B070F25F976D900A1D516 /* Shared */,
 				2F6B071925F976DA00A1D516 /* iOS */,
@@ -128,11 +129,9 @@
 				2F6B075825F99C8100A1D516 /* Colors.swift */,
 				2FE51A2425FBE472004518A0 /* Extensions */,
 				2F6B071025F976D900A1D516 /* GastosApp.swift */,
-				2F6B073D25F97ACE00A1D516 /* Model */,
-				2F9500D12603A7A600C9ABFC /* Services */,
 				2F91537F2601923D0092033E /* Transactions */,
 				2F6B076025FA610800A1D516 /* View Modifiers */,
-				2F6B073325F9790A00A1D516 /* Views */,
+				2F6B073325F9790A00A1D516 /* Views Components */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -163,7 +162,7 @@
 			path = macOS;
 			sourceTree = "<group>";
 		};
-		2F6B073325F9790A00A1D516 /* Views */ = {
+		2F6B073325F9790A00A1D516 /* Views Components */ = {
 			isa = PBXGroup;
 			children = (
 				2F6B073425F9791C00A1D516 /* FlexibleView.swift */,
@@ -172,7 +171,7 @@
 				2F9500DF2603E38600C9ABFC /* WeekView.swift */,
 				2FBEBC09260D2ACA001C4FCD /* WeekView+Model.swift */,
 			);
-			path = Views;
+			path = "Views Components";
 			sourceTree = "<group>";
 		};
 		2F6B073D25F97ACE00A1D516 /* Model */ = {
@@ -209,6 +208,15 @@
 				2F9500D22603A7C400C9ABFC /* Service+Publishers.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		2FBEBC70260F8E89001C4FCD /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				2F9500D12603A7A600C9ABFC /* Services */,
+				2F6B073D25F97ACE00A1D516 /* Model */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 		2FE51A2425FBE472004518A0 /* Extensions */ = {

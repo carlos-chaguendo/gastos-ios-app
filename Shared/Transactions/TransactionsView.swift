@@ -24,7 +24,6 @@ struct TransactionsView: View {
  */
     ]
     
-    @State private var calendarMode = WeekView.Mode.monthly
     @ObservedObject private var weekendViewModel: WeekendViewModel
     
     private let backcolor = Colors.groupedBackground
@@ -49,7 +48,7 @@ struct TransactionsView: View {
                     Color(backcolor)
                         .frame(height: 100)
                     
-                    WeekView(mode: $calendarMode, model: weekendViewModel)
+                    WeekView(mode: $weekendViewModel.mode, model: weekendViewModel)
                         .background(backcolor)
                         .foregroundColor(.primary)
                     
@@ -117,9 +116,9 @@ struct TransactionsView: View {
     private var showCalendarButton: some View {
         Button(action: {
             withAnimation {
-                switch calendarMode {
-                case.weekend: self.calendarMode = .monthly
-                case .monthly:  self.calendarMode = .weekend
+                switch weekendViewModel.mode {
+                case.weekend: self.weekendViewModel.mode = .monthly
+                case .monthly: self.weekendViewModel.mode = .weekend
                 }
             }
         }, label: {

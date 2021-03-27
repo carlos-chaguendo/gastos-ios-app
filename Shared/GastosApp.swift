@@ -18,7 +18,7 @@ struct GastosApp: App {
     @State private var showingDetail = false
     
     private let addButtonSize: CGFloat = 60
-    private let addButtonBorderSize : CGFloat = 4
+    private let addButtonBorderSize : CGFloat = 34
     
     init() {
         
@@ -45,7 +45,7 @@ struct GastosApp: App {
                 .foregroundColor(.white)
                 .frame(width:  addButtonSize, height: addButtonSize)
                 .shadow(radius: 4)
-            Image(systemName: "plus.circle.fill")
+            Image(systemName: "plus")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: addButtonSize - addButtonBorderSize , height: addButtonSize - addButtonBorderSize)
@@ -60,10 +60,12 @@ struct GastosApp: App {
         }
     }
     
+    var transactionsView = TransactionsView()
+    
     var body: some Scene {
         WindowGroup {
             TabBar {
-                TransactionsView()
+                transactionsView
                     .tabItem {
                         TabBar.Page.Item(systemIconName: "homekit", tabName: "Home")
                     }
@@ -76,7 +78,8 @@ struct GastosApp: App {
                     Logger.info("ssss", self.selected)
                 }.tabItem {
                     
-                    plusButton.offset(y: -40)
+                    plusButton
+                        .offset(y: -30)
                     
                     
                 }
