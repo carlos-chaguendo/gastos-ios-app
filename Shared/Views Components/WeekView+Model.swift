@@ -33,12 +33,13 @@ public class WeekendViewModel: ObservableObject {
     
     @Published public var selected = Date() {
         didSet {
-            if selected > lastWeek.end  {
+            /// >=  el rango incluye el inicio del siguiente periodo
+            if selected >= month.end  {
                 Logger.info("Listo crearrr un nuevo mes despues")
                 createDatesForMonth(in: selected)
             }
             
-            if selected < firstWeek.start  {
+            if selected < month.start  {
                 Logger.info("Listo crearrr un nuevo mes antes")
                 createDatesForMonth(in: selected)
             }

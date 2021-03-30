@@ -104,11 +104,11 @@ public struct WeekView: View {
                         weekDayNumbers(dayWidth, dates: datesByWeek[currentWeekOfMonth].dates)
                             .transition(
                                 AnyTransition.asymmetric(
-                                    insertion:  AnyTransition.offset(x: 0, y: daysRowHeight * CGFloat(currentWeekOfMonth - 1)).combined(with: .move(edge: .bottom)),
+                                    insertion: AnyTransition.offset(x: 0, y: daysRowHeight * CGFloat(currentWeekOfMonth - 1)).combined(with: .move(edge: .bottom)),
                                     removal: AnyTransition.offset(x: 0, y: daysRowHeight * CGFloat(currentWeekOfMonth - 1)).combined(with: .move(edge: .bottom))
                                 )
                             )
-                            .animation(isAnimatingPageChanged ? .none : .default)
+                            .animation(.default)
                         
                     case .monthly:
                         ForEach(datesByWeek, id: \.i) { week in
@@ -146,7 +146,7 @@ public struct WeekView: View {
                 }
             }
             .coordinateSpace(name: "WeekendDayNumbers")
-            .frame(height: viewModel.rowsHeight + 14)
+            .frame(height: viewModel.rowsHeight + 15)
             
   
  
@@ -156,7 +156,8 @@ public struct WeekView: View {
     
     /// Ejecuta la animacion de cambiar pagina
     /// - Parameter size: tancho de la pantalla
-    func pageChangeAnimation(screenWidth size: CGFloat) {
+    /// - Parameter updateSelected: un boleano que indica si tien que actualizar la fecha selecionada actualmente al cambiar de pagina
+    func pageChangeAnimation(screenWidth size: CGFloat, updateSelected: Bool = true) {
         guard !isAnimatingPageChanged else { return }
         
         Logger.info("Page change", size)
@@ -167,8 +168,10 @@ public struct WeekView: View {
             self.offset = size
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-
-                self.offset = -size
+        
+            self.offset = -size
+            
+            if updateSelected {
                 let sign = size < 0 ? 1 : -1
                 switch mode {
                 case .weekend:
@@ -177,7 +180,8 @@ public struct WeekView: View {
                 case .monthly: ()
                     self.viewModel.selected = Calendar.current.date(byAdding: .month, value: 1 * sign, to: viewModel.selected)!
                 }
-            
+            }
+        
             withAnimation(.easeInOut) {
                 self.offset = 0
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
@@ -186,26 +190,6 @@ public struct WeekView: View {
             }
         }
     }
-    
-    func animateCurrentDayLabel(direction: CGFloat) {
-        self.dayOffset = direction * 40
-        withAnimation(Animation.easeInOut(duration: 0.1)) {
-            self.dayOffset = 0
-        }
-    }
-    
-    @ViewBuilder
-    func weekDayNumbers(_ dayWidth: CGFloat, dates: [Date]) -> some View {
-        HStack(alignment: VerticalAlignment.firstTextBaseline, spacing: 0) {
-            ForEach(dates, id: \.self) { date in
-                dayView(date: date, size: daysRowHeight - 6)
-                    .frame(width: dayWidth, height: daysRowHeight)
-                    .offset(x: self.offset, y: 0)
-            }
-        }
-        .lineLimit(1)
-    }
-    
     
     /// Envuelve un text dentro de una vista, con margenes para le numero del dia
     /// - Parameters:
@@ -229,8 +213,28 @@ public struct WeekView: View {
             }.clipped()
             .cornerRadius(size/2)
             .onTapGesture {
+                /// Se seleciono una fecah por fuera del mes actual
+                if date >= viewModel.month.end {
+                    pageChangeAnimation(screenWidth: -UIScreen.main.bounds.size.width, updateSelected: false)
+                }
+                if date < viewModel.month.start {
+                    pageChangeAnimation(screenWidth: UIScreen.main.bounds.size.width, updateSelected: false)
+                }
+                
                 self.viewModel.selected = date
             }
+    }
+    
+    @ViewBuilder
+    func weekDayNumbers(_ dayWidth: CGFloat, dates: [Date]) -> some View {
+        HStack(alignment: VerticalAlignment.firstTextBaseline, spacing: 0) {
+            ForEach(dates, id: \.self) { date in
+                dayView(date: date, size: daysRowHeight - 6)
+                    .frame(width: dayWidth, height: daysRowHeight)
+                    .offset(x: self.offset, y: 0)
+            }
+        }
+        .lineLimit(1)
     }
 }
 
