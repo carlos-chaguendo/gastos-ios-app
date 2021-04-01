@@ -25,7 +25,7 @@ public class WeekendViewModel: ObservableObject {
     
     @Published public private(set) var rowsHeight: CGFloat = 0
     
-    @Published public var mode: WeekView.Mode = .monthly {
+    @Published public var mode: WeekView.Mode = .weekend {
         didSet {
             calculateRowsHeight()
         }
@@ -48,18 +48,23 @@ public class WeekendViewModel: ObservableObject {
         }
     }
     
+    /// las fechas en las cuales se les agrega una marca
+    ///
+    /// la fecha debe de ser al inicio del dia
+    @Published public var marked: [Date] = []
+    
     public let daysRowHeight: CGFloat = 40
     
     
     /// El numero de la semana en el mes
     public var currentWeekOfMonth: Int { selected.number(of: .weekOfMonth, since: firstWeek.start)}
     
-    init(date: Date) {
+    init(date: Date, mode: WeekView.Mode = .monthly) {
         self.selected = Calendar.current.dateInterval(of: .day, for: date)!.start
         self.mode = .monthly
     }
     
-    private func createDatesForMonth(in date: Date) {
+    public func createDatesForMonth(in date: Date) {
         self.month = Calendar.current.dateInterval(of: .month, for: date)!
         self.firstWeek = Calendar.current.dateInterval(of: .weekOfMonth, for: month.start)!
         self.lastWeek = Calendar.current.dateInterval(of: .weekOfMonth, for: month.end)!

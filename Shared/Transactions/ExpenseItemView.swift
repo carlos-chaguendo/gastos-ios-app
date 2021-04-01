@@ -28,8 +28,8 @@ struct ExpenseItemView: View {
                     .foregroundColor(Colors.title)
             }
 
-            FlexibleView(data: model.tags) { item in
-                Text(verbatim: item)
+            FlexibleView(data: model.tags.toArray()) { item in
+                Text(verbatim: item.name)
                     .font(.caption2)
                     .fontWeight(.medium)
                     .padding(3)
@@ -50,10 +50,22 @@ struct ExpenseItemView_Previews: PreviewProvider {
 
     static var previews: some View {
         Group {
-            ExpenseItemView(model: ExpenseItem(title: "Tamales", value: 3500, tags: ["Desayuno", "Comida", "Marisol"]))
-                .preferredColorScheme(.dark)
+       
             
-            ExpenseItemView(model: ExpenseItem(title: "Tamales", value: 3500, tags: ["Desayuno", "Comida", "Marisol"]))
+            ExpenseItemView(
+                model: .init {
+                    $0.title = "Tamal"
+                    $0.value = 3500
+                }
+            )
+            .preferredColorScheme(.dark)
+            
+            ExpenseItemView(
+                model: .init {
+                    $0.title = "Comida"
+                    $0.value = 3500
+                }
+            )
                 .preferredColorScheme(.light)
 
         }

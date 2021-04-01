@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
+import CoreServices
 
 
 // https://www.hackingwithswift.com/quick-start/swiftui
 // https://github.com/SwiftUIX/SwiftUIX/
 @main
 struct GastosApp: App {
-    
     
     @State var selected: Int = 0
     @State private var showingDetail = false
@@ -32,7 +32,7 @@ struct GastosApp: App {
         UINavigationBar.appearance().barTintColor = .clear // Color de fondo
         
         UITableView.appearance().separatorStyle = .none
-        UITableView.appearance().backgroundColor = .clear
+        //UITableView.appearance().backgroundColor = .clear
         
         // UITableViewCell.appearance().backgroundColor = .clear
         
@@ -40,20 +40,28 @@ struct GastosApp: App {
     }
     
     @ViewBuilder var plusButton: some View {
-        ZStack {
-            Circle()
-                .foregroundColor(.white)
-                .frame(width:  addButtonSize, height: addButtonSize)
-                .shadow(radius: 4)
-            Image(systemName: "plus")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: addButtonSize - addButtonBorderSize , height: addButtonSize - addButtonBorderSize)
-                .foregroundColor(Colors.primary)
-        }.onTapGesture {
-            self.showingDetail.toggle()
-        }.sheet(isPresented: $showingDetail) {
-            ExpenseItemFormView(isPresented: $showingDetail)
+//        PresentLinkView(destination:  ExpenseItemFormView()) {
+            ZStack {
+                Circle()
+                    .foregroundColor(.white)
+                    .frame(width:  addButtonSize, height: addButtonSize)
+                    .shadow(radius: 4)
+                Image(systemName: "plus")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: addButtonSize - addButtonBorderSize , height: addButtonSize - addButtonBorderSize)
+                    .foregroundColor(Colors.primary)
+            }
+            .onTapGesture {
+                self.showingDetail.toggle()
+            }
+//        }
+        
+        
+
+        
+        .fullScreenCover(isPresented: $showingDetail) {
+            ExpenseItemFormView()
                 .onTextChange { text in
                     Logger.info("Cambando 2", text)
                 }
@@ -70,29 +78,31 @@ struct GastosApp: App {
                         TabBar.Page.Item(systemIconName: "homekit", tabName: "Home")
                     }
                 
-                
                 NavigationView {
                     Text("Hola")
                         .navigationBarTitle("", displayMode: .inline)
                 }.onAppear {
                     Logger.info("ssss", self.selected)
                 }.tabItem {
-                    
                     plusButton
                         .offset(y: -30)
-                    
-                    
                 }
                 
-                
                 NavigationView {
-                    Button("Arkit") {
-                        self.selected -= 1
-                    }.navigationBarTitle("", displayMode: .inline)
+                    FileImportButton()
                 }.onAppear {
                     Logger.info("ssss", self.selected)
                 }.tabItem {
                     TabBar.Page.Item(systemIconName: "sun.min", tabName: "Setup")
+                }
+                
+                Button("Add Category") {
+                    Service.addCategory(Catagory {
+                         $0.name = "Comida"
+                    })
+                
+                }.tabItem {
+                    TabBar.Page.Item(systemIconName: "homepod.fill", tabName: "Categories")
                 }
                 
             }
@@ -100,7 +110,7 @@ struct GastosApp: App {
             .set(\.background, Color(Colors.background))
             .set(\.selectedColor, Color(Colors.primary))
             .background(Colors.background)
-            
         }
     }
+
 }

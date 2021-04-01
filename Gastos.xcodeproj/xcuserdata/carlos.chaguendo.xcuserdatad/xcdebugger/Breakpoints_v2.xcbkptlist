@@ -39,22 +39,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7CCAB67D-EF90-4C93-AFB3-D7356033C2CC"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/Transactions/TransactionsView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
-            landmarkName = "showCalendarButton"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "AF3F45DF-B42B-471A-AF17-17F22175511C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -82,6 +66,262 @@
             endingLineNumber = "174"
             landmarkName = "pageChangeAnimation(screenWidth:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B56FF1E7-7A74-4B91-BB38-5A02F7A9E5F2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Domain/Services/Service.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "addItem(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3AEE87AE-1B86-4360-BD2F-F87366578881"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Domain/Services/Service.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "addItem(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3AEE87AE-1B86-4360-BD2F-F87366578881 - 62c7bfe370f3e4c0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Gastos.Service.addItem(Gastos.ExpenseItem) -&gt; ()"
+                  moduleName = "Gastos"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Domain/Services/Service.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "71">
+               </Location>
+               <Location
+                  uuid = "3AEE87AE-1B86-4360-BD2F-F87366578881 - 1acf1b6214144e03"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in static Gastos.Service.addItem(Gastos.ExpenseItem) -&gt; ()"
+                  moduleName = "Gastos"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Domain/Services/Service.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "103">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BCC49CE3-C1BC-41B6-9955-9010E233212F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Transactions/TransactionsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "47F3CDCD-F934-42DC-BBA4-711B1DC47D4D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Domain/Services/Service.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "remove(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "47F3CDCD-F934-42DC-BBA4-711B1DC47D4D - 340dc517c35c5a27"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Gastos.Service.remove(Gastos.ExpenseItem) -&gt; ()"
+                  moduleName = "Gastos"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Domain/Services/Service.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "454">
+               </Location>
+               <Location
+                  uuid = "47F3CDCD-F934-42DC-BBA4-711B1DC47D4D - 4e37b8eea517f330"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in static Gastos.Service.remove(Gastos.ExpenseItem) -&gt; ()"
+                  moduleName = "Gastos"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Domain/Services/Service.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "87">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8BE2577B-9A19-40DA-AE51-209A73F52D9C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Domain/Services/Service.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "remove(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "69A6EBBC-EE3E-4D3F-9DDD-4FCF30846DF0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Transactions/TransactionsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "38674A5B-7BA3-4B00-AAE5-1F207B15C290"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Transactions/TransactionsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "76C99BDA-FF6A-4739-90B9-61B196B6CE9A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Views Components/DocumentPickerViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "makeUIViewController(context:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5CF666A7-A4A8-4768-818E-8391AF1797A2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Views Components/Select.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "20D85148-FEC2-49C5-B744-7072A4EA5F32"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Transactions/ExpenseItemFormView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "20D85148-FEC2-49C5-B744-7072A4EA5F32 - 4ab0704d60856fed"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(Gastos.PresentLinkView&lt;&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, Gastos.CategorySelectionView&gt;, Gastos.PresentLinkView&lt;&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, Gastos.TagSelectionView&gt;, Gastos.PresentLinkView&lt;&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, Gastos.WalletsSelectionView&gt;)&gt;, SwiftUI.EmptyView&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.cornerRadius(_: CoreGraphics.CGFloat, antialiased: Swift.Bool) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.navigationBarItems&lt;A where A1: SwiftUI.View&gt;(leading: A1) -&gt; some&gt;&gt;.0 in Gastos.ExpenseItemFormView.body.getter : some"
+                  moduleName = "Gastos"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Shared/Transactions/ExpenseItemFormView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "800">
+               </Location>
+               <Location
+                  uuid = "20D85148-FEC2-49C5-B744-7072A4EA5F32 - f24a53c1410e49b7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.keyboardType(__C.UIKeyboardType) -&gt; some&gt;&gt;.0 in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(Gastos.PresentLinkView&lt;&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, Gastos.CategorySelectionView&gt;, Gastos.PresentLinkView&lt;&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, Gastos.TagSelectionView&gt;, Gastos.PresentLinkView&lt;&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, Gastos.WalletsSelectionView&gt;)&gt;, SwiftUI.EmptyView&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.cornerRadius(_: CoreGraphics.CGFloat, antialiased: Swift.Bool) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.navigationBarItems&lt;A where A1: SwiftUI.View&gt;(leading: A1) -&gt; some&gt;&gt;.0 in Gastos.ExpenseItemFormView.body.getter : some"
+                  moduleName = "Gastos"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Shared/Transactions/ExpenseItemFormView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "484">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

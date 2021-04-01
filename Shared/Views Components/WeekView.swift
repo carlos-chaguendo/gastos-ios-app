@@ -146,10 +146,8 @@ public struct WeekView: View {
                 }
             }
             .coordinateSpace(name: "WeekendDayNumbers")
-            .frame(height: viewModel.rowsHeight + 15)
-            
-  
- 
+            .frame(height: viewModel.rowsHeight + 16)
+
         }
     }
     
@@ -203,6 +201,14 @@ public struct WeekView: View {
             }
             .font(.system(size: 15))
             .frame(width: size, height: size, alignment: .center)
+            .if(viewModel.marked.contains(date)) { text in
+                text.background(
+                    Circle()
+                        .fill(Color.secondary.opacity(0.6))
+                        .frame(width: 6, height: 6, alignment: .center)
+                        .offset(y: (size/2) - 6)
+                )
+            }
             .if(date == viewModel.selected) { text in
                 text.background(Colors.primary)
                     .foregroundColor(.white)

@@ -19,7 +19,6 @@ struct TabBar: View {
     @State private var removal: Edge = .leading
     @State private var insertion: Edge = .trailing
     
-    
     public var background: Color = .white
     public var selectedColor: Color = .blue
     public var unselectedColor: Color = .gray
