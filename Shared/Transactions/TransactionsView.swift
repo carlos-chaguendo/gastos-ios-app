@@ -13,14 +13,14 @@ struct TransactionsView: View {
     @State private var total: Double = 0.0
     
     @State private var datasource: [ExpenseItem] = []
-    
+        
     @ObservedObject private var weekendViewModel: WeekendViewModel
     
     @Environment(\.colorScheme) var colorScheme
     
     private let backcolor = Colors.groupedBackground
     private let systemBackground = Colors.background
-        
+            
     public private(set) var monthNames: [String] = {
         DateFormatter.day.shortStandaloneMonthSymbols
     }()
@@ -104,15 +104,18 @@ struct TransactionsView: View {
     
                     List {
                         ForEach(datasource) { item in
-                            ZStack {
-                                Rectangle()
-                                    .fill(Color(systemBackground))
-                                    .padding(.bottom, -6)
-                                    .padding(.trailing, -14)
-                                
-                                ExpenseItemView(model: item)
-                    
+                            PresentLinkView(destination: ExpenseItemFormView(item)) {
+                                ZStack {
+                                    Rectangle()
+                                        .fill(Color(systemBackground))
+                                        .padding(.bottom, -6)
+                                        .padding(.trailing, -14)
+                                    
+                                    ExpenseItemView(model: item)
+                        
+                                }
                             }.listRowBackground(Color(Colors.background))
+                            
                         }.onDelete { index in
                             for offset in index {
                                 let item = datasource[offset]
@@ -129,6 +132,11 @@ struct TransactionsView: View {
                     self.datasource.append(item)
                     self.calculateTotal()
                     Logger.info("Agrego una nueva transaccion", item)
+                }.onReceive(Publishers.didEditTransaction) { item in
+                    self.datasource.removeAll()
+                    self.loadDataSource()
+                    self.calculateTotal()
+                    Logger.info("Edito una nueva transaccion", item)
                 }.onReceive(WeekView.didSelectDate) { date in
                     self.datasource.removeAll()
                     self.loadDataSource()

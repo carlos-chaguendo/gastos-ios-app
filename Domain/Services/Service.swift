@@ -65,16 +65,29 @@ public class Service {
     
     static func addItem(_ item: ExpenseItem) {
         try! realm.write {
-            item.id = item.date.description
             
-            item.category = realm.findBy(id: item.category.id)
-            item.wallet = realm.findBy(id: item.wallet.id)
-            item.tags = realm.findBy(ids: item.tags)
+            let local: ExpenseItem = realm.findBy(id: item.id) ?? item
             
-            realm.add(item)
+            local.value = item.value
+            local.title = item.title
+            local.date = item.date
+            
+            if local.realm == nil {
+                local.id = item.date.description
+            }
+            
+            local.category = realm.findBy(id: item.category.id)
+            local.wallet = realm.findBy(id: item.wallet.id)
+            local.tags = realm.findBy(ids: item.tags)
+            
+            realm.add(local)
         }
 
-        NotificationCenter.default.post(name: .didAddNewTransaction, object: item.detached())
+        if item.hasId() {
+            NotificationCenter.default.post(name: .didEditTransaction, object: item.detached())
+        } else {
+            NotificationCenter.default.post(name: .didAddNewTransaction, object: item.detached())
+        }
     }
     
     

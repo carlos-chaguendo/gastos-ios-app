@@ -46,7 +46,7 @@ enum Colors {
     
     
     struct Form {
-        public static let label: ColorSpace =  .color(light: ColorSpace.label,  dark: ColorSpace.secondaryLabel)
+        public static let label: ColorSpace =  .color(light: ColorSpace.secondaryLabel,  dark: ColorSpace.secondaryLabel)
         public static let value: ColorSpace = .color(light: #colorLiteral(red: 0.09411764706, green: 0.1725490196, blue: 0.2941176471, alpha: 1), dark: .white)
     }
     

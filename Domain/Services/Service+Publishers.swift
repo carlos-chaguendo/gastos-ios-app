@@ -14,6 +14,9 @@ extension Notification.Name {
     
     static var didAddNewTransaction = Notification.Name(rawValue: "didAddNewTransaction")
     
+    static var didEditTransaction = Notification.Name(rawValue: "didEditTransaction")
+
+    
 }
 
 
@@ -21,6 +24,12 @@ extension Publishers {
     
     static var didAddNewTransaction: AnyPublisher<ExpenseItem, Never> {
         NotificationCenter.default.publisher(for: Notification.Name.didAddNewTransaction)
+            .compactMap { $0.object as? ExpenseItem }
+            .eraseToAnyPublisher()
+    }
+    
+    static var didEditTransaction: AnyPublisher<ExpenseItem, Never> {
+        NotificationCenter.default.publisher(for: Notification.Name.didEditTransaction)
             .compactMap { $0.object as? ExpenseItem }
             .eraseToAnyPublisher()
     }

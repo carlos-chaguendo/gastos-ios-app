@@ -11,11 +11,11 @@ struct PresentLinkView<Label: View, Destination: View>: View {
     
     @State var isPresented: Bool = false
     
-    var destination: Destination
+    var destination: () -> Destination
     var addNavigation = false
     var label: Label
     
-    init(destination: Destination, @ViewBuilder label: () -> Label) {
+    init(destination: @escaping @autoclosure () -> Destination, @ViewBuilder label: () -> Label) {
         self.destination = destination
         self.label = label()
     }
@@ -30,10 +30,10 @@ struct PresentLinkView<Label: View, Destination: View>: View {
             
             if addNavigation {
                 NavigationView {
-                    destination
+                    destination()
                 }
             } else {
-                destination
+                destination()
             }
         }
     }

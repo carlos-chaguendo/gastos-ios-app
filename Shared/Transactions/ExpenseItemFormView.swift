@@ -10,15 +10,45 @@ import UIKit
 import Combine
 
 
+public class ExpenseItemFormViewModel: ObservableObject {
+    private(set) var item: ExpenseItem?
+    
+    @Published var amount: Double?
+    @Published var note: String = ""
+    @Published var date = Date()
+    
+    @Published var wallets = Set<Wallet>()
+    @Published var tags = Set<Tag>()
+    @Published var categories = Set<Catagory>()
+    
+    init() {
+        
+    }
+    
+    init(_ item: ExpenseItem) {
+        self.item = item
+        self.amount = item.value
+        self.note = item.title
+        self.date = item.date
+        self.categories.insert(item.category)
+        item.tags.forEach { self.tags.insert($0) }
+        self.wallets.insert(item.wallet)
+    }
+    
+    func getValues() -> ExpenseItem {
+        let selection = item ?? ExpenseItem()
+        selection.title = note
+        selection.value = amount ?? 00
+        selection.category = categories.first
+        selection.tags.append(objectsIn: tags)
+        selection.wallet = wallets.first
+        return selection
+    }
+}
+
 struct ExpenseItemFormView: View {
     
-    @State var amount: Double?
-    @State var note: String = ""
-    @State var date = Date()
-    
-    @State private var wallets = Set<Wallet>()
-    @State private var tags = Set<Tag>()
-    @State private var categories = Set<Catagory>()
+
     
     @Environment(\.presentationMode) private var presentation
     
@@ -27,6 +57,16 @@ struct ExpenseItemFormView: View {
     private let backcolor = Colors.groupedBackground
     private let systemBackground = Colors.background
     
+    @ObservedObject private var viewModel: ExpenseItemFormViewModel
+    
+    init() {
+        viewModel = .init()
+    }
+    
+    init(_ item: ExpenseItem) {
+        viewModel = .init(item)
+        Logger.info("Formularo", item.value)
+    }
     
     func setup( block: (Self) -> Self ) -> Self {
         return  block(self)
@@ -37,16 +77,16 @@ struct ExpenseItemFormView: View {
             
             ScrollView {
                 VStack {
-                    
-                    CurrencyTextField("Transaction value", value: $amount, foregroundColor: Colors.Form.label, accentColor: Colors.Form.label)
+           
+                    CurrencyTextField("Transaction value", value: $viewModel.amount, foregroundColor: Colors.Form.value, accentColor: Colors.Form.value)
                     .font(.title)
                     .frame(height: 50)
                     
-                    TextField("Description", text: $note)
+                    TextField("Description", text: $viewModel.note)
                         .font(.body)
                         .frame(height: 50)
-                        .accentColor(Colors.Form.label)
-                        .foregroundColor(Colors.Form.label)
+                        .accentColor(Colors.Form.value)
+                        .foregroundColor(Colors.Form.value)
                         .autocapitalization(.words)
                     
                     /// Date picker
@@ -56,16 +96,18 @@ struct ExpenseItemFormView: View {
                             .frame(height: 34)
                             .background(.secondarySystemBackground)
                             .accentColor(Color(Colors.subtitle))
+                            .foregroundColor(Colors.primary)
                             .cornerRadius(3.0)
                         
                         Button("Yesterday") {}
                             .padding()
                             .frame(height: 34)
                             .background(.secondarySystemBackground)
+                            .foregroundColor(Colors.primary)
                             .accentColor(Color(Colors.subtitle))
                             .cornerRadius(3.0)
                         
-                        DatePicker("Date", selection: $date, displayedComponents: .date)
+                        DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
                             .labelsHidden()
                             .accentColor(Color(Colors.subtitle))
                             .background(.secondarySystemBackground)
@@ -75,23 +117,23 @@ struct ExpenseItemFormView: View {
                     }.frame(height: 50)
                     
                     /// Categories picker
-                    PresentLinkView(destination: CategorySelectionView(selection: $categories)) {
+                    PresentLinkView(destination: CategorySelectionView(selection: $viewModel.categories)) {
                         Row(icon: "square.stack.3d.up.fill", withArrow: true) {
-                            ListLabel(items: $categories, empty: "Categories")
+                            ListLabel(items: $viewModel.categories, empty: "Categories")
                         }
                     }//.frame(height: 60)
                     
                     /// Tags picker
-                    PresentLinkView(destination: TagSelectionView(selection: $tags)) {
+                    PresentLinkView(destination: TagSelectionView(selection: $viewModel.tags)) {
                         Row(icon: "tag.fill", withArrow: true) {
-                            TagsLabel(items: $tags, empty: "Tags")
+                            TagsLabel(items: $viewModel.tags, empty: "Tags")
                         }
                     }
                     
                     /// Wallet picker
-                    PresentLinkView(destination: WalletsSelectionView(selection: $wallets)) {
+                    PresentLinkView(destination: WalletsSelectionView(selection: $viewModel.wallets)) {
                         Row(icon: "wallet.pass.fill", withArrow: true) {
-                            ListLabel(items: $wallets, empty: "Wallet")
+                            ListLabel(items: $viewModel.wallets, empty: "Wallet")
                         }
                     }
 
@@ -111,7 +153,7 @@ struct ExpenseItemFormView: View {
                 //.frame(width: 30, height: 30)
                 .foregroundColor(Colors.primary),
                 
-                trailing: Button("Create") {
+                trailing: Button(viewModel.item == nil ? "Create" : "Edit") {
                     self.saveAction()
                 }.foregroundColor(Colors.primary)
                 
@@ -121,13 +163,7 @@ struct ExpenseItemFormView: View {
     }
     
     private func saveAction() {
-        let selection = ExpenseItem {
-            $0.title = note
-            $0.value = amount ?? 00
-            $0.category = self.categories.first
-            $0.tags.append(objectsIn: self.tags)
-            $0.wallet = self.wallets.first
-        }
+        let selection = viewModel.getValues()
         
         Service.addItem(selection)
         self.presentation.wrappedValue.dismiss()
@@ -143,13 +179,13 @@ struct ExpenseItemFormView: View {
         if items.wrappedValue.isEmpty {
             Text(empty)
                 .padding(.vertical)
-                .accentColor(Colors.Form.label)
+                .foregroundColor(Colors.Form.label)
         } else {
             VStack(alignment: .leading) {
                 Text(empty)
                     .font(.caption)
                     .padding(.bottom, 1)
-                    .accentColor(Colors.Form.label)
+                    .foregroundColor(Colors.Form.label)
                 
                 ForEach(Array(items.wrappedValue), id: \.self) {
                     Text($0.name)
@@ -166,13 +202,13 @@ struct ExpenseItemFormView: View {
         if items.wrappedValue.isEmpty {
             Text(empty)
                 .padding(.vertical)
-                .accentColor(Colors.Form.label)
+                .foregroundColor(Colors.Form.label)
         } else {
             VStack(alignment: .leading) {
                 Text(empty)
                     .font(.caption)
                     .padding(.bottom, 1)
-                    .accentColor(Colors.Form.label)
+                    .foregroundColor(Colors.Form.label)
                 
                 FlexibleView(data: items.wrappedValue) { item in
                     Text(verbatim: item.name)
@@ -214,11 +250,6 @@ struct ExpenseItemFormView_Previews: PreviewProvider {
     
     static var previews: some View {
         ExpenseItemFormView()
-            .setup {
-                $0.note =  "Nota descriptiva"
-                
-                return $0
-            }
             .preferredColorScheme(.dark)
     }
 }

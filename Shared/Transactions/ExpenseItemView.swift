@@ -15,8 +15,7 @@ struct ExpenseItemView: View {
     var body: some View {
         VStack {
             HStack {
-                Text(model.title)
-             
+                Text(model.title.isEmpty ? model.category?.name ?? "" :  model.title )
                     .font(.system(size: 15))
                     .fontWeight(.medium)
                     .foregroundColor(Colors.title)

@@ -26,6 +26,9 @@ open class Entity: Object, Identifiable {
     }
     
 
+    func hasId() -> Bool {
+        id != "0x0"
+    }
     
     
     open override class func primaryKey() -> String? {
