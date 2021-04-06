@@ -12,7 +12,7 @@ import Combine
 
 struct ExpenseItemFormView: View {
     
-    @State var amount: String = ""
+    @State var amount: Double?
     @State var note: String = ""
     @State var date = Date()
     
@@ -21,114 +21,116 @@ struct ExpenseItemFormView: View {
     @State private var categories = Set<Catagory>()
     
     @Environment(\.presentationMode) private var presentation
-
+    
     public let textChangePublisher = PassthroughSubject<String, Never>()
     
     private let backcolor = Colors.groupedBackground
     private let systemBackground = Colors.background
     
+    
+    func setup( block: (Self) -> Self ) -> Self {
+        return  block(self)
+    }
+    
     var body: some View {
         NavigationView {
-            VStack {
-                
-                /// Navigation bar background color
-                Color(backcolor)
-                    .frame(height: 100)
-                
-                Color(.red)
-                    .frame(height: 20)
-                
-                RoundedRectangle(cornerRadius: 25.0, style: .circular)
-                    .fill(Color(systemBackground))
-                    .offset(x: 0, y: -20)
-                    .frame(height: 40)
-                    .padding(.bottom, -40)
-             
-//                    .if(colorScheme == .light) {
-//                        $0.shadow(color: Color(Colors.shadown),radius: 2, y: -3)
-//                    }
-                
-                List {
-                    Section {
-                        Row(icon: "dollarsign.square.fill" ) {
-                            TextField("Cost", text: $amount)
-                                .keyboardType(.numberPad)
-                        }
+            
+            ScrollView {
+                VStack {
+                    
+                    CurrencyTextField("Transaction value", value: $amount, foregroundColor: Colors.Form.label, accentColor: Colors.Form.label)
+                    .font(.title)
+                    .frame(height: 50)
+                    
+                    TextField("Description", text: $note)
+                        .font(.body)
+                        .frame(height: 50)
+                        .accentColor(Colors.Form.label)
+                        .foregroundColor(Colors.Form.label)
+                        .autocapitalization(.words)
+                    
+                    /// Date picker
+                    HStack {
+                        Button("Today") {}
+                            .padding()
+                            .frame(height: 34)
+                            .background(.secondarySystemBackground)
+                            .accentColor(Color(Colors.subtitle))
+                            .cornerRadius(3.0)
                         
-                        Row(icon: "note.text") {
-                            TextField("Description", text: $note)
-                        }
+                        Button("Yesterday") {}
+                            .padding()
+                            .frame(height: 34)
+                            .background(.secondarySystemBackground)
+                            .accentColor(Color(Colors.subtitle))
+                            .cornerRadius(3.0)
                         
-                        Row(icon: "calendar") {
-                            HStack {
-                         
-                                
-                                DatePicker("", selection: $date, displayedComponents: .date)
-                                    .labelsHidden()
-                                
-                                Spacer()
-                                
-                                Button("Today") {
-                                    
-                                }
-                                
-                                Button("Yesterday") {
-                                    
-                                }
-                            }
+                        DatePicker("Date", selection: $date, displayedComponents: .date)
+                            .labelsHidden()
+                            .accentColor(Color(Colors.subtitle))
+                            .background(.secondarySystemBackground)
+                            .foregroundColor(.red)
+                            .cornerRadius(3.0)
+                        Spacer()
+                    }.frame(height: 50)
+                    
+                    /// Categories picker
+                    PresentLinkView(destination: CategorySelectionView(selection: $categories)) {
+                        Row(icon: "square.stack.3d.up.fill", withArrow: true) {
+                            ListLabel(items: $categories, empty: "Categories")
+                        }
+                    }//.frame(height: 60)
+                    
+                    /// Tags picker
+                    PresentLinkView(destination: TagSelectionView(selection: $tags)) {
+                        Row(icon: "tag.fill", withArrow: true) {
+                            TagsLabel(items: $tags, empty: "Tags")
                         }
                     }
                     
-                    Section {
-                        PresentLinkView(destination: CategorySelectionView(selection: $categories)) {
-                            Row(icon: "square.stack.3d.up.fill", withArrow: true) {
-                                ListLabel(items: $categories, empty: "Categories")
-                            }
+                    /// Wallet picker
+                    PresentLinkView(destination: WalletsSelectionView(selection: $wallets)) {
+                        Row(icon: "wallet.pass.fill", withArrow: true) {
+                            ListLabel(items: $wallets, empty: "Wallet")
                         }
-        
-                        PresentLinkView(destination: TagSelectionView(selection: $tags)) {
-                            Row(icon: "tag.fill", withArrow: true) {
-                                ListLabel(items: $tags, empty: "Tags")
-                            }
-                        }
-                        
-                        PresentLinkView(destination: WalletsSelectionView(selection: $wallets)) {
-                            Row(icon: "wallet.pass.fill", withArrow: true) {
-                                ListLabel(items: $wallets, empty: "Wallet")
-                            }
-                        }
-                
                     }
+
+                    Spacer()
                     
-                    Button("Save") {
-                        self.presentation.wrappedValue.dismiss()
-                        let selection = ExpenseItem {
-                            $0.title = note
-                            $0.value = Double(amount) ?? 0.0
-                        }
-                        Service.addItem(selection)
-                    }
-                    .listRowBackground(Color(Colors.background))
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0,idealHeight: 40, maxHeight: .infinity)
-                    .background(Color(Colors.primary))
-                    .foregroundColor(.label)
-                    .cornerRadius(16.0)
-                    .onAppear {
-                        UITableView.appearance().backgroundColor = Colors.groupedBackground
-                    }
                 }
-                .navigationBarTitle("Cost")
-                .navigationBarItems(
-                    leading: Button {
-                        self.presentation.wrappedValue.dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                    .frame(width: 30, height: 30)
-                )
-            }.listStyle(PlainListStyle())
+            }
+            .padding()
+            .navigationBarTitle("Expense",displayMode: .inline)
+            .navigationBarItems(
+                leading: Button {
+                    self.presentation.wrappedValue.dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                        .imageScale(.medium)
+                }
+                //.frame(width: 30, height: 30)
+                .foregroundColor(Colors.primary),
+                
+                trailing: Button("Create") {
+                    self.saveAction()
+                }.foregroundColor(Colors.primary)
+                
+            )
         }
         
+    }
+    
+    private func saveAction() {
+        let selection = ExpenseItem {
+            $0.title = note
+            $0.value = amount ?? 00
+            $0.category = self.categories.first
+            $0.tags.append(objectsIn: self.tags)
+            $0.wallet = self.wallets.first
+        }
+        
+        Service.addItem(selection)
+        self.presentation.wrappedValue.dismiss()
     }
     
     public func onTextChange( action: @escaping (String) -> Void) -> SubscriptionView<AnyPublisher<String, Never>, Self> {
@@ -140,19 +142,60 @@ struct ExpenseItemFormView: View {
     func ListLabel<Value: Entity & EntityWithName>(items: Binding<Set<Value>>, empty: String) -> some View {
         if items.wrappedValue.isEmpty {
             Text(empty)
+                .padding(.vertical)
+                .accentColor(Colors.Form.label)
         } else {
-            HStack {
+            VStack(alignment: .leading) {
+                Text(empty)
+                    .font(.caption)
+                    .padding(.bottom, 1)
+                    .accentColor(Colors.Form.label)
+                
                 ForEach(Array(items.wrappedValue), id: \.self) {
                     Text($0.name)
+                        .foregroundColor(Colors.Form.value)
                 }
-            }
+                
+                
+            }.padding(.vertical)
+        }
+    }
+    
+    @ViewBuilder
+    func TagsLabel<Value: Entity & EntityWithName>(items: Binding<Set<Value>>, empty: String) -> some View {
+        if items.wrappedValue.isEmpty {
+            Text(empty)
+                .padding(.vertical)
+                .accentColor(Colors.Form.label)
+        } else {
+            VStack(alignment: .leading) {
+                Text(empty)
+                    .font(.caption)
+                    .padding(.bottom, 1)
+                    .accentColor(Colors.Form.label)
+                
+                FlexibleView(data: items.wrappedValue) { item in
+                    Text(verbatim: item.name)
+                        .font(.callout)
+                        // .fontWeight(.medium)
+                        .padding(3)
+                        .foregroundColor(Colors.Form.value)
+                        .background(
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(Color(.secondarySystemBackground))
+                            //.fill(Color.gray.opacity(0.2))
+                        )
+                }//.padding(.top, -6)
+            }.padding(.vertical)
+            
+            
         }
     }
     
     @ViewBuilder
     func Row<Content: View>(icon: String, withArrow: Bool = false, @ViewBuilder buildContent: () -> Content) -> some View {
         HStack {
-            Image(systemName: icon)
+            //Image(systemName: icon)
             buildContent()
             if withArrow {
                 Spacer()
@@ -171,6 +214,11 @@ struct ExpenseItemFormView_Previews: PreviewProvider {
     
     static var previews: some View {
         ExpenseItemFormView()
+            .setup {
+                $0.note =  "Nota descriptiva"
+                
+                return $0
+            }
             .preferredColorScheme(.dark)
     }
 }

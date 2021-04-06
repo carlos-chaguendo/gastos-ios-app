@@ -66,6 +66,11 @@ public class Service {
     static func addItem(_ item: ExpenseItem) {
         try! realm.write {
             item.id = item.date.description
+            
+            item.category = realm.findBy(id: item.category.id)
+            item.wallet = realm.findBy(id: item.wallet.id)
+            item.tags = realm.findBy(ids: item.tags)
+            
             realm.add(item)
         }
 
@@ -74,6 +79,20 @@ public class Service {
     
     
     static func addCategory(_ item: Catagory) {
+        try! realm.write {
+            item.id = UUID().description
+            realm.add(item)
+        }
+    }
+    
+    static func addTag(_ item: Tag) {
+        try! realm.write {
+            item.id = UUID().description
+            realm.add(item)
+        }
+    }
+    
+    static func addWallet(_ item: Wallet) {
         try! realm.write {
             item.id = UUID().description
             realm.add(item)

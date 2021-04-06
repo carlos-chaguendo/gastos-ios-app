@@ -23,6 +23,7 @@ struct PresentLinkView<Label: View, Destination: View>: View {
     var body: some View {
         Button {
             self.isPresented.toggle()
+            UIApplication.shared.windows.forEach { $0.endEditing(true) }
         } label: {
             label
         }.sheet(isPresented: $isPresented) {

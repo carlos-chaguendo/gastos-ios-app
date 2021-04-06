@@ -45,6 +45,12 @@ enum Colors {
     public static let subtitle: ColorSpace = #colorLiteral(red: 0.4196078431, green: 0.4666666667, blue: 0.5490196078, alpha: 1)
     
     
+    struct Form {
+        public static let label: ColorSpace =  .color(light: ColorSpace.label,  dark: ColorSpace.secondaryLabel)
+        public static let value: ColorSpace = .color(light: #colorLiteral(red: 0.09411764706, green: 0.1725490196, blue: 0.2941176471, alpha: 1), dark: .white)
+    }
+    
+    
     public static let shadown: ColorSpace = ColorSpace.color(light: #colorLiteral(red: 0.7540688515, green: 0.7540867925, blue: 0.7540771365, alpha: 1), dark: #colorLiteral(red: 0.370555222, green: 0.3705646992, blue: 0.3705595732, alpha: 1)).withAlphaComponent(0.2)
     
 }
@@ -58,6 +64,10 @@ extension View {
     
     func foregroundColor(_ color: ColorSpace) -> some View {
         self.foregroundColor(Color(color))
+    }
+    
+    func accentColor(_ color: ColorSpace) -> some View {
+        self.accentColor(Color(color))
     }
     
 }

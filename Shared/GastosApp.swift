@@ -62,9 +62,7 @@ struct GastosApp: App {
         
         .fullScreenCover(isPresented: $showingDetail) {
             ExpenseItemFormView()
-                .onTextChange { text in
-                    Logger.info("Cambando 2", text)
-                }
+          
         }
     }
     
@@ -99,6 +97,34 @@ struct GastosApp: App {
                 Button("Add Category") {
                     Service.addCategory(Catagory {
                          $0.name = "Comida"
+                    })
+                    
+                    Service.addTag(Tag{
+                        $0.name = "Comida"
+                    })
+                    
+                    Service.addTag(Tag{
+                        $0.name = "Trago"
+                    })
+                    
+                    Service.addTag(Tag{
+                        $0.name = "Marisol"
+                    })
+                    
+                    Service.addTag(Tag{
+                        $0.name = "Popayan"
+                    })
+                    
+                    Service.addWallet(Wallet {
+                        $0.name = "Bancolombia"
+                    })
+                    
+                    Service.addWallet(Wallet {
+                        $0.name = "Efectivo"
+                    })
+                    
+                    Service.addWallet(Wallet {
+                        $0.name = "Davivienda"
                     })
                 
                 }.tabItem {

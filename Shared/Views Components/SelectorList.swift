@@ -24,20 +24,25 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
     var body: some View {
         
         List(selection: selected) {
-            Section(header: Text(allowMultipleSelection ?"Si":"No"), footer: footerView) {
+            Section(header: EmptyView(), footer: footerView) {
                 ForEach(values, id: \.id) { item in
                     if allowMultipleSelection {
-                        HStack {
-                            Image(systemName: self.selectedIdentifiers.contains(item.id) ? "checkmark.circle.fill": "circle")
-                                .imageScale(.large)
-                                .foregroundColor(Colors.primary)
-                            content(item)
-                        }.onTapGesture {
+                        Button {
                             let inseted = self.selectedIdentifiers.insert(item.id).inserted
                             if inseted == false {
                                 self.selectedIdentifiers.remove(item.id)
                             }
+                        } label: {
+                            HStack {
+                                content(item)
+                                Spacer()
+                                Image(systemName: self.selectedIdentifiers.contains(item.id) ? "checkmark.circle.fill": "circle")
+                                    .imageScale(.large)
+                                    .foregroundColor(Colors.primary)
+                               
+                            }
                         }
+    
                     } else {
                         Button {
                             self.selected.wrappedValue.removeAll()
@@ -63,7 +68,7 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
         }
         //        .environment(\.editMode, .constant(allowMultipleSelection ? .active : .inactive))
         .navigationBarTitle(title)
-        .listStyle(InsetGroupedListStyle())
+        .listStyle(PlainListStyle())
         
         .navigationBarItems(leading: Button {
             self.presentation.wrappedValue.dismiss()
@@ -87,7 +92,7 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
             selected.wrappedValue.forEach {
                 selectedIdentifiers.insert($0.id)
             }
-        }
+        }.foregroundColor(Colors.primary)
     }
     
     
@@ -96,10 +101,10 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
             VStack {
                 NavigationLink(destination: addNew) {
                     Text("Add New \(title)")
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0,idealHeight: 40, maxHeight: .infinity)
-                        .background(Color(Colors.primary))
-                        .foregroundColor(.label)
-                        .cornerRadius(16.0)
+                        //.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0,idealHeight: 40, maxHeight: .infinity)
+                        //.background(Color(Colors.primary))
+                        .foregroundColor(Colors.primary)
+                        .cornerRadius(3)
                 }
                 
                 
@@ -107,6 +112,18 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
         } else {
             EmptyView()
         }
+    }
+}
+
+
+
+struct SelectorList_Previews: PreviewProvider {
+    
+    @State private static var categories = Set<Category>()
+    
+    static var previews: some View {
+        CategorySelectionView(selection: .constant(Set()))
+            .preferredColorScheme(.dark)
     }
 }
 

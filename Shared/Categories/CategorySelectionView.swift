@@ -22,6 +22,7 @@ struct CategorySelectionView: View {
                 destination: Text("sss"),
                 content:  {
                     Text($0.name)
+                        .foregroundColor(Colors.Form.value)
                 }
             )
             .set(\.allowMultipleSelection, false)
@@ -48,6 +49,7 @@ struct TagSelectionView: View {
                 destination: Text("new Tag"),
                 content:  {
                     Text($0.name)
+                        .foregroundColor(Colors.Form.value)
                 }
             )
             .set(\.allowMultipleSelection, true)
@@ -74,6 +76,7 @@ struct WalletsSelectionView: View {
                 destination: Text("new Wallet"),
                 content:  {
                     Text($0.name)
+                        .foregroundColor(Colors.Form.value)
                 }
             )
             .set(\.allowMultipleSelection, false)

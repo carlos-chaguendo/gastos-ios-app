@@ -78,8 +78,8 @@
             filePath = "Domain/Services/Service.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
             landmarkName = "addItem(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -158,8 +158,8 @@
             filePath = "Domain/Services/Service.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
             landmarkName = "remove(_:)"
             landmarkType = "7">
             <Locations>
@@ -206,8 +206,8 @@
             filePath = "Domain/Services/Service.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "remove(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -279,47 +279,137 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "20D85148-FEC2-49C5-B744-7072A4EA5F32"
+            uuid = "7C8BD0EF-8BE9-4A22-A4FC-E6F9FDE54619"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Shared/Transactions/ExpenseItemFormView.swift"
+            filePath = "Shared/Views Components/CurrencyTextField.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "makeUIView(context:)"
+            landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "20D85148-FEC2-49C5-B744-7072A4EA5F32 - 4ab0704d60856fed"
+                  uuid = "7C8BD0EF-8BE9-4A22-A4FC-E6F9FDE54619 - 3f5ac96fd55d3e20"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(Gastos.PresentLinkView&lt;&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, Gastos.CategorySelectionView&gt;, Gastos.PresentLinkView&lt;&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, Gastos.TagSelectionView&gt;, Gastos.PresentLinkView&lt;&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, Gastos.WalletsSelectionView&gt;)&gt;, SwiftUI.EmptyView&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.cornerRadius(_: CoreGraphics.CGFloat, antialiased: Swift.Bool) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.navigationBarItems&lt;A where A1: SwiftUI.View&gt;(leading: A1) -&gt; some&gt;&gt;.0 in Gastos.ExpenseItemFormView.body.getter : some"
+                  symbolName = "Gastos.CurrencyTextField.makeUIView(context: SwiftUI.UIViewRepresentableContext&lt;Gastos.CurrencyTextField&gt;) -&gt; __C.UITextField"
                   moduleName = "Gastos"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Shared/Transactions/ExpenseItemFormView.swift"
+                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Shared/Views%20Components/CurrencyTextField.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31"
-                  offsetFromSymbolStart = "800">
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "2041">
                </Location>
                <Location
-                  uuid = "20D85148-FEC2-49C5-B744-7072A4EA5F32 - f24a53c1410e49b7"
+                  uuid = "7C8BD0EF-8BE9-4A22-A4FC-E6F9FDE54619 - 3f5ac96fd55d3e20"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.keyboardType(__C.UIKeyboardType) -&gt; some&gt;&gt;.0 in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(Gastos.PresentLinkView&lt;&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, Gastos.CategorySelectionView&gt;, Gastos.PresentLinkView&lt;&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, Gastos.TagSelectionView&gt;, Gastos.PresentLinkView&lt;&lt;&lt;opaque return type of Gastos.ExpenseItemFormView.Row&lt;A where A: SwiftUI.View&gt;(icon: Swift.String, withArrow: Swift.Bool, buildContent: () -&gt; A) -&gt; some&gt;&gt;.0, Gastos.WalletsSelectionView&gt;)&gt;, SwiftUI.EmptyView&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.cornerRadius(_: CoreGraphics.CGFloat, antialiased: Swift.Bool) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.navigationBarItems&lt;A where A1: SwiftUI.View&gt;(leading: A1) -&gt; some&gt;&gt;.0 in Gastos.ExpenseItemFormView.body.getter : some"
+                  symbolName = "Gastos.CurrencyTextField.makeUIView(context: SwiftUI.UIViewRepresentableContext&lt;Gastos.CurrencyTextField&gt;) -&gt; __C.UITextField"
                   moduleName = "Gastos"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Shared/Transactions/ExpenseItemFormView.swift"
+                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Shared/Views%20Components/CurrencyTextField.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "484">
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "2357">
+               </Location>
+               <Location
+                  uuid = "7C8BD0EF-8BE9-4A22-A4FC-E6F9FDE54619 - 3f5ac96fd55d3e20"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Gastos.CurrencyTextField.makeUIView(context: SwiftUI.UIViewRepresentableContext&lt;Gastos.CurrencyTextField&gt;) -&gt; __C.UITextField"
+                  moduleName = "Gastos"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Shared/Views%20Components/CurrencyTextField.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "2673">
+               </Location>
+               <Location
+                  uuid = "7C8BD0EF-8BE9-4A22-A4FC-E6F9FDE54619 - 3f5ac96fd55d3e20"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Gastos.CurrencyTextField.makeUIView(context: SwiftUI.UIViewRepresentableContext&lt;Gastos.CurrencyTextField&gt;) -&gt; __C.UITextField"
+                  moduleName = "Gastos"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Shared/Views%20Components/CurrencyTextField.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "2995">
+               </Location>
+               <Location
+                  uuid = "7C8BD0EF-8BE9-4A22-A4FC-E6F9FDE54619 - 3f5ac96fd55d3e20"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Gastos.CurrencyTextField.makeUIView(context: SwiftUI.UIViewRepresentableContext&lt;Gastos.CurrencyTextField&gt;) -&gt; __C.UITextField"
+                  moduleName = "Gastos"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Shared/Views%20Components/CurrencyTextField.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "3317">
+               </Location>
+               <Location
+                  uuid = "7C8BD0EF-8BE9-4A22-A4FC-E6F9FDE54619 - 3f5ac96fd55d3e20"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Gastos.CurrencyTextField.makeUIView(context: SwiftUI.UIViewRepresentableContext&lt;Gastos.CurrencyTextField&gt;) -&gt; __C.UITextField"
+                  moduleName = "Gastos"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Shared/Views%20Components/CurrencyTextField.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "3639">
+               </Location>
+               <Location
+                  uuid = "7C8BD0EF-8BE9-4A22-A4FC-E6F9FDE54619 - 3f5ac96fd55d3e20"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Gastos.CurrencyTextField.makeUIView(context: SwiftUI.UIViewRepresentableContext&lt;Gastos.CurrencyTextField&gt;) -&gt; __C.UITextField"
+                  moduleName = "Gastos"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Shared/Views%20Components/CurrencyTextField.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "3961">
+               </Location>
+               <Location
+                  uuid = "7C8BD0EF-8BE9-4A22-A4FC-E6F9FDE54619 - 3f5ac96fd55d3e20"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Gastos.CurrencyTextField.makeUIView(context: SwiftUI.UIViewRepresentableContext&lt;Gastos.CurrencyTextField&gt;) -&gt; __C.UITextField"
+                  moduleName = "Gastos"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlos.chaguendo/Documents/iOS/Gastos/Shared/Views%20Components/CurrencyTextField.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "4283">
                </Location>
             </Locations>
          </BreakpointContent>

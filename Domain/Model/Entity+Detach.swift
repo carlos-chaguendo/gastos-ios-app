@@ -10,23 +10,23 @@ import Realm
 import RealmSwift
 
 protocol RealmListDetachable {
-
+    
     func detached() -> Self
 }
 
 extension List: RealmListDetachable where Element: Object {
-
+    
     func detached() -> List<Element> {
         let detached = self.detached
         let result = List<Element>()
         result.append(objectsIn: detached)
         return result
     }
-
+    
 }
 
 @objc extension Object {
-
+    
     public func detached() -> Self {
         let detached = type(of: self).init()
         for property in objectSchema.properties {
@@ -44,17 +44,34 @@ extension List: RealmListDetachable where Element: Object {
 }
 
 extension Sequence where Iterator.Element: Object {
-
+    
     public var detached: [Element] {
         return self.map({ $0.detached() })
     }
-
+    
 }
 
 extension List {
-
+    
     public func toArray() -> [Element] {
         return Array(self)
     }
+    
+}
 
+extension Realm {
+    public func findBy<E: Entity, Id>(id: Id) -> E? {
+        return object(ofType: E.self, forPrimaryKey: id)
+    }
+    
+    public func findBy<Element: Entity>(ids: List<Element>) -> List<Element> {
+        let result = List<Element>()
+        ids.map { $0.id }
+            .compactMap { id -> Element? in
+                self.findBy(id: id)
+            }
+        .forEach { result.append($0)}
+        return result
+    }
+    
 }

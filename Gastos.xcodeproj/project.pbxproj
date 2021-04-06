@@ -31,6 +31,8 @@
 		2F6B076925FA613900A1D516 /* KeyboardHeightPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B076725FA613900A1D516 /* KeyboardHeightPublisher.swift */; };
 		2F6B076D25FA615D00A1D516 /* UIResponder+Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B076C25FA615D00A1D516 /* UIResponder+Current.swift */; };
 		2F6B076E25FA615D00A1D516 /* UIResponder+Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B076C25FA615D00A1D516 /* UIResponder+Current.swift */; };
+		2F816D2A261CF072009FB091 /* CurrencyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F816D29261CF072009FB091 /* CurrencyTextField.swift */; };
+		2F816D2B261CF072009FB091 /* CurrencyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F816D29261CF072009FB091 /* CurrencyTextField.swift */; };
 		2F915373260185010092033E /* ArrayBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F915372260185010092033E /* ArrayBuilder.swift */; };
 		2F915374260185010092033E /* ArrayBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F915372260185010092033E /* ArrayBuilder.swift */; };
 		2F91537B26018FED0092033E /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5936325FC1231005A1B93 /* TabBar.swift */; };
@@ -95,6 +97,7 @@
 		2F6B076225FA611C00A1D516 /* KeyboardAdaptive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAdaptive.swift; sourceTree = "<group>"; };
 		2F6B076725FA613900A1D516 /* KeyboardHeightPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightPublisher.swift; sourceTree = "<group>"; };
 		2F6B076C25FA615D00A1D516 /* UIResponder+Current.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Current.swift"; sourceTree = "<group>"; };
+		2F816D29261CF072009FB091 /* CurrencyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyTextField.swift; sourceTree = "<group>"; };
 		2F915372260185010092033E /* ArrayBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayBuilder.swift; sourceTree = "<group>"; };
 		2F9500D22603A7C400C9ABFC /* Service+Publishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Publishers.swift"; sourceTree = "<group>"; };
 		2F9500D62603B04300C9ABFC /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -205,6 +208,7 @@
 				2F98CE69261559500004F1B2 /* FileImportButton.swift */,
 				2F98CE7526156B620004F1B2 /* SelectorList.swift */,
 				2F98CE80261640270004F1B2 /* PresentLinkView.swift */,
+				2F816D29261CF072009FB091 /* CurrencyTextField.swift */,
 			);
 			path = "Views Components";
 			sourceTree = "<group>";
@@ -420,6 +424,7 @@
 				2F98CE65261553820004F1B2 /* Tag.swift in Sources */,
 				2F6B075925F99C8100A1D516 /* Colors.swift in Sources */,
 				2F9500E02603E38600C9ABFC /* WeekView.swift in Sources */,
+				2F816D2A261CF072009FB091 /* CurrencyTextField.swift in Sources */,
 				2F98CE7626156B620004F1B2 /* SelectorList.swift in Sources */,
 				2F6B073925F9793E00A1D516 /* ExpenseItemView.swift in Sources */,
 				2FBEBBFE260CF9EA001C4FCD /* Date.swift in Sources */,
@@ -448,6 +453,7 @@
 				2FE51A2725FBE485004518A0 /* DateFormatter.swift in Sources */,
 				2FB5935E25FC012B005A1B93 /* PropertyBuilder.swift in Sources */,
 				2F6B075525F980DA00A1D516 /* ExpenseItem.swift in Sources */,
+				2F816D2B261CF072009FB091 /* CurrencyTextField.swift in Sources */,
 				2F98CE72261569330004F1B2 /* Wallet.swift in Sources */,
 				2F9500C92602AE2800C9ABFC /* Colors.swift in Sources */,
 				2F91537B26018FED0092033E /* TabBar.swift in Sources */,
