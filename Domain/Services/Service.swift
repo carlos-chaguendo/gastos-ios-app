@@ -37,6 +37,25 @@ extension Sequence {
             return uniqueElements
         }
     }
+
+    public func groupBy<U: Hashable>(_ keyFunc: (Iterator.Element) -> U) -> [U: [Iterator.Element]] {
+        var dict: [U: [Iterator.Element]] = [:]
+        for el in self {
+            let key = keyFunc(el)
+            dict[key, default: []].append(el)
+        }
+        return dict
+    }
+
+    public func countBy<U: Hashable>(_ keyFunc: (Iterator.Element) -> U) -> [U: Int] {
+        var dict: [U: Int] = [:]
+        for el in self {
+            let key = keyFunc(el)
+            dict[key, default: 0] += 1
+        }
+        return dict
+    }
+    
 }
 
 extension Sequence where Iterator.Element: Hashable {
@@ -135,13 +154,20 @@ public class Service {
     
     /// Retorna todas las fechas que almenos tiene una transaccion
     /// - Parameter date: El mes el cual se quiere consultar
-    /// - Returns: <#description#>
+    /// - Returns: description
     static func summaryOf(month date: Date) -> [Date] {
         realm.objects(ExpenseItem.self)
             .filter { Calendar.current.isDate($0.date, equalTo: date, toGranularity: .month)  }
             .map {  Calendar.current.dateInterval(of: .day, for: $0.date)!.start  }
             .uniq
         
+    }
+    
+    static func countEventsIn(month date: Date)-> [Date: Int] {
+        realm.objects(ExpenseItem.self)
+            .filter { Calendar.current.isDate($0.date, equalTo: date, toGranularity: .month)  }
+            .map {  Calendar.current.dateInterval(of: .day, for: $0.date)!.start  }
+            .countBy { $0 }
     }
     
     static func getAll<Object: Entity>(_ type: Object.Type) -> [Object] {

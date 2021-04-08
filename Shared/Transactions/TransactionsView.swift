@@ -79,9 +79,21 @@ struct TransactionsView: View {
                     Color(backcolor)
                         .frame(height: 100)
                     
-                    WeekView(mode: $weekendViewModel.mode, model: weekendViewModel)
+                    WeekView(model: weekendViewModel)
                         .background(backcolor)
                         .foregroundColor(.primary)
+                    
+                    Text(DateFormatter.day.string(from: weekendViewModel.selected))
+                        .font(.subheadline)
+                        
+                        //.frame(width: width)
+                        .foregroundColor(Color(#colorLiteral(red: 0.4156862745, green: 0.4666666667, blue: 0.5490196078, alpha: 1)))
+                        
+                        //.opacity(dayOffset == 0 ? 1 : 0)
+                        //.offset(x: dayOffset, y: 0)
+                        .padding(.top)
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .background(backcolor)
                     
                     Color(backcolor)
                         .frame(height: 40)

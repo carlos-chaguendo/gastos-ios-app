@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: View>: View {
     
-    var title: String
+    var title: LocalizedStringKey
     var values: [Value]
     var selected: Binding<Set<Value>>
     var destination: Destination?
@@ -100,7 +100,7 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
         if let addNew = destination {
             VStack {
                 NavigationLink(destination: addNew) {
-                    Text("Add New \(title)")
+                    Text("Add New")
                         //.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0,idealHeight: 40, maxHeight: .infinity)
                         //.background(Color(Colors.primary))
                         .foregroundColor(Colors.primary)

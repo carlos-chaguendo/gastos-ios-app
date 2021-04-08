@@ -124,7 +124,8 @@ extension TabBar.Page {
         
         let width: CGFloat = 24
         let height: CGFloat = 24
-        let systemIconName, tabName: String
+        let systemIconName: String
+        let tabName: LocalizedStringKey
 
         var body: some View {
             VStack {

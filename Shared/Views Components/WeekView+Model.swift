@@ -18,6 +18,7 @@ public class WeekendViewModel: ObservableObject {
     
     // MARK:  Rangos
    
+    @Published public var weekDayNames: [String] = []
     @Published public private(set) var month: DateInterval = DateInterval()
     @Published public private(set) var firstWeek: DateInterval = DateInterval()
     @Published public private(set) var lastWeek: DateInterval = DateInterval()
@@ -53,13 +54,20 @@ public class WeekendViewModel: ObservableObject {
     /// la fecha debe de ser al inicio del dia
     @Published public var marked: [Date] = []
     
-    public let daysRowHeight: CGFloat = 40
+    public var daysRowHeight: CGFloat = 40 {
+        didSet {
+            withAnimation(.easeInOut) {
+                calculateRowsHeight()
+            }
+        }
+    }
     
     
     /// El numero de la semana en el mes
     public var currentWeekOfMonth: Int { selected.number(of: .weekOfMonth, since: firstWeek.start)}
     
     init(date: Date, mode: WeekView.Mode = .monthly) {
+        self.weekDayNames = DateFormatter.day.shortStandaloneWeekdaySymbols
         self.selected = Calendar.current.dateInterval(of: .day, for: date)!.start
         self.mode = .monthly
     }
@@ -80,7 +88,7 @@ public class WeekendViewModel: ObservableObject {
         }
 
         withAnimation(.easeInOut) {
-        calculateRowsHeight()
+            calculateRowsHeight()
         }
         
         Logger.info("Rango de fechas", firstWeek.start, lastWeek.end)

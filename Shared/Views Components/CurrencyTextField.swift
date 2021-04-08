@@ -64,7 +64,7 @@ public struct CurrencyTextField: UIViewRepresentable {
         onEditingChanged: @escaping (Bool) -> Void = { _ in }
     ) {
         self._value = value
-        self.placeholder = placeholder
+        self.placeholder = NSLocalizedString(placeholder, comment: "")
         self.isResponder = isResponder
         self.tag = tag
         self.alwaysShowFractions = alwaysShowFractions

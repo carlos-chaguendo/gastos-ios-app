@@ -33,18 +33,11 @@ public struct WeekView: View {
             .eraseToAnyPublisher()
     }
     
-    public private(set) var names: [String] = {
-        DateFormatter.day.shortStandaloneWeekdaySymbols
-    }()
-    
     @Namespace private var currentDayID
     @State private var isScrollEnabled = false
     @State private var isAnimatingPageChanged = false
     @State private var offset: CGFloat = 0
     @State private var dayOffset: CGFloat = 0
-    
-    /// El alto del componente
-    @Binding public var mode: Mode
     
     @ObservedObject private var viewModel: WeekendViewModel
     
@@ -56,99 +49,93 @@ public struct WeekView: View {
     
     private var today = Date()
     
-    
     private var datesByWeek: [WeekendViewModel.Row] { viewModel.datesByWeek }
     private var currentWeekOfMonth: Int { viewModel.currentWeekOfMonth }
     
-    var caas = Set<AnyCancellable>()
+    public var dayGenerator: ((Date, CGFloat) -> AnyView)?
     
     init() {
-        self.init(mode: .constant(.monthly))
+        self.init(date: Date())
     }
     
-    init(mode: Binding<WeekView.Mode> = .constant(.monthly), date: Date = Date()) {
-        self._mode = mode
+    init(date: Date = Date()) {
         self.viewModel = WeekendViewModel(date: date)
         self.today = Calendar.current.dateInterval(of: .day, for: date)!.start
     }
     
-    init(mode: Binding<WeekView.Mode> = .constant(.monthly), model: WeekendViewModel) {
-        self._mode = mode
+    init(model: WeekendViewModel) {
         self.viewModel = model
         self.today = Calendar.current.dateInterval(of: .day, for: Date())!.start
     }
     
+    init(model: WeekendViewModel, content: ((Date, CGFloat) -> AnyView)?) {
+        self.init(model: model)
+        self.dayGenerator = content
+    }
+    
     
     public var body: some View {
-        let width = UIScreen.main.bounds.size.width
-        let dayWidth = (width / CGFloat(names.count)) - 1
-        VStack(alignment: .center, spacing: 0) {
+        GeometryReader { reader in
+            let width = reader.size.width
+            let dayWidth = (width / CGFloat(viewModel.weekDayNames.count)) //- 1
             
-            /// Weekend day names
-            HStack(alignment: .center, spacing: 0) {
-                ForEach(names, id: \.self) { day in
-                    Text(day)
-                        .font(.caption)
-                        .fontWeight(.semibold)
-                        .frame(width: dayWidth)
-                }
-            }
-            
-            
-            /// Weekend Day Numbers
-            ScrollView(isScrollEnabled ? .horizontal : [] , showsIndicators: false) {
+            VStack(alignment: .center, spacing: 0) {
                 
-                Group {
-                    switch mode {
-                    case .weekend:
-                        weekDayNumbers(dayWidth, dates: datesByWeek[currentWeekOfMonth].dates)
-                            .transition(
-                                AnyTransition.asymmetric(
-                                    insertion: AnyTransition.offset(x: 0, y: daysRowHeight * CGFloat(currentWeekOfMonth - 1)).combined(with: .move(edge: .bottom)),
-                                    removal: AnyTransition.offset(x: 0, y: daysRowHeight * CGFloat(currentWeekOfMonth - 1)).combined(with: .move(edge: .bottom))
+                /// Weekend day names
+                HStack(alignment: .center, spacing: 0) {
+                    ForEach(viewModel.weekDayNames, id: \.self) { day in
+                        Text(day)
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .frame(width: dayWidth, height: 14)
+                    }
+                }
+                
+                
+                /// Weekend Day Numbers
+                ScrollView(isScrollEnabled ? .horizontal : [] , showsIndicators: false) {
+                    
+                    Group {
+                        switch viewModel.mode {
+                        case .weekend:
+                            weekDayNumbers(dayWidth, dates: datesByWeek[currentWeekOfMonth].dates)
+                                .transition(
+                                    AnyTransition.asymmetric(
+                                        insertion: AnyTransition.offset(x: 0, y: daysRowHeight * CGFloat(currentWeekOfMonth - 1)).combined(with: .move(edge: .bottom)),
+                                        removal: AnyTransition.offset(x: 0, y: daysRowHeight * CGFloat(currentWeekOfMonth - 1)).combined(with: .move(edge: .bottom))
+                                    )
                                 )
-                            )
-                            .animation(.default)
-                        
-                    case .monthly:
-                        ForEach(datesByWeek, id: \.i) { week in
-                            weekDayNumbers(dayWidth, dates: week.dates)
-                                .transition(currentWeekOfMonth == week.i ?  (week.i == 0 ? .identity :.equal ): currentWeekOfMonth < week.i ? .bottomX : .topX )
                                 .animation(.default)
+                            
+                        case .monthly:
+                            ForEach(datesByWeek, id: \.i) { week in
+                                weekDayNumbers(dayWidth, dates: week.dates)
+                                    .transition(currentWeekOfMonth == week.i ?  (week.i == 0 ? .identity :.equal ): currentWeekOfMonth < week.i ? .bottomX : .topX )
+                                    .animation(.default)
+                            }
+                        }
+                        
+                    }.readOffset(named: "WeekendDayNumbers") { y in
+                        let tolerance = dayWidth / 2
+                        if y.maxX < width - tolerance {
+                            pageChangeAnimation(screenWidth: -width)
+                        }
+                        
+                        if y.minX > tolerance {
+                            pageChangeAnimation(screenWidth: width)
+                        }
+                    }.onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                            self.isScrollEnabled = true
+                            print("On apera grpup")
+                            /// No se necesita simpre y cuando aparezcan solo los 7 dias de la semana
+                            /// scrollReader.scrollTo(currentDayID, anchor: .none)
                         }
                     }
-                    
-                    Text(DateFormatter.day.string(from: viewModel.selected))
-                        .font(.subheadline)
-                        .frame(width: width)
-                        .foregroundColor(Color(#colorLiteral(red: 0.4156862745, green: 0.4666666667, blue: 0.5490196078, alpha: 1)))
-                        .opacity(dayOffset == 0 ? 1 : 0)
-                        .offset(x: dayOffset, y: 0)
-                        .frame(minWidth: 0, maxWidth: .infinity)
- 
-                    
-                }.readOffset(named: "WeekendDayNumbers") { y in
-                    let tolerance = dayWidth / 2
-                    if y.maxX < width - tolerance {
-                        pageChangeAnimation(screenWidth: -width)
-                    }
-                    
-                    if y.minX > tolerance {
-                        pageChangeAnimation(screenWidth: width)
-                    }
-                }.onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                        self.isScrollEnabled = true
-                        print("On apera grpup")
-                        /// No se necesita simpre y cuando aparezcan solo los 7 dias de la semana
-                        /// scrollReader.scrollTo(currentDayID, anchor: .none)
-                    }
                 }
+                .coordinateSpace(name: "WeekendDayNumbers")
             }
-            .coordinateSpace(name: "WeekendDayNumbers")
-            .frame(height: viewModel.rowsHeight + 16)
-
-        }
+        }.frame(height: viewModel.rowsHeight + 14)
     }
     
     
@@ -166,12 +153,12 @@ public struct WeekView: View {
             self.offset = size
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-        
+            
             self.offset = -size
             
             if updateSelected {
                 let sign = size < 0 ? 1 : -1
-                switch mode {
+                switch viewModel.mode {
                 case .weekend:
                     self.viewModel.selected = Calendar.current.date(byAdding: .day, value: 7 * sign, to: viewModel.selected)!
                     
@@ -179,7 +166,7 @@ public struct WeekView: View {
                     self.viewModel.selected = Calendar.current.date(byAdding: .month, value: 1 * sign, to: viewModel.selected)!
                 }
             }
-        
+            
             withAnimation(.easeInOut) {
                 self.offset = 0
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
@@ -235,9 +222,16 @@ public struct WeekView: View {
     func weekDayNumbers(_ dayWidth: CGFloat, dates: [Date]) -> some View {
         HStack(alignment: VerticalAlignment.firstTextBaseline, spacing: 0) {
             ForEach(dates, id: \.self) { date in
-                dayView(date: date, size: daysRowHeight - 6)
-                    .frame(width: dayWidth, height: daysRowHeight)
-                    .offset(x: self.offset, y: 0)
+                if let generator = dayGenerator {
+                    generator(date, daysRowHeight)
+                        .frame(width: dayWidth, height: daysRowHeight)
+                        .offset(x: self.offset, y: 0)
+                        
+                } else {
+                    dayView(date: date, size: daysRowHeight - 6)
+                        .frame(width: dayWidth, height: daysRowHeight)
+                        .offset(x: self.offset, y: 0)
+                }
             }
         }
         .lineLimit(1)

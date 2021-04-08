@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 import Combine
 
 
@@ -78,7 +77,7 @@ struct ExpenseItemFormView: View {
             ScrollView {
                 VStack {
            
-                    CurrencyTextField("Transaction value", value: $viewModel.amount, foregroundColor: Colors.Form.value, accentColor: Colors.Form.value)
+                    CurrencyTextField(NSLocalizedString("Transaction Value", comment: ":"), value: $viewModel.amount, foregroundColor: Colors.Form.value, accentColor: Colors.Form.value)
                     .font(.title)
                     .frame(height: 50)
                     
@@ -114,14 +113,14 @@ struct ExpenseItemFormView: View {
                             .foregroundColor(.red)
                             .cornerRadius(3.0)
                         Spacer()
-                    }.frame(height: 50)
+                    }.frame(height: 60)
                     
                     /// Categories picker
                     PresentLinkView(destination: CategorySelectionView(selection: $viewModel.categories)) {
                         Row(icon: "square.stack.3d.up.fill", withArrow: true) {
                             ListLabel(items: $viewModel.categories, empty: "Categories")
                         }
-                    }//.frame(height: 60)
+                    }
                     
                     /// Tags picker
                     PresentLinkView(destination: TagSelectionView(selection: $viewModel.tags)) {
@@ -150,8 +149,9 @@ struct ExpenseItemFormView: View {
                     Image(systemName: "xmark")
                         .imageScale(.medium)
                 }
-                //.frame(width: 30, height: 30)
-                .foregroundColor(Colors.primary),
+                .frame(width: 30, height: 30)
+                .foregroundColor(Colors.primary)
+                .offset(x: -8, y: 0),
                 
                 trailing: Button(viewModel.item == nil ? "Create" : "Edit") {
                     self.saveAction()
@@ -175,11 +175,12 @@ struct ExpenseItemFormView: View {
     
     
     @ViewBuilder
-    func ListLabel<Value: Entity & EntityWithName>(items: Binding<Set<Value>>, empty: String) -> some View {
+    func ListLabel<Value: Entity & EntityWithName>(items: Binding<Set<Value>>, empty: LocalizedStringKey) -> some View {
         if items.wrappedValue.isEmpty {
             Text(empty)
                 .padding(.vertical)
                 .foregroundColor(Colors.Form.label)
+                .frame(minHeight: 60)
         } else {
             VStack(alignment: .leading) {
                 Text(empty)
@@ -198,7 +199,7 @@ struct ExpenseItemFormView: View {
     }
     
     @ViewBuilder
-    func TagsLabel<Value: Entity & EntityWithName>(items: Binding<Set<Value>>, empty: String) -> some View {
+    func TagsLabel<Value: Entity & EntityWithName>(items: Binding<Set<Value>>, empty: LocalizedStringKey) -> some View {
         if items.wrappedValue.isEmpty {
             Text(empty)
                 .padding(.vertical)
@@ -249,7 +250,13 @@ struct ExpenseItemFormView_Previews: PreviewProvider {
     @State private static var showingDetail = false
     
     static var previews: some View {
-        ExpenseItemFormView()
-            .preferredColorScheme(.dark)
+        Group {
+            ExpenseItemFormView()
+                .preferredColorScheme(.dark)
+            
+            ExpenseItemFormView()
+                .preferredColorScheme(.light)
+                .environment(\.locale, Locale(identifier: "es_Co"))
+        }
     }
 }
