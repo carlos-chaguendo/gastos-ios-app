@@ -7,15 +7,20 @@
 
 import Foundation
 
-class Wallet: Entity, EntityWithName {
+class Wallet: Entity, EntityWithName, ExpensePropertyWithValue {
     
     @objc public dynamic var name: String = ""
+    
+    public var value: Double = 0.0
+    override class func ignoredProperties() -> [String] {
+        ["value"]
+    }
     
 }
 
 class CreditCart: Wallet {
-    
+
     @objc public dynamic var paymentDate: Date?
     @objc public dynamic var invoiceDate: Date?
-    
+      
 }

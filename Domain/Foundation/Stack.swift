@@ -20,7 +20,12 @@ struct Stack<Element>: ExpressibleByArrayLiteral {
     }
     
     subscript(_ index: Int) -> Element {
-        return array[index]
+        get {
+            array[index]
+        }
+        set(newValue) {
+            array[index] = newValue
+        }
     }
     
     init(arrayLiteral elements: Element...) {

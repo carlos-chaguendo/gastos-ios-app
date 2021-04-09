@@ -8,9 +8,9 @@
 import Foundation
 import CoreGraphics
 
-extension CGFloat {
+extension Numeric where Self: FloatingPoint {
     
-    public func map(from: Range<CGFloat>, to: Range<CGFloat>) -> CGFloat {
+    public func map(from: Range<Self>, to: Range<Self>) -> Self {
         let x = self
         
         let inmin = from.lowerBound
@@ -21,7 +21,17 @@ extension CGFloat {
         
         let sup = (x - inmin) * (outmax - outmin)
         let sub = (inmax - inmin) + outmin
-        return sup / sub
+        return sup/sub
     }
     
 }
+
+extension FloatingPoint {
+    /// Rounds the double to decimal places value
+    public func rounded(toPlaces places: Int) -> Self {
+        let divisor = Self(Int(pow(10.0, Double(places))))
+        return (self * divisor).rounded() / divisor
+    }
+}
+
+

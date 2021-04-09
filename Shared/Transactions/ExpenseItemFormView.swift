@@ -21,7 +21,9 @@ public class ExpenseItemFormViewModel: ObservableObject {
     @Published var categories = Set<Catagory>()
     
     init() {
-        
+        if let current = UserDefaults.standard.value(forKey: "currentDate") as? Date {
+            date = current
+        }
     }
     
     init(_ item: ExpenseItem) {
@@ -41,6 +43,7 @@ public class ExpenseItemFormViewModel: ObservableObject {
         selection.category = categories.first
         selection.tags.append(objectsIn: tags)
         selection.wallet = wallets.first
+        selection.date = date
         return selection
     }
 }

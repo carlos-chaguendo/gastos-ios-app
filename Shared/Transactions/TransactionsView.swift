@@ -143,18 +143,25 @@ struct TransactionsView: View {
                 }.onReceive(Publishers.didAddNewTransaction) { item in
                     self.datasource.append(item)
                     self.calculateTotal()
+                    self.weekendViewModel.marked = Service.summaryOf(month: weekendViewModel.selected)
                     Logger.info("Agrego una nueva transaccion", item)
+                    
                 }.onReceive(Publishers.didEditTransaction) { item in
                     self.datasource.removeAll()
                     self.loadDataSource()
                     self.calculateTotal()
+                    self.weekendViewModel.marked = Service.summaryOf(month: weekendViewModel.selected)
                     Logger.info("Edito una nueva transaccion", item)
+                    
                 }.onReceive(WeekView.didSelectDate) { date in
                     self.datasource.removeAll()
                     self.loadDataSource()
                     self.weekendViewModel.marked = Service.summaryOf(month: weekendViewModel.selected)
-                   
                     Logger.info("Date selected", date)
+                    
+                    UserDefaults.standard.setValue(date, forKey: "currentDate")
+                    UserDefaults.standard.synchronize()
+                    
                 }.onAppear {
                     self.loadDataSource()
                     self.weekendViewModel.marked = Service.summaryOf(month: weekendViewModel.selected)

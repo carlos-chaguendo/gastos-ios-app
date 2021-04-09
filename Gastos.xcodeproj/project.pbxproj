@@ -45,6 +45,8 @@
 		2F89BA2A261F76C40009EA03 /* LinesGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA29261F76C40009EA03 /* LinesGraph.swift */; };
 		2F89BA30261F8DB30009EA03 /* MaxExpendingGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA2F261F8DB30009EA03 /* MaxExpendingGraphView.swift */; };
 		2F89BA39261F8EC80009EA03 /* ExpenseGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA38261F8EC80009EA03 /* ExpenseGraphView.swift */; };
+		2F89BA3D261FBB1B0009EA03 /* ApplicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA3C261FBB1B0009EA03 /* ApplicationData.swift */; };
+		2F89BA412620B12E0009EA03 /* GroupPercentGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA402620B12E0009EA03 /* GroupPercentGraphView.swift */; };
 		2F915373260185010092033E /* ArrayBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F915372260185010092033E /* ArrayBuilder.swift */; };
 		2F915374260185010092033E /* ArrayBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F915372260185010092033E /* ArrayBuilder.swift */; };
 		2F91537B26018FED0092033E /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5936325FC1231005A1B93 /* TabBar.swift */; };
@@ -120,6 +122,8 @@
 		2F89BA29261F76C40009EA03 /* LinesGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinesGraph.swift; sourceTree = "<group>"; };
 		2F89BA2F261F8DB30009EA03 /* MaxExpendingGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxExpendingGraphView.swift; sourceTree = "<group>"; };
 		2F89BA38261F8EC80009EA03 /* ExpenseGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseGraphView.swift; sourceTree = "<group>"; };
+		2F89BA3C261FBB1B0009EA03 /* ApplicationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationData.swift; sourceTree = "<group>"; };
+		2F89BA402620B12E0009EA03 /* GroupPercentGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPercentGraphView.swift; sourceTree = "<group>"; };
 		2F915372260185010092033E /* ArrayBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayBuilder.swift; sourceTree = "<group>"; };
 		2F9500D22603A7C400C9ABFC /* Service+Publishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Publishers.swift"; sourceTree = "<group>"; };
 		2F9500D62603B04300C9ABFC /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -248,6 +252,7 @@
 				2F6B073E25F97AE200A1D516 /* ExpenseItem.swift */,
 				2F98CE64261553820004F1B2 /* Tag.swift */,
 				2F98CE70261569330004F1B2 /* Wallet.swift */,
+				2F89BA3C261FBB1B0009EA03 /* ApplicationData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -267,9 +272,10 @@
 		2F816D63261D26BF009FB091 /* Summary Graphs */ = {
 			isa = PBXGroup;
 			children = (
-				2F816D64261D26E7009FB091 /* SummaryGraphicsView.swift */,
-				2F89BA2F261F8DB30009EA03 /* MaxExpendingGraphView.swift */,
 				2F89BA38261F8EC80009EA03 /* ExpenseGraphView.swift */,
+				2F89BA402620B12E0009EA03 /* GroupPercentGraphView.swift */,
+				2F89BA2F261F8DB30009EA03 /* MaxExpendingGraphView.swift */,
+				2F816D64261D26E7009FB091 /* SummaryGraphicsView.swift */,
 			);
 			path = "Summary Graphs";
 			sourceTree = "<group>";
@@ -465,6 +471,7 @@
 				2F98CE6A261559500004F1B2 /* FileImportButton.swift in Sources */,
 				2F6B072525F976DA00A1D516 /* TransactionsView.swift in Sources */,
 				2FE51A1E25FAEB8F004518A0 /* TextColor.swift in Sources */,
+				2F89BA412620B12E0009EA03 /* GroupPercentGraphView.swift in Sources */,
 				2F89BA15261E89CF0009EA03 /* Numbers.swift in Sources */,
 				2F2FB8B02613F45E00CE3E9E /* Entity+Detach.swift in Sources */,
 				2F98CE5B26154EF50004F1B2 /* Catagory.swift in Sources */,
@@ -491,6 +498,7 @@
 				2F816D2A261CF072009FB091 /* CurrencyTextField.swift in Sources */,
 				2F98CE7626156B620004F1B2 /* SelectorList.swift in Sources */,
 				2F6B073925F9793E00A1D516 /* ExpenseItemView.swift in Sources */,
+				2F89BA3D261FBB1B0009EA03 /* ApplicationData.swift in Sources */,
 				2FBEBBFE260CF9EA001C4FCD /* Date.swift in Sources */,
 				2F9500D32603A7C400C9ABFC /* Service+Publishers.swift in Sources */,
 				2F98CE81261640270004F1B2 /* PresentLinkView.swift in Sources */,

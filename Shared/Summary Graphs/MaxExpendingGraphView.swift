@@ -10,7 +10,10 @@ import SwiftUI
 struct MaxExpendingGraphView: View {
     
     @ObservedObject private var weekendViewModel: WeekendViewModel
-    @State private var eventCount: [Date: Int] = [:]
+    @State private var eventCount: [Date: Double] = [:]
+    @State private var maximumAmount: Double = 0.0
+    
+    private let defaultOpacity: Double = 0.05
     
     init() {
         let model = WeekendViewModel(date: Date(), mode: .weekend)
@@ -21,32 +24,85 @@ struct MaxExpendingGraphView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(DateFormatter.longMonth.string(from: weekendViewModel.selected).capitalized)
+            
+            HStack(alignment: VerticalAlignment.firstTextBaseline, spacing: 1) {
+                Text(DateFormatter.longMonth.string(from: weekendViewModel.selected).capitalized)
+                    .font(.caption2)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.secondary)
+                
+                Text(DateFormatter.year.string(from: weekendViewModel.selected).capitalized)
+                    .font(.caption2)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.secondary)
+            }.lineLimit(1)
+         
+           
+            Text(NumberFormatter.currency.string(from: NSNumber(value: maximumAmount) ) ?? "")
                 .font(.title3)
                 .fontWeight(.heavy)
-         
-            Text("Maximum spending days")
+                
+            
+            Text("Maximun daily spending")
                 .font(.caption2)
                 .foregroundColor(.secondary)
+            
            
             WeekView(model: weekendViewModel) { date, size in
                 AnyView(
-                    Text("\(Calendar.current.component(.day, from: date))")
+                   Text("\(Calendar.current.component(.day, from: date))")
                         .font(.caption2)
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
                         .background(Colors.primary)
                         .foregroundColor(.white)
-                        .opacity(Double.random(in: 0.1..<1))
-
+                        .opacity(eventCount[date, default: defaultOpacity])
+                        .if(!Calendar.current.isDate(weekendViewModel.selected, equalTo: date, toGranularity: .month)) { text in
+                            text.hidden()
+                        }
                 )
             }
             .cornerRadius(6)
+            .onReceive(WeekView.didSelectDate) { date in
+                didPageChanged()
+            }
             .onAppear {
-                self.eventCount = Service.countEventsIn(month: weekendViewModel.selected)
+                didPageChanged()
             }
         }.cardView()
     }
     
+    private func didPageChanged() {
+        let events = Service.sumEventsIn(month: weekendViewModel.selected)
+        let maximumAmount = events.values.max() ?? 0
+        let minimunAmount = events.values.min() ?? 0
+        
+        let opacityRange: Range<Double> = 0..<1
+        let ammountRange: Range<Double> = minimunAmount..<maximumAmount
+        
+        self.eventCount = events
+            .mapValues { $0.map(from: ammountRange, to: opacityRange).rounded(toPlaces: 2) }
+            .mapValues { max(defaultOpacity, $0
+            ) }
+        self.maximumAmount = maximumAmount
+ 
+    }
+    
+}
+
+
+struct MaxExpendingGraphView_Previews: PreviewProvider {
+    
+    
+    
+    static var previews: some View {
+        Group {
+            MaxExpendingGraphView()
+                .previewLayout(PreviewLayout.fixed(width: 220 , height: 320))
+            //.preferredColorScheme(.dark)
+            
+        }
+        
+    }
 }
 
 

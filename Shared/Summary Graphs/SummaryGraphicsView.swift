@@ -26,15 +26,14 @@ struct SummaryGraphicsView: View {
                 VStack(alignment: .leading) {
                     
                     LazyVGrid(columns: columns, spacing: 16) {
-                        
                         MaxExpendingGraphView()
-                        
-                        ExpenseGraphView()
-                        
-                    }.padding()
-            
+                        //ExpenseGraphView()
+                    }
                     
-                } // VStack
+                    GroupPercentGraphView(groupBy: \.wallet)
+                    GroupPercentGraphView(groupBy: \.category)
+     
+                }.padding() // VStack
                 
             } // Scroll View
             .navigationBarTitle("Expense",displayMode: .automatic)

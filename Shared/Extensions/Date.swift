@@ -21,11 +21,13 @@ extension Date {
     }
     
     public func isSame(_ component: Calendar.Component, to another: Date, in timezone: TimeZone = .current) -> Bool {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = timezone
-        let thisComponent: Int = calendar.component(component, from: self)
-        let anotherComponent: Int = calendar.component(component, from: another)
-        return thisComponent == anotherComponent
+//        var calendar = Calendar(identifier: .gregorian)
+//        calendar.timeZone = timezone
+//        let thisComponent: Int = calendar.component(component, from: self)
+//        let anotherComponent: Int = calendar.component(component, from: another)
+//        return thisComponent == anotherComponent
+//
+        return Calendar.gregorian.isDate(self, equalTo: another, toGranularity: component)
     }
     
     public func withStart(of dateComponent: Calendar.Component, timezone: TimeZone = .current) -> Date {
@@ -45,5 +47,30 @@ extension Date {
 
         return calendar.date(byAdding: dateComponent, value: 1, to: self.withStart(of: dateComponent, timezone: timezone))!.addingTimeInterval(-1)
     }
+    
+    
+    /// Genera una colleccion de fechas hasta una fecha, agregando la cantidad de componentes a la siguiente fecha
+    /// - Parameters:
+    ///   - component: La cantidad de tiempo que existe entre fechas (.day, .hour...)
+    ///   - end: La fecha maxima generada o limite del array
+    /// - Returns: Devuelve el nuevo array libre de duplicados.
+    public func enumerate(_ component: Calendar.Component, until end: Date) -> [Date] {
+        var result: [Date] = []
+        var currentDate = self
 
+        while currentDate <= end {
+            result.append(currentDate)
+            currentDate = Calendar.gregorian.date(byAdding: component, value: 1, to: currentDate)!
+        }
+
+        return result
+    }
+
+}
+
+extension DateInterval {
+    
+    public func enumerate(_ component: Calendar.Component) -> [Date] {
+        start.enumerate(component, until: end)
+    }
 }

@@ -23,4 +23,14 @@ extension AnyTransition {
         insertion: AnyTransition.move(edge: .bottom).combined(with: .opacity),
         removal: AnyTransition.move(edge: .bottom).combined(with: .opacity)
     )
+    
+    static let leadingX = AnyTransition.asymmetric(
+        insertion: AnyTransition.move(edge: .leading).combined(with: .opacity),
+        removal:  AnyTransition.move(edge: .trailing).combined(with: .opacity)
+    )
+    
+    static let scaled = AnyTransition.asymmetric(
+        insertion: .scale(scale: 0.5, anchor: .bottomLeading),
+        removal: .scale(scale: 2)
+    )
 }

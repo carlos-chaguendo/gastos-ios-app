@@ -44,6 +44,7 @@ extension Collection where Index == Int {
 struct PageView<SelectionValue : Hashable, Content: View>: View  {
     
     public var continuePage: Bool = true
+    @Binding public var needsRefresh: Bool
     @Binding public var currentPage: SelectionValue
     @State private var isAnimatingPageChanged = false
     @State private var offset: CGFloat = 0
@@ -51,7 +52,6 @@ struct PageView<SelectionValue : Hashable, Content: View>: View  {
     
     @State private var prevOffset: CGFloat = 0
 
-    
     public let content: (SelectionValue) -> Content
     
     public let next: (SelectionValue) -> SelectionValue
@@ -63,9 +63,35 @@ struct PageView<SelectionValue : Hashable, Content: View>: View  {
     
     @State private var availableWidth: CGFloat = 0
     
+    public init(
+        continuePage: Bool,
+        needsRefresh: Binding<Bool>,
+        currentPage: Binding<SelectionValue>,
+        @ViewBuilder content: @escaping (SelectionValue) -> Content,
+        next: @escaping (SelectionValue) -> SelectionValue,
+        prev: @escaping (SelectionValue) -> SelectionValue
+    )
+    {
+        self.continuePage = true
+        self._needsRefresh = needsRefresh
+        self._currentPage = currentPage
+        self.content = content
+        self.next = next
+        self.prev = prev
+    }
+    
     //@ViewBuilder
-    func getpage(at index: Int) -> some View {
-        pages[index]
+    func getpage(at i: Int) -> Content {
+        if needsRefresh {
+            return invokeContentGenerator(at: index[i])
+        }
+        
+        return pages[i]
+    }
+    
+    func invokeContentGenerator(at i: SelectionValue) -> Content {
+        Logger.info("generando contenido ", i)
+        return content(i)
     }
     
     var body: some View {
@@ -74,10 +100,11 @@ struct PageView<SelectionValue : Hashable, Content: View>: View  {
             let width = reader.size.width
             let tolerance = width * 1/5
             
-            if pages.isEmpty {
+            if pages.isEmpty || needsRefresh {
                 Text("loasing")
                     .frame(width: width)
                     .onAppear {
+                        needsRefresh = false
                         generatePages()
                     }
             } else {
@@ -135,10 +162,10 @@ struct PageView<SelectionValue : Hashable, Content: View>: View  {
     func generatePages() {
         if continuePage {
             index = [prev(currentPage), currentPage, next(currentPage) ]
-            pages = [content(index[0]), content(currentPage), content(index[2])]
+            pages = [invokeContentGenerator(at: index[0]), invokeContentGenerator(at: currentPage), invokeContentGenerator(at: index[2])]
         } else {
             index = [currentPage]
-            pages = [content(currentPage)]
+            pages = [invokeContentGenerator(at: currentPage)]
         }
     }
     
@@ -171,7 +198,7 @@ struct PageView<SelectionValue : Hashable, Content: View>: View  {
                     let newRight = next(rightIndex)
                     
                     index.right(newRight)
-                    pages.right(content(newRight))
+                    pages.right(invokeContentGenerator(at: newRight))
                     print("indices", index)
                     
                     
@@ -185,7 +212,7 @@ struct PageView<SelectionValue : Hashable, Content: View>: View  {
                     let newleft = prev(leftIndex)
                     
                     index.left(newleft)
-                    pages.left(content(newleft))
+                    pages.left(invokeContentGenerator(at: newleft))
                     print("indices", index)
                     
                     currentPage = leftIndex
@@ -215,7 +242,7 @@ struct PageView<SelectionValue : Hashable, Content: View>: View  {
 extension PageView where SelectionValue: Numeric {
     
     init(continuePage: Bool = true, steps: SelectionValue, currentPage: Binding<SelectionValue>, content: @escaping (SelectionValue) -> Content) {
-        self.init(continuePage: continuePage, currentPage: currentPage, content: content, next:  { current in
+        self.init(continuePage: continuePage, needsRefresh: .constant(false), currentPage: currentPage, content: content, next:  { current in
             return current + steps
         }, prev: {
             $0 - steps
@@ -226,23 +253,23 @@ extension PageView where SelectionValue: Numeric {
     
 }
 
-struct PageView_Previews: PreviewProvider {
-    @State static var selected: Int = 0
-    
-    static var previews: some View {
-        VStack{
-            PageView(continuePage: false, currentPage: $selected) { i -> Text in
-                print("generando contenido", i)
-                return Text("Esto son las fechas de\(i)")
-            } next:  {
-                $0 + 1
-            } prev: {
-                $0 - 1
-            }.background(.blue)
-
-            Text("Aqui termina")
-            Spacer()
-        }
-
-    }
-}
+//struct PageView_Previews: PreviewProvider {
+//    @State static var selected: Int = 0
+//
+//    static var previews: some View {
+//        VStack{
+//            PageView(continuePage: false, currentPage: $selected) { i -> Text in
+//                print("generando contenido", i)
+//                return Text("Esto son las fechas de\(i)")
+//            } next:  {
+//                $0 + 1
+//            } prev: {
+//                $0 - 1
+//            }.background(.blue)
+//
+//            Text("Aqui termina")
+//            Spacer()
+//        }
+//
+//    }
+//}

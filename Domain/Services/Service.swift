@@ -109,12 +109,14 @@ public class Service {
         }
     }
     
-    
-    static func addCategory(_ item: Catagory) {
+    @discardableResult
+    static func addCategory(_ item: Catagory) -> Catagory {
         try! realm.write {
             item.id = UUID().description
             realm.add(item)
         }
+        
+        return item.detached()
     }
     
     static func addTag(_ item: Tag) {
@@ -124,11 +126,13 @@ public class Service {
         }
     }
     
-    static func addWallet(_ item: Wallet) {
+    static func addWallet(_ item: Wallet) -> Wallet {
         try! realm.write {
             item.id = UUID().description
             realm.add(item)
         }
+        
+        return item.detached()
     }
     
     static func remove(_ item:ExpenseItem) {
@@ -163,12 +167,38 @@ public class Service {
         
     }
     
-    static func countEventsIn(month date: Date)-> [Date: Int] {
+    static func countEventsIn(month date: Date) -> [Date: Int] {
         realm.objects(ExpenseItem.self)
             .filter { Calendar.current.isDate($0.date, equalTo: date, toGranularity: .month)  }
             .map {  Calendar.current.dateInterval(of: .day, for: $0.date)!.start  }
             .countBy { $0 }
     }
+    
+    static func sumEventsIn(month date: Date) -> [Date: Double] {
+        realm.objects(ExpenseItem.self)
+            .filter { $0.date.isSame(.month, to: date) }
+            .groupBy { $0.date.withStart(of: .day) }
+            .mapValues { $0.map { $0.value}.reduce(0, +) }
+    }
+    
+    static func expenses<Group: Entity & ExpensePropertyWithValue>(by group: KeyPath<ExpenseItem, Group>, in date: Date) -> [Group] {
+        let expensesByCategoryId = realm.objects(ExpenseItem.self)
+            .filter { $0.date.isSame(.month, to: date) }
+            .groupBy { $0[keyPath: group].id }
+            .mapValues { $0.map { $0.value}.reduce(0, +) }
+        
+        let categoriesById = realm.objects(Group.self)
+            .groupBy { $0.id }
+            .compactMapValues { $0.first }
+        
+        return expensesByCategoryId.compactMap { categoriId, value -> Group? in
+            let category = categoriesById[categoriId]
+            category?.value = value
+            return category
+        }.sorted(by: { $0.value > $1.value })
+    }
+    
+
     
     static func getAll<Object: Entity>(_ type: Object.Type) -> [Object] {
         realm.objects(Object.self)
@@ -176,5 +206,3 @@ public class Service {
     }
     
 }
-
-
