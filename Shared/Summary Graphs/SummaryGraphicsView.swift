@@ -9,29 +9,29 @@ import SwiftUI
 
 struct SummaryGraphicsView: View {
     
-    
-    private  let columns = [
+    private let columns = [
         //      GridItem(.adaptive(minimum: 80)),
         GridItem(.flexible()),
         GridItem(.flexible()),
         //GridItem(.flexible()),
     ]
-
     
     var body: some View {
         NavigationView {
-            
             
             ScrollView {
                 VStack(alignment: .leading) {
                     
                     LazyVGrid(columns: columns, spacing: 16) {
                         MaxExpendingGraphView()
-                        //ExpenseGraphView()
+                        ExpenseGraphView()
                     }
+   
+                    VStack(spacing: 8) {
+                        GroupPercentGraphView(groupBy: \.category, title: "Category")
                     
-                    GroupPercentGraphView(groupBy: \.wallet)
-                    GroupPercentGraphView(groupBy: \.category)
+                        GroupPercentGraphView(groupBy: \.wallet, title: "Wallet", showTotal: false)
+                    }.cardView()
      
                 }.padding() // VStack
                 

@@ -8,6 +8,7 @@
 import Foundation
 import CoreGraphics
 import SwiftUI
+import Combine
 
 public class WeekendViewModel: ObservableObject {
     

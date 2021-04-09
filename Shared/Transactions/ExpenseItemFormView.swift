@@ -121,7 +121,7 @@ struct ExpenseItemFormView: View {
                     /// Categories picker
                     PresentLinkView(destination: CategorySelectionView(selection: $viewModel.categories)) {
                         Row(icon: "square.stack.3d.up.fill", withArrow: true) {
-                            ListLabel(items: $viewModel.categories, empty: "Categories")
+                            ListLabel(items: $viewModel.categories, empty: "Category")
                         }
                     }
                     

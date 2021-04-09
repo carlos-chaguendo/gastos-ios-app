@@ -23,44 +23,48 @@ struct TabBar: View {
     public var selectedColor: Color = .blue
     public var unselectedColor: Color = .gray
     
+    @State private var tabIndex = 0
+    
     var body: some View {
         GeometryReader { geometry in
-            VStack {
-                
-//                ForEach(0..<pages.count) { i in
-//                    if i == selectedIndex {
-                        pages[selectedIndex]
-                            .content
-                            //.transition(AnyTransition.asymmetric(insertion: .move(edge: insertion),  removal: .move(edge: removal)))
-//                            .animation(.default)
-//                    }
-//                }
-
-          
-        
-                Spacer()
-                ZStack {
-                    HStack {
-                        
-                        ForEach(0..<pages.count) { i in
-                            pages[i].tab
-                                .padding(.horizontal, 4)
-                                .frame(width: geometry.size.width/CGFloat(pages.count))
-                                .onTapGesture {
-                                    
-                                    self.removal = i > selectedIndex ? .leading : .trailing
-                                    self.insertion = i > selectedIndex ? .trailing : .leading
-                                    
-                                    self.selectedIndex = i
-                                }
-                                .foregroundColor(selectedIndex == i ? selectedColor : unselectedColor)
-                        }
-                        
             
-
+            ZStack {
+                
+                TabView(selection: $tabIndex) {
+                    ForEach(0..<pages.count) { i in
+                        pages[i]
+                            .content
+                            .tabItem { Text("\(i)")}
                     }
-                    .frame(width: geometry.size.width, height: geometry.size.height/10)
-                    .background(self.background.shadow(radius: 2))
+                }
+            
+                VStack {
+                    Spacer()
+                    
+                    ZStack {
+                        HStack {
+                            
+                            ForEach(0..<pages.count) { i in
+                                pages[i].tab
+                                    .padding(.horizontal, 4)
+                                    .frame(width: geometry.size.width/CGFloat(pages.count), height: 40)
+                                    .onTapGesture {
+                                        
+                                        self.removal = i > selectedIndex ? .leading : .trailing
+                                        self.insertion = i > selectedIndex ? .trailing : .leading
+                                        
+                                        self.selectedIndex = i
+                                        self.tabIndex = i
+                                    }
+                                    .foregroundColor(selectedIndex == i ? selectedColor : unselectedColor)
+                            }
+                            
+
+                        }
+                        .frame(width: geometry.size.width, height: 54 + UIApplication.shared.keyWindow!.safeAreaInsets.bottom)
+                        .background(self.background.shadow(radius: 2))
+                    }
+
                 }
             }.edgesIgnoringSafeArea(.bottom)
         }
@@ -88,11 +92,7 @@ extension TabBar {
         var tab: AnyView?
         
         var body: some View {
-            VStack {
-                content
-                Spacer()
-                tab
-            }
+            EmptyView()
         }
         
         init<Content: View, Tab: View>(@ViewBuilder buildContent: () -> Content, @ViewBuilder tabItem buildTab: () -> Tab) {
@@ -146,7 +146,7 @@ extension TabBar.Page {
 
 extension View {
     
-    func tabItem<TabBarButton : View>( @ViewBuilder menuItems: () -> TabBarButton) -> TabBar.Page {
+    func tabBarItem<TabBarButton : View>( @ViewBuilder menuItems: () -> TabBarButton) -> TabBar.Page {
         TabBar.Page(body: self, tabItem: menuItems)
     }
 }
@@ -168,7 +168,7 @@ struct FlexibleTabView_Previews: PreviewProvider {
                     Text("!").listRowBackground(Color.clear)
                     Text("!").listRowBackground(Color.clear)
                 }
-            }.tabItem {
+            }.tabBarItem {
                     VStack {
                         Image(systemName: "waveform")
                             .resizable()
@@ -183,12 +183,12 @@ struct FlexibleTabView_Previews: PreviewProvider {
             
            
             Text("Contenido2")
-                .tabItem {
+                .tabBarItem {
                     Text("s")
                 }
             
             Text("Contenido2")
-                .tabItem {
+                .tabBarItem {
                     Text("btn")
                 }
             

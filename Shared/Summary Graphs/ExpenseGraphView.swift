@@ -57,8 +57,6 @@ struct ExpenseGraphView: View {
             /// Cuando se cambia la fecha desde la paginacion
             Logger.info("On receibe ", nex)
             //datasource.setInterval(mode: datasource.mode, date: nex)
-        }.onAppear {
-            datasource.reloadDatasource()
         }
     }
     
@@ -98,7 +96,7 @@ extension ExpenseGraphView {
             interval = getInterval(mode: mode, date: date)
             Logger.info("Cargando rsultados")
             self.points = points(of: date)
-            self.numbers = points.count        
+            self.numbers = points.count
         }
         
         private func getInterval(mode: String, date: Date = Date()) -> DateInterval {

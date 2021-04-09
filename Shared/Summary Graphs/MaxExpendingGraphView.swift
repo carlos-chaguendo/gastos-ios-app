@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct MaxExpendingGraphView: View {
     
@@ -72,21 +73,35 @@ struct MaxExpendingGraphView: View {
     }
     
     private func didPageChanged() {
-        let events = Service.sumEventsIn(month: weekendViewModel.selected)
-        let maximumAmount = events.values.max() ?? 0
-        let minimunAmount = events.values.min() ?? 0
+        Future<[Date: Double], Never> { promise in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                promise(.success(Service.sumEventsIn(month: weekendViewModel.selected)))
+            }
+        }
+        .receive(on: DispatchQueue.main)
+        .sink { events in
+            
+           // let events = Service.sumEventsIn(month: weekendViewModel.selected)
+            let maximumAmount = events.values.max() ?? 0
+            let minimunAmount = events.values.min() ?? 0
+            
+            let opacityRange: Range<Double> = 0..<1
+            let ammountRange: Range<Double> = minimunAmount..<maximumAmount
+            
+            self.eventCount = events
+                .mapValues { $0.map(from: ammountRange, to: opacityRange).rounded(toPlaces: 2) }
+                .mapValues { max(defaultOpacity, $0
+                ) }
+            self.maximumAmount = maximumAmount
+            Logger.info("Update State")
+        }.store(in: &cancellables)
         
-        let opacityRange: Range<Double> = 0..<1
-        let ammountRange: Range<Double> = minimunAmount..<maximumAmount
-        
-        self.eventCount = events
-            .mapValues { $0.map(from: ammountRange, to: opacityRange).rounded(toPlaces: 2) }
-            .mapValues { max(defaultOpacity, $0
-            ) }
-        self.maximumAmount = maximumAmount
+  
  
     }
     
+    @State
+    public var cancellables = Set<AnyCancellable>()
 }
 
 

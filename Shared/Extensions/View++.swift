@@ -53,6 +53,18 @@ extension View {
         .onPreferenceChange(OffsetPreferenceKey.self, perform: onChange)
     }
     
+    func background(_ color: ColorSpace) -> some View {
+        self.background(Color(color))
+    }
+    
+    func foregroundColor(_ color: ColorSpace) -> some View {
+        self.foregroundColor(Color(color))
+    }
+    
+    func accentColor(_ color: ColorSpace) -> some View {
+        self.accentColor(Color(color))
+    }
+    
 }
 
 

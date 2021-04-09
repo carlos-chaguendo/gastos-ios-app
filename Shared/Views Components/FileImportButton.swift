@@ -46,13 +46,10 @@ struct FileImportButton: View {
             ).dropFirst().map { line -> ExpenseItem in
                let item = line.components(separatedBy: ",")
                 let fehca = item[0]
-                let categoria = item[1].replacingOccurrences(of: "\"", with: "")
-                let cuenta = item[2].replacingOccurrences(of: "\"", with: "")
-                let nota = item[9].replacingOccurrences(of: "\"", with: "")
+                let categoria = item[1].replacingOccurrences(of: "\"", with: "").capitalized
+                let cuenta = item[2].replacingOccurrences(of: "\"", with: "").capitalized
+                let nota = item[9].replacingOccurrences(of: "\"", with: "").capitalized
                 let valor = item[7].replacingOccurrences(of: "\"$ ", with: "").replacingOccurrences(of: "\"", with: "")
-                
-                
-                
                 
                 return ExpenseItem {
                     $0.title = nota
@@ -61,10 +58,10 @@ struct FileImportButton: View {
                     $0.id =  $0.date.description
                     
                     $0.category = Service.realm.objects(Catagory.self)
-                        .first(where: {$0.name == categoria}) ?? addCategory(named: categoria)
+                        .first(where: {$0.name.uppercased() == categoria.uppercased()}) ?? addCategory(named: categoria)
                     
                     $0.wallet = Service.realm.objects(Wallet.self)
-                        .first(where: {$0.name == cuenta}) ?? addWallt(named: cuenta)
+                        .first(where: {$0.name.uppercased() == cuenta.uppercased()}) ?? addWallt(named: cuenta)
                     
                 }
             }

@@ -17,7 +17,7 @@ protocol ExpensePropertyWithValue: EntityWithName {
 
 class Catagory: Entity, EntityWithName, ExpensePropertyWithValue {
     @objc public dynamic var name: String = ""
-    @objc public dynamic var color = "0xCE0755"
+    @objc public dynamic var color: Int32 = 0x257D81
     @objc public dynamic var icon: String = ""
     
     public var value: Double = 0.0

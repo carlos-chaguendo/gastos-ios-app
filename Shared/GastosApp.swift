@@ -20,19 +20,25 @@ struct GastosAppDebug: App {
     var body: some Scene {
         WindowGroup {
             
-            VStack {
-                Text("Continue | Constante")
-                PageView(continuePage: true, steps: 1, currentPage: .constant(0)) { i -> Text in
-                    print("generando contenido", i)
-                    return Text("Esto son las fechas de\(i)")
-                }
-            
-//                next:  {
-//                    $0 + 1
-//                } prev: {
-//                    $0 - 1
-//                }
-            }
+            TabBar {
+                
+                SummaryGraphicsView()
+                    .tabBarItem {
+                        Text("A")
+                    }
+                
+                SummaryGraphicsView()
+                    .tabBarItem {
+                        Text("B")
+                    }
+                
+                CapijaView()
+                    .tabBarItem {
+                        Text("C")
+                    }
+                
+                
+            }.selectedIndex($selected)
         }
     }
 }
@@ -94,67 +100,36 @@ struct GastosApp: App {
     
     var transactionsView = TransactionsView()
     
+    var summary = SummaryGraphicsView()
+    
+    var capj = CapijaView()
+    
     var body: some Scene {
         WindowGroup {
             TabBar {
-                SummaryGraphicsView()
-                    .tabItem {
+                summary
+                    .tabBarItem {
                         TabBar.Page.Item(systemIconName: "rectangle.3.offgrid", tabName: "Dashboard")
                     }
                 
                 
                 transactionsView
-                    .tabItem {
+                    .tabBarItem {
                         TabBar.Page.Item(systemIconName: "homekit", tabName: "Home")
                     }
                 
-                VStack {
-                    FileImportButton()
-                    
-                    Button("Add Category") {
-                        Service.addCategory(Catagory {
-                             $0.name = "Comida"
-                        })
-                        
-                        Service.addTag(Tag{
-                            $0.name = "Comida"
-                        })
-                        
-                        Service.addTag(Tag{
-                            $0.name = "Trago"
-                        })
-                        
-                        Service.addTag(Tag{
-                            $0.name = "Marisol"
-                        })
-                        
-                        Service.addTag(Tag{
-                            $0.name = "Popayan"
-                        })
-                        
-                        Service.addWallet(Wallet {
-                            $0.name = "Bancolombia"
-                        })
-                        
-                        Service.addWallet(Wallet {
-                            $0.name = "Efectivo"
-                        })
-                        
-                        Service.addWallet(Wallet {
-                            $0.name = "Davivienda"
-                        })
-                    
+   
+                CapijaView()
+                    .tabBarItem {
+                        TabBar.Page.Item(systemIconName: "homepod.fill", tabName: "Categories")
                     }
-                }.tabItem {
-                    TabBar.Page.Item(systemIconName: "homepod.fill", tabName: "Categories")
-                }
                 
                 NavigationView {
                     Text("Hola")
                         .navigationBarTitle("", displayMode: .inline)
                 }.onAppear {
                     Logger.info("ssss", self.selected)
-                }.tabItem {
+                }.tabBarItem {
                     plusButton
                         .offset(y: -30)
                 }
@@ -167,4 +142,89 @@ struct GastosApp: App {
         }
     }
 
+}
+
+
+struct CapijaView: View {
+    
+    
+    let  number = Int.random(in: 0..<100)
+    
+    @State var updateView = 0
+    
+    
+    @State private var bgColor = Color.red
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                
+                Text("has \(number)")
+                Text("u \(Int.random(in: 0..<100))")
+                Text("updateView \(updateView)")
+                    .onAppear {
+                        self.updateView += 1
+                    }
+                
+                FileImportButton()
+                    .padding()
+                
+                
+                
+                VStack {
+                         ColorPicker("Set the background color", selection: $bgColor)
+                     }
+                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                     .background(bgColor)
+                
+                Button {
+                    
+                    
+              
+                    
+                    let color: UInt32 = 0x257D81
+                    let uicolor = ColorSpace.from(hex: color)
+                    
+                } label: {
+            
+                    
+                }
+                
+                Button("Add Category") {
+                    Service.addCategory(Catagory {
+                         $0.name = "Comida"
+                    })
+                    
+                    Service.addTag(Tag{
+                        $0.name = "Comida"
+                    })
+                    
+                    Service.addTag(Tag{
+                        $0.name = "Trago"
+                    })
+                    
+                    Service.addTag(Tag{
+                        $0.name = "Marisol"
+                    })
+                    
+                    Service.addTag(Tag{
+                        $0.name = "Popayan"
+                    })
+                    
+                    Service.addWallet(Wallet {
+                        $0.name = "Bancolombia"
+                    })
+                    
+                    Service.addWallet(Wallet {
+                        $0.name = "Efectivo"
+                    })
+                    
+                    Service.addWallet(Wallet {
+                        $0.name = "Davivienda"
+                    })
+                
+                }
+        }
+        }
+    }
 }

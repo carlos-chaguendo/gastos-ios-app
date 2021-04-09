@@ -75,6 +75,17 @@ public class Service {
     
     public static var realm: Realm = {
         Logger.info("File", Realm.Configuration.defaultConfiguration.fileURL)
+        
+        let config = Realm.Configuration(
+            schemaVersion: 1,
+            migrationBlock: { migration, oldSchemaVersion in
+
+                if (oldSchemaVersion < 1) {
+        
+                }
+        })
+        Realm.Configuration.defaultConfiguration = config
+        
         let realm = try! Realm(configuration: Realm.Configuration.defaultConfiguration)
         return realm
     }()
