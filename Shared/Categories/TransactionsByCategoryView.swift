@@ -38,33 +38,36 @@ struct TransactionsByCategoryView: View {
                         
                         VStack {
                             Text(NumberFormatter.currency.string(from: NSNumber(value: total)) ?? "")
-                                .font(.body)
-                                .fontWeight(.heavy)
+                                .font(.title3)
+                                .fontWeight(.medium)
+                                .foregroundColor(Colors.title)
                             Text("Total (\(numberOfTransactions))")
                                 .font(.caption2)
                                 .fontWeight(.medium)
-                                .foregroundColor(.secondary)
-                        }//.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+                                .foregroundColor(Colors.subtitle)
+                        }
                         
                         VStack {
                             Text(NumberFormatter.currency.string(from: NSNumber(value: max)) ?? "")
-                                .font(.body)
-                                .fontWeight(.heavy)
+                                .font(.title3)
+                                .fontWeight(.medium)
+                                .foregroundColor(Colors.title)
                             Text("Maximun")
                                 .font(.caption2)
                                 .fontWeight(.medium)
-                                .foregroundColor(.secondary)
-                        }//.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+                                .foregroundColor(Colors.subtitle)
+                        }
                         
                         VStack {
                             Text(NumberFormatter.currency.string(from: NSNumber(value: min)) ?? "")
-                                .font(.body)
-                                .fontWeight(.heavy)
+                                .font(.title3)
+                                .fontWeight(.medium)
+                                .foregroundColor(Colors.title)
                             Text("Minimun")
                                 .font(.caption2)
                                 .fontWeight(.medium)
-                                .foregroundColor(.secondary)
-                        }//.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+                                .foregroundColor(Colors.subtitle)
+                        }
                         
                     }
                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
@@ -81,13 +84,14 @@ struct TransactionsByCategoryView: View {
                 ForEach(dates, id: \.self) { date in
                     
                     Text(DateFormatter.day.string(from: date))
-                        .font(.system(size: 15))
-                        .fontWeight(.semibold)
-                        .foregroundColor(Color.primary)
+                        .font(.caption)
+                        .foregroundColor(Color.secondary)
                         .padding(.vertical)
                     
-                    ForEach(transactions[date, default: []], id: \.self) {transaction in
-                        ExpenseItemView(model: transaction)
+                    ForEach(transactions[date, default: []], id: \.self) { transaction in
+                        PresentLinkView(destination: ExpenseItemFormView(transaction)) {
+                            ExpenseItemView(model: transaction)
+                        }
                     }
                 }.padding(.horizontal)
    

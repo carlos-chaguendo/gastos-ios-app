@@ -38,16 +38,16 @@ struct GroupPercentGraphView<Group: Entity & ExpensePropertyWithValue>: View {
             if showTotal {
                 Text(NumberFormatter.currency.string(from: NSNumber(value: datasource.total)) ?? "")
                     .font(.title3)
-                    .fontWeight(.heavy)
-                    .foregroundColor(Color.primary)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Colors.title)
      
             }
             
             if let title = title {
                 Text(title)
                     .font(.caption2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.secondary)
+                    .fontWeight(.medium)
+                    .foregroundColor(Colors.subtitle)
                     .padding(.bottom, -3)
             }
             

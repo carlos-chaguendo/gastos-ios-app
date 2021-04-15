@@ -18,11 +18,12 @@ struct ExpenseGraphView: View {
             
             Text(DateIntervalFormatter.duration(range: datasource.interval))
                 .font(.caption2)
-                .foregroundColor(.secondary)
+                .foregroundColor(Colors.subtitle)
             
             Text(NumberFormatter.currency.string(from: NSNumber(value: datasource.total) ) ?? "")
                 .font(.title3)
-                .fontWeight(.heavy)
+                .fontWeight(.semibold)
+                .foregroundColor(Colors.title)
             
             Text("Maximun daily spending")
                 .font(.caption2)

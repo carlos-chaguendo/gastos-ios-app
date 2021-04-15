@@ -16,13 +16,13 @@ struct ExpenseItemView: View {
         VStack {
             HStack {
                 Text(model.title.isEmpty ? model.category?.name ?? "" :  model.title )
-                    .font(.system(size: 15))
+                    //.font(.system(size: 15))
                     //.fontWeight(.medium)
                     .foregroundColor(Colors.title)
                 
                 Spacer()
                 Text(NumberFormatter.currency.string(from: NSNumber(value: model.value)) ?? "")
-                    .font(Font.menlo(size: 15))
+                    //.font(Font.system(size: 15))
                     .fontWeight(.regular)
                     .foregroundColor(Colors.title)
             }
@@ -32,10 +32,10 @@ struct ExpenseItemView: View {
                     .font(.caption2)
                     //.fontWeight(.medium)
                     .padding(3)
-                    .foregroundColor(Colors.subtitle)
+                    .foregroundColor(Colors.Form.value)
                     .background(
                        RoundedRectangle(cornerRadius: 4)
-                         .fill(Color.gray.opacity(0.2))
+                        .fill(Color(.secondarySystemBackground))
                       )
             }.padding(.top, -6)
             

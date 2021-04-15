@@ -64,8 +64,8 @@ enum Colors {
     public static let primaryII: ColorSpace = .color(light: #colorLiteral(red: 0.262745098, green: 0.462745098, blue: 1, alpha: 0.7921539494), dark: #colorLiteral(red: 0.2431372549, green: 0.462745098, blue: 0.7176470588, alpha: 1))
     public static let backgroundII: ColorSpace = .color(light: .white, dark: #colorLiteral(red: 0.1098039216, green: 0.1529411765, blue: 0.2156862745, alpha: 1))
     
-    public static let title: ColorSpace = label//UIColor.color(light:#colorLiteral(red: 0.09019607843, green: 0.168627451, blue: 0.3019607843, alpha: 1), dark: #colorLiteral(red: 0.8392156863, green: 0.8392156863, blue: 0.8392156863, alpha: 1))
-    public static let subtitle: ColorSpace = #colorLiteral(red: 0.4196078431, green: 0.4666666667, blue: 0.5490196078, alpha: 1)
+    public static let title: ColorSpace = Colors.Form.value//UIColor.color(light:#colorLiteral(red: 0.09019607843, green: 0.168627451, blue: 0.3019607843, alpha: 1), dark: #colorLiteral(red: 0.8392156863, green: 0.8392156863, blue: 0.8392156863, alpha: 1))
+    public static let subtitle: ColorSpace =  Colors.Form.label //#colorLiteral(red: 0.4196078431, green: 0.4666666667, blue: 0.5490196078, alpha: 1)
     
     
     struct Form {

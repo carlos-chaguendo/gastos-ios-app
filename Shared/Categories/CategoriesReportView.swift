@@ -58,18 +58,18 @@ struct CategoriesReportView: View {
                             HStack(alignment: VerticalAlignment.firstTextBaseline) {
                                 Text(category.name)
                                     .font(.system(size: 15))
-                                    .fontWeight(.medium)
-                                    .foregroundColor(Color.primary)
+                                    //.fontWeight(.medium)
+                                    .foregroundColor(Colors.title)
                                 
                                 Text("\(percent.rounded(toPlaces: 2).cleanValue)%")
                                     .font(.caption2)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.secondary)
+                                    //.fontWeight(.semibold)
+                                    .foregroundColor(Colors.subtitle)
                                 
                                 Spacer()
                                 Text("\(NumberFormatter.currency.string(from: NSNumber(value: category.value)) ?? "")")
                                     .font(.system(size: 15))
-                                    .foregroundColor(Color.primary)
+                                    .foregroundColor(Colors.title)
                                 
                                 
                                 Image(systemName: "chevron.right")

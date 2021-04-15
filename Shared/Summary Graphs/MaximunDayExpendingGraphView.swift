@@ -29,17 +29,18 @@ struct MaximunDayExpendingGraphView: View {
             HStack(alignment: VerticalAlignment.firstTextBaseline, spacing: 1) {
                 Text(DateFormatter.longMonth.string(from: weekendViewModel.selected).capitalized)
                     .font(.caption2)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Colors.subtitle)
                 
                 Text(DateFormatter.year.string(from: weekendViewModel.selected).capitalized)
                     .font(.caption2)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Colors.subtitle)
             }.lineLimit(1)
          
            
             Text(NumberFormatter.currency.string(from: NSNumber(value: maximumAmount) ) ?? "")
                 .font(.title3)
-                .fontWeight(.heavy)
+                .fontWeight(.semibold)
+                .foregroundColor(Colors.title)
                 
             
             Text("Maximun daily spending")
