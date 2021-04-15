@@ -8,7 +8,6 @@
 import Foundation
 import RealmSwift
 
-
 extension Sequence where Iterator.Element: Identifiable {
 
     /// Crea una versión libre de duplicados de una Array, usando comparaciones de igualdad, en la que sólo se mantiene la primera ocurrencia de cada elemento.
@@ -77,7 +76,7 @@ public class Service {
         Logger.info("File", Realm.Configuration.defaultConfiguration.fileURL)
         
         let config = Realm.Configuration(
-            schemaVersion: 1,
+            schemaVersion: 2,
             migrationBlock: { migration, oldSchemaVersion in
 
                 if (oldSchemaVersion < 1) {
@@ -159,13 +158,7 @@ public class Service {
         }
     }
     
-    static func getItems(in date: Date) -> [ExpenseItem] {
-        realm.objects(ExpenseItem.self)
-            .filter { Calendar.current.isDate($0.date, equalTo: date, toGranularity: .day) }
-            .detached
-            .sorted(by: {$0.id > $1.id })
-    
-    }
+
     
     /// Retorna todas las fechas que almenos tiene una transaccion
     /// - Parameter date: El mes el cual se quiere consultar
@@ -185,6 +178,9 @@ public class Service {
             .countBy { $0 }
     }
     
+    /// Suma de costos por dia
+    /// - Parameter date: Fecha
+    /// - Returns: Dicionario de costos diarios
     static func sumEventsIn(month date: Date) -> [Date: Double] {
         realm.objects(ExpenseItem.self)
             .filter { $0.date.isSame(.month, to: date) }
@@ -192,9 +188,27 @@ public class Service {
             .mapValues { $0.map { $0.value}.reduce(0, +) }
     }
     
-    static func expenses<Group: Entity & ExpensePropertyWithValue>(by group: KeyPath<ExpenseItem, Group>, in date: Date) -> [Group] {
+    static func getItems(in date: Date) -> [ExpenseItem] {
+        realm.objects(ExpenseItem.self)
+            .filter { Calendar.current.isDate($0.date, equalTo: date, toGranularity: .day) }
+            .detached
+            .sorted(by: {$0.id > $1.id })
+    
+    }
+    
+    static func transactions<Group: Entity & ExpensePropertyWithValue>(by group: KeyPath<ExpenseItem, Group>, _ category: Group, in componet: Calendar.Component, of date: Date) -> [ExpenseItem] {
+        realm.objects(ExpenseItem.self)
+            .filter { $0.date.isSame(componet, to: date) && $0[keyPath: group].id == category.id }
+            .detached
+            .sorted(by: {$0.id > $1.id })
+    }
+    
+    static func expenses<Group: Entity & ExpensePropertyWithValue>(by group: KeyPath<ExpenseItem, Group>, in componet: Calendar.Component, of date: Date) -> [Group] {
+        
+        setColorsIfNeeded(to: Group.self)
+        
         let expensesByCategoryId = realm.objects(ExpenseItem.self)
-            .filter { $0.date.isSame(.month, to: date) }
+            .filter { $0.date.isSame(componet, to: date) }
             .groupBy { $0[keyPath: group].id }
             .mapValues { $0.map { $0.value}.reduce(0, +) }
         
@@ -203,17 +217,28 @@ public class Service {
             .compactMapValues { $0.first }
         
         return expensesByCategoryId.compactMap { categoriId, value -> Group? in
-            let category = categoriesById[categoriId]
+            let category = categoriesById[categoriId]?.detached()
             category?.value = value
             return category
-        }.sorted(by: { $0.value > $1.value })
+        }
+        .sorted(by: { $0.value > $1.value })
+        
     }
-    
-
     
     static func getAll<Object: Entity>(_ type: Object.Type) -> [Object] {
         realm.objects(Object.self)
             .detached
+    }
+    
+    private static func setColorsIfNeeded<Group: Entity & ExpensePropertyWithValue>(to group: Group.Type) {
+        let groups = realm.objects(group.self)
+            .filter { $0.color == 0x000 }
+        
+        try! realm.write {
+            groups.forEach {
+                $0.color = Int32(ColorSpace.random.toHexInt())
+            }
+        }
     }
     
 }

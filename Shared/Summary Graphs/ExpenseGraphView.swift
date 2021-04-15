@@ -15,7 +15,20 @@ struct ExpenseGraphView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-
+            
+            Text(DateIntervalFormatter.duration(range: datasource.interval))
+                .font(.caption2)
+                .foregroundColor(.secondary)
+            
+            Text(NumberFormatter.currency.string(from: NSNumber(value: datasource.total) ) ?? "")
+                .font(.title3)
+                .fontWeight(.heavy)
+            
+            Text("Maximun daily spending")
+                .font(.caption2)
+                .foregroundColor(.secondary)
+            
+    
             HStack {
                 Picker("", selection: $datasource.mode) {
                     ForEach(datasource.modes, id:\.self) { mode in
@@ -23,17 +36,18 @@ struct ExpenseGraphView: View {
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .frame(height: 10)
+                .padding(0)
       
                 Spacer()
                 Image(systemName: "chevron.right.circle.fill")
                     .imageScale(.large)
                     .foregroundColor(.quaternaryLabel)
             }
+            .lineLimit(1)
+            .padding(.top, -6)
+  
            
-            Text(DateIntervalFormatter.duration(range: datasource.interval))
-                .font(.caption2)
-                .foregroundColor(.secondary)
+
 
             PageView(continuePage: true, needsRefresh: $needRefreshPageCache, currentPage: $datasource.date) { date in
                 Chart.Lines(datasource: [
@@ -72,7 +86,8 @@ extension ExpenseGraphView {
         @Published var interval = DateInterval()
         @Published var points: [CGPoint] = []
         @Published var numbers: Int = 0
-        @Published var mode = "M" {
+        @Published var total: Double = 0.0
+        @Published var mode = "W" {
             didSet {
                 Logger.info("Cambio el modo a ", mode)
                 reloadDatasource()
@@ -97,6 +112,8 @@ extension ExpenseGraphView {
             Logger.info("Cargando rsultados")
             self.points = points(of: date)
             self.numbers = points.count
+            
+            self.total = Double(self.points.map { $0.y }.reduce(0, +))
         }
         
         private func getInterval(mode: String, date: Date = Date()) -> DateInterval {
@@ -127,12 +144,14 @@ extension ExpenseGraphView {
             return points
         }
         
-        func getPoints(of date: Date) -> Future<[CGPoint], Never> {
-            Future { promise in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    promise(.success(self.points(of: date)))
+        func getPoints(of date: Date) -> AnyPublisher<[CGPoint], Never> {
+            Deferred {
+                Future { promise in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        promise(.success(self.points(of: date)))
+                    }
                 }
-            }
+            }.eraseToAnyPublisher()
         }
         
     }

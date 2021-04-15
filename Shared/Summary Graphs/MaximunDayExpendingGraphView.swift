@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct MaxExpendingGraphView: View {
+struct MaximunDayExpendingGraphView: View {
     
     @ObservedObject private var weekendViewModel: WeekendViewModel
     @State private var eventCount: [Date: Double] = [:]
@@ -29,12 +29,10 @@ struct MaxExpendingGraphView: View {
             HStack(alignment: VerticalAlignment.firstTextBaseline, spacing: 1) {
                 Text(DateFormatter.longMonth.string(from: weekendViewModel.selected).capitalized)
                     .font(.caption2)
-                    .fontWeight(.semibold)
                     .foregroundColor(.secondary)
                 
                 Text(DateFormatter.year.string(from: weekendViewModel.selected).capitalized)
                     .font(.caption2)
-                    .fontWeight(.semibold)
                     .foregroundColor(.secondary)
             }.lineLimit(1)
          
@@ -73,11 +71,14 @@ struct MaxExpendingGraphView: View {
     }
     
     private func didPageChanged() {
-        Future<[Date: Double], Never> { promise in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                promise(.success(Service.sumEventsIn(month: weekendViewModel.selected)))
+        Deferred {
+            Future<[Date: Double], Never> { promise in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    promise(.success(Service.sumEventsIn(month: weekendViewModel.selected)))
+                }
             }
         }
+        .eraseToAnyPublisher()
         .receive(on: DispatchQueue.main)
         .sink { events in
             
@@ -111,7 +112,7 @@ struct MaxExpendingGraphView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            MaxExpendingGraphView()
+            MaximunDayExpendingGraphView()
                 .previewLayout(PreviewLayout.fixed(width: 220 , height: 320))
             //.preferredColorScheme(.dark)
             
@@ -119,5 +120,3 @@ struct MaxExpendingGraphView_Previews: PreviewProvider {
         
     }
 }
-
-

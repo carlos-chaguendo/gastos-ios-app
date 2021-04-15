@@ -27,9 +27,6 @@ struct TransactionsView: View {
     
     init() {
         weekendViewModel = WeekendViewModel(date: Date(), mode: .weekend)
-        UITableView.appearance().separatorStyle = .none
-        UITableView.appearance().separatorInset = UIEdgeInsets(top: 0, left: 100, bottom: 0, right: 0)
-        UITableView.appearance().backgroundColor = .clear // ColorSpace.color(light: systemBackground, dark: systemBackground)
     }
     
     private var currentMonthView: some View {

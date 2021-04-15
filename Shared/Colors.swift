@@ -40,6 +40,8 @@ extension ColorSpace {
         var g: CGFloat = 0
         var b: CGFloat = 0
         var a: CGFloat = 0
+        
+
 
         getRed(&r, green: &g, blue: &b, alpha: &a)
 
@@ -76,6 +78,17 @@ enum Colors {
     
 }
 
+extension ColorSpace {
+    static var random: ColorSpace {
+        return .init(
+            red: .random(in: 0...1),
+            green: .random(in: 0...1),
+            blue: .random(in: 0...1),
+            alpha: 1
+        )
+    }
+}
+
 extension Color {
     static var random: Color {
         return Color(
@@ -83,5 +96,9 @@ extension Color {
             green: .random(in: 0...1),
             blue: .random(in: 0...1)
         )
+    }
+    
+    var uicolor: UIColor {
+        UIColor(self)
     }
 }

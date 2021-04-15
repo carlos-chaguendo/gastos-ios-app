@@ -11,6 +11,11 @@
 		2F2FB8A72613E50200CE3E9E /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2FB8A62613E50200CE3E9E /* Entity.swift */; };
 		2F2FB8AA2613E50700CE3E9E /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2FB8A62613E50200CE3E9E /* Entity.swift */; };
 		2F2FB8B02613F45E00CE3E9E /* Entity+Detach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2FB8AF2613F45E00CE3E9E /* Entity+Detach.swift */; };
+		2F3643D32621085900D5BF5D /* CategoriesReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3643D22621085900D5BF5D /* CategoriesReportView.swift */; };
+		2F3643D42621085900D5BF5D /* CategoriesReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3643D22621085900D5BF5D /* CategoriesReportView.swift */; };
+		2F54798326288CA700730F13 /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F54798226288CA700730F13 /* Chart.swift */; };
+		2F54798726288CE800730F13 /* StackChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F54798626288CE800730F13 /* StackChart.swift */; };
+		2F54798B2628A35600730F13 /* TransactionsByCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F54798A2628A35600730F13 /* TransactionsByCategoryView.swift */; };
 		2F6B072325F976DA00A1D516 /* GastosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B071025F976D900A1D516 /* GastosApp.swift */; };
 		2F6B072425F976DA00A1D516 /* GastosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B071025F976D900A1D516 /* GastosApp.swift */; };
 		2F6B072525F976DA00A1D516 /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B071125F976D900A1D516 /* TransactionsView.swift */; };
@@ -43,7 +48,7 @@
 		2F89BA19261EA1880009EA03 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA18261EA1880009EA03 /* PageView.swift */; };
 		2F89BA1E261EB43A0009EA03 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA1D261EB43A0009EA03 /* Stack.swift */; };
 		2F89BA2A261F76C40009EA03 /* LinesGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA29261F76C40009EA03 /* LinesGraph.swift */; };
-		2F89BA30261F8DB30009EA03 /* MaxExpendingGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA2F261F8DB30009EA03 /* MaxExpendingGraphView.swift */; };
+		2F89BA30261F8DB30009EA03 /* MaximunDayExpendingGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA2F261F8DB30009EA03 /* MaximunDayExpendingGraphView.swift */; };
 		2F89BA39261F8EC80009EA03 /* ExpenseGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA38261F8EC80009EA03 /* ExpenseGraphView.swift */; };
 		2F89BA3D261FBB1B0009EA03 /* ApplicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA3C261FBB1B0009EA03 /* ApplicationData.swift */; };
 		2F89BA412620B12E0009EA03 /* GroupPercentGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA402620B12E0009EA03 /* GroupPercentGraphView.swift */; };
@@ -95,6 +100,10 @@
 		2F2FB8A22613E44E00CE3E9E /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		2F2FB8A62613E50200CE3E9E /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		2F2FB8AF2613F45E00CE3E9E /* Entity+Detach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+Detach.swift"; sourceTree = "<group>"; };
+		2F3643D22621085900D5BF5D /* CategoriesReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesReportView.swift; sourceTree = "<group>"; };
+		2F54798226288CA700730F13 /* Chart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
+		2F54798626288CE800730F13 /* StackChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackChart.swift; sourceTree = "<group>"; };
+		2F54798A2628A35600730F13 /* TransactionsByCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsByCategoryView.swift; sourceTree = "<group>"; };
 		2F6B071025F976D900A1D516 /* GastosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GastosApp.swift; sourceTree = "<group>"; };
 		2F6B071125F976D900A1D516 /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
 		2F6B071225F976DA00A1D516 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -120,7 +129,7 @@
 		2F89BA18261EA1880009EA03 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		2F89BA1D261EB43A0009EA03 /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		2F89BA29261F76C40009EA03 /* LinesGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinesGraph.swift; sourceTree = "<group>"; };
-		2F89BA2F261F8DB30009EA03 /* MaxExpendingGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxExpendingGraphView.swift; sourceTree = "<group>"; };
+		2F89BA2F261F8DB30009EA03 /* MaximunDayExpendingGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximunDayExpendingGraphView.swift; sourceTree = "<group>"; };
 		2F89BA38261F8EC80009EA03 /* ExpenseGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseGraphView.swift; sourceTree = "<group>"; };
 		2F89BA3C261FBB1B0009EA03 /* ApplicationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationData.swift; sourceTree = "<group>"; };
 		2F89BA402620B12E0009EA03 /* GroupPercentGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPercentGraphView.swift; sourceTree = "<group>"; };
@@ -274,7 +283,7 @@
 			children = (
 				2F89BA38261F8EC80009EA03 /* ExpenseGraphView.swift */,
 				2F89BA402620B12E0009EA03 /* GroupPercentGraphView.swift */,
-				2F89BA2F261F8DB30009EA03 /* MaxExpendingGraphView.swift */,
+				2F89BA2F261F8DB30009EA03 /* MaximunDayExpendingGraphView.swift */,
 				2F816D64261D26E7009FB091 /* SummaryGraphicsView.swift */,
 			);
 			path = "Summary Graphs";
@@ -292,6 +301,8 @@
 			isa = PBXGroup;
 			children = (
 				2F89BA29261F76C40009EA03 /* LinesGraph.swift */,
+				2F54798226288CA700730F13 /* Chart.swift */,
+				2F54798626288CE800730F13 /* StackChart.swift */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -319,6 +330,8 @@
 			isa = PBXGroup;
 			children = (
 				2F98CE7B261589DE0004F1B2 /* CategorySelectionView.swift */,
+				2F3643D22621085900D5BF5D /* CategoriesReportView.swift */,
+				2F54798A2628A35600730F13 /* TransactionsByCategoryView.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -464,7 +477,7 @@
 				2F89BA10261E7F370009EA03 /* CardViewModifier.swift in Sources */,
 				2F98CE71261569330004F1B2 /* Wallet.swift in Sources */,
 				2FE51A2625FBE485004518A0 /* DateFormatter.swift in Sources */,
-				2F89BA30261F8DB30009EA03 /* MaxExpendingGraphView.swift in Sources */,
+				2F89BA30261F8DB30009EA03 /* MaximunDayExpendingGraphView.swift in Sources */,
 				2F816D65261D26E8009FB091 /* SummaryGraphicsView.swift in Sources */,
 				2F6B076D25FA615D00A1D516 /* UIResponder+Current.swift in Sources */,
 				2F98CE602615508F0004F1B2 /* DocumentPickerViewController.swift in Sources */,
@@ -486,14 +499,18 @@
 				2F98CE7C261589DE0004F1B2 /* CategorySelectionView.swift in Sources */,
 				2FB5935D25FC012B005A1B93 /* PropertyBuilder.swift in Sources */,
 				2F6B076325FA611C00A1D516 /* KeyboardAdaptive.swift in Sources */,
+				2F54798326288CA700730F13 /* Chart.swift in Sources */,
 				2FE51A2D25FBE4AA004518A0 /* Font.swift in Sources */,
 				2F2FB8A72613E50200CE3E9E /* Entity.swift in Sources */,
 				2F6B075D25F9A31500A1D516 /* ExpenseItemFormView.swift in Sources */,
 				2F6B073F25F97AE200A1D516 /* ExpenseItem.swift in Sources */,
 				2FBEBC0A260D2ACA001C4FCD /* WeekView+Model.swift in Sources */,
+				2F3643D32621085900D5BF5D /* CategoriesReportView.swift in Sources */,
 				2FBEBC06260D2527001C4FCD /* AnyTransition.swift in Sources */,
 				2F98CE65261553820004F1B2 /* Tag.swift in Sources */,
+				2F54798B2628A35600730F13 /* TransactionsByCategoryView.swift in Sources */,
 				2F6B075925F99C8100A1D516 /* Colors.swift in Sources */,
+				2F54798726288CE800730F13 /* StackChart.swift in Sources */,
 				2F9500E02603E38600C9ABFC /* WeekView.swift in Sources */,
 				2F816D2A261CF072009FB091 /* CurrencyTextField.swift in Sources */,
 				2F98CE7626156B620004F1B2 /* SelectorList.swift in Sources */,
@@ -515,6 +532,7 @@
 				2FE51A3325FBE4C6004518A0 /* NumberFormatter.swift in Sources */,
 				2FE51A2E25FBE4AA004518A0 /* Font.swift in Sources */,
 				2F98CE66261553820004F1B2 /* Tag.swift in Sources */,
+				2F3643D42621085900D5BF5D /* CategoriesReportView.swift in Sources */,
 				2F6B076925FA613900A1D516 /* KeyboardHeightPublisher.swift in Sources */,
 				2FBEBBFA260CEE4E001C4FCD /* ExpenseItemFormView.swift in Sources */,
 				2F98CE612615508F0004F1B2 /* DocumentPickerViewController.swift in Sources */,

@@ -23,11 +23,11 @@ struct SummaryGraphicsView: View {
                 VStack(alignment: .leading) {
                     
                     LazyVGrid(columns: columns, spacing: 16) {
-                        MaxExpendingGraphView()
+                        MaximunDayExpendingGraphView()
                         ExpenseGraphView()
                     }
    
-                    VStack(spacing: 8) {
+                    VStack(spacing: 18 ) {
                         GroupPercentGraphView(groupBy: \.category, title: "Category")
                     
                         GroupPercentGraphView(groupBy: \.wallet, title: "Wallet", showTotal: false)
@@ -39,14 +39,13 @@ struct SummaryGraphicsView: View {
             .navigationBarTitle("Expense",displayMode: .automatic)
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
             .background(Colors.background)
-        }
+            
+        } // Bottones de navegacion
     }
 }
 
 struct ChartsView_Previews: PreviewProvider {
-    
-    
-    
+
     static var previews: some View {
         Group {
             SummaryGraphicsView()

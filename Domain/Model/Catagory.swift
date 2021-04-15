@@ -13,11 +13,12 @@ protocol EntityWithName: class {
 
 protocol ExpensePropertyWithValue: EntityWithName {
     var value: Double { get set }
+    var color: Int32 { get set }
 }
 
 class Catagory: Entity, EntityWithName, ExpensePropertyWithValue {
     @objc public dynamic var name: String = ""
-    @objc public dynamic var color: Int32 = 0x257D81
+    @objc public dynamic var color: Int32 = 0x000
     @objc public dynamic var icon: String = ""
     
     public var value: Double = 0.0

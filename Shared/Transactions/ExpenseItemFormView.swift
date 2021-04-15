@@ -51,7 +51,6 @@ public class ExpenseItemFormViewModel: ObservableObject {
 struct ExpenseItemFormView: View {
     
 
-    
     @Environment(\.presentationMode) private var presentation
     
     public let textChangePublisher = PassthroughSubject<String, Never>()

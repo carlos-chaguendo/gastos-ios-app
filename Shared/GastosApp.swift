@@ -59,14 +59,12 @@ struct GastosApp: App {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().isTranslucent = true
         
-        // UINavigationBar.appearance().tintColor = Colors.primary // Colores de los botones de navegacion
-        
-        UINavigationBar.appearance().barTintColor = .clear // Color de fondo
+        UINavigationBar.appearance().tintColor = Colors.primary // Colores de los botones de navegacion
+        UINavigationBar.appearance().barTintColor = .red // Color de fondo
         
         UITableView.appearance().separatorStyle = .none
-        //UITableView.appearance().backgroundColor = .clear
-        
-        // UITableViewCell.appearance().backgroundColor = .clear
+        UITableView.appearance().separatorInset = UIEdgeInsets(top: 0, left: 100, bottom: 0, right: 0)
+        UITableView.appearance().backgroundColor = .clear // ColorSpace.color(light: systemBackground, dark: systemBackground)
         
         #endif
     }

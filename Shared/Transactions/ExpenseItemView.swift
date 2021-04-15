@@ -17,7 +17,7 @@ struct ExpenseItemView: View {
             HStack {
                 Text(model.title.isEmpty ? model.category?.name ?? "" :  model.title )
                     .font(.system(size: 15))
-                    .fontWeight(.medium)
+                    //.fontWeight(.medium)
                     .foregroundColor(Colors.title)
                 
                 Spacer()
@@ -30,7 +30,7 @@ struct ExpenseItemView: View {
             FlexibleView(data: model.tags.toArray()) { item in
                 Text(verbatim: item.name)
                     .font(.caption2)
-                    .fontWeight(.medium)
+                    //.fontWeight(.medium)
                     .padding(3)
                     .foregroundColor(Colors.subtitle)
                     .background(

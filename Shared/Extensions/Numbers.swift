@@ -32,6 +32,15 @@ extension FloatingPoint {
         let divisor = Self(Int(pow(10.0, Double(places))))
         return (self * divisor).rounded() / divisor
     }
+    
+}
+
+extension Double {
+    
+    public var cleanValue: String {
+        return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
+    }
+    
 }
 
 

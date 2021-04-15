@@ -9,72 +9,84 @@ import SwiftUI
 import Combine
 
 struct GroupPercentGraphView<Group: Entity & ExpensePropertyWithValue>: View {
+
+    @ObservedObject var datasource: DataSource
     
-    @State var total: Double = 0.0
-    @State var categories: [Group] = []
-    @State var colorsByCategory: [String: Color] = [:]
-    
-    public let groupBy: KeyPath<ExpenseItem, Group>
     @State public var cancellables = Set<AnyCancellable>()
     
-    public var title: LocalizedStringKey
+    public var title: LocalizedStringKey?
     public var showTotal = true
+    public var showNavigation = true
+    
+    init(groupBy: KeyPath<ExpenseItem, Group>, title: LocalizedStringKey?, showTotal: Bool = true, showNavigation: Bool = true) {
+        self.datasource = DataSource(group: groupBy)
+        self.title = title
+        self.showTotal = showTotal
+        self.showNavigation = showNavigation
+    }
+    
+    init(datasource: DataSource, title: LocalizedStringKey?, showTotal: Bool = true, showNavigation: Bool = true) {
+        self.datasource = datasource
+        self.title = title
+        self.showTotal = showTotal
+        self.showNavigation = showNavigation
+    }
     
     var body: some View {
-        VStack(alignment: .leading) {
-
+        VStack(alignment: .leading, spacing: 0) {
+            
             if showTotal {
-                HStack {
-                    Text(NumberFormatter.currency.string(from: NSNumber(value: total)) ?? "")
-                        .font(.title3)
-                        .fontWeight(.heavy)
-                    
-                    Spacer()
-                    
-                    NavigationLink(destination: Text("s")) {
+                Text(NumberFormatter.currency.string(from: NSNumber(value: datasource.total)) ?? "")
+                    .font(.title3)
+                    .fontWeight(.heavy)
+                    .foregroundColor(Color.primary)
+     
+            }
+            
+            if let title = title {
+                Text(title)
+                    .font(.caption2)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.secondary)
+                    .padding(.bottom, -3)
+            }
+            
+            HStack {
+                StackChart<Group>(
+                    total: datasource.total,
+                    categories: datasource.categories
+                )
+
+                if showNavigation {
+                    NavigationLink(destination: CategoriesReportView()) {
                         Image(systemName: "chevron.right.circle.fill")
                             .imageScale(.large)
                             .foregroundColor(.quaternaryLabel)
                     }
-
                 }
             }
-               
-            Text(title)
-                .font(.caption2)
-                .fontWeight(.semibold)
-                .foregroundColor(.secondary)
-                .padding(.bottom, -3)
+
             
-            GeometryReader { reader in
-                HStack(spacing: 0.5) {
-                    if categories.isEmpty {
-                        Spacer()
-                    } else {
-                        ForEach(categories, id: \.self) { category in
-                                colorsByCategory[category.id, default: .red]
-                                    .frame(width: reader.size.width * CGFloat(category.value))
-                      
-                                    .transition(.leadingX)
-                                    .opacity(0.5)
-//                            }
-                        }
-                    }
+    
+            FlexibleView(data: datasource.categories) { category in
+                HStack(alignment: .center, spacing: 0) {
+                    Text("•")
+                        .font(.caption)
+                        .fontWeight(.black)
+                        .foregroundColor(UIColor.from(hex: UInt32(category.color)))
+                        
                     
+                    Text(category.name)
+                        .font(.caption2)
+                        .padding(.trailing, 2)
+                        .foregroundColor(Colors.subtitle)
+                        
+                        
                 }
-            }
-            .background(Colors.groupedBackground)
-            .frame(height: 16)
-            .cornerRadius(8.0)
-            
-
-            Text(categories.map { $0.name }.joined(separator: " • "))
-                .font(.caption2)
-                .foregroundColor(Colors.subtitle)
-                .padding(.top, -6)
-
+            }//.padding(.top, -8)
+         
         }
-
+        
         //.cardView()
         //.animation(.none)
         .onReceive(Publishers.didAddNewTransaction) { item in
@@ -86,75 +98,124 @@ struct GroupPercentGraphView<Group: Entity & ExpensePropertyWithValue>: View {
         }
     }
     
-    func fectDataSource(refresh: Bool = false) {
+    func fectDataSource(refresh: Bool = false, file: String = #file, line: Int = #line) {
+        
+        Logger.info("Fetch Datasource \(title)", file: file, line: line)
         
         if refresh {
-            categories.removeAll()
+            datasource.categories.removeAll()
         }
         
-        guard categories.isEmpty else {
+        guard datasource.categories.isEmpty else {
             return
         }
         
-        getValues()
+        datasource.getValuesGrouped()
+    }
+    
+
+}
+
+
+extension GroupPercentGraphView {
+    
+    class DataSource: ObservableObject, PropertyBuilder {
+        
+        public let groupBy: KeyPath<ExpenseItem, Group>
+        
+        @Published var mode = "M"
+        @Published var date = Date()
+        @Published var interval = DateInterval()
+        @Published var total: Double = 0.0
+        @Published var categories: [Group] = []
+        @Published var cancellables = Set<AnyCancellable>()
+        
+        init(group: KeyPath<ExpenseItem, Group>) {
+            self.groupBy = group
+        }
+        
+        
+        var calendarComponent: Calendar.Component { mode == "M" ? .month:   mode == "Y" ? .year : .weekOfMonth }
+        
+        private func getInterval(mode: String, date: Date = Date()) -> DateInterval {
+            let componet = calendarComponent
+            let start = date.withStart(of: componet)
+            let end = date.withEnd(of: componet)
+            return DateInterval(start: start, end: end)
+        }
+        
+        func getValuesGrouped() {
+            Deferred {
+                Future<[Group], Never> { promise in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        let result = Service.expenses(by: self.groupBy, in: self.calendarComponent, of: self.date)
+                        promise(.success(result))
+                    }
+                }
+            }
+            .eraseToAnyPublisher()
             .receive(on: DispatchQueue.main)
             .sink { values in
                 
-                Logger.info("Obteneiendo resultados")
+                Logger.info("Obteneiendo resultados \(self.mode)", self.groupBy)
                 
-                    self.categories = values
-                    self.colorsByCategory = categories.groupBy { $0.id }.mapValues { _ in
-                        Color.random
-                    }
-                    self.total = categories.map { $0.value }.reduce(0, +)
-                
-                /// se conviereten los valores a porcentajes del total
-                self.categories.forEach { c in
-                    c.value = ((c.value * 100)/total)/100
-                }
-                
+                self.interval = self.getInterval(mode: self.mode, date: self.date)
+                self.categories = values
+                self.total = values.map { $0.value }.reduce(0, +)
+//                self.categories.forEach {
+//                    $0.color = Int32(Color.random.uicolor.toHexInt())
+//                }
+
             }.store(in: &cancellables)
+        }
+        
+        func previousPage() {
+            date = Calendar.gregorian.date(byAdding: calendarComponent, value: -1, to: date) ?? date
+            self.getValuesGrouped()
+        }
+        
+        func nextPage() {
+            date = Calendar.gregorian.date(byAdding: calendarComponent, value: 1, to: date) ?? date
+            self.getValuesGrouped()
+        }
+        
     }
     
-    func getValues() -> Future<[Group], Never> {
-        Future { promise in
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                let result = Service.expenses(by: groupBy, in: Date())
-                promise(.success(result))
-            }
-        }
-    }
 }
 
 struct GroupPercentGraphView_Previews: PreviewProvider {
-    
-    static let categories = [
-        Catagory {
+
+    static let datasource = GroupPercentGraphView<Wallet>.DataSource(group: \.wallet)
+    .set(\.total, 1)
+    .set(\.categories, [
+        Wallet {
             $0.name = "One"
             $0.value = 0.25
         },
-        Catagory {
+        Wallet {
             $0.id = "2"
             $0.name = "Comida"
             $0.value = 0.75
         }
-    ]
+    ])
     
-    static let colors = [
-        "2": Color.green
-    ]
-    
+
     static var previews: some View {
         Group {
             
-            GroupPercentGraphView(categories: categories, groupBy: \.category, title: "Category")
+
+            GroupPercentGraphView(datasource: datasource, title: "Category")
                 .previewLayout(PreviewLayout.fixed(width: 350 , height: 100))
-             
+                .padding()
             
-            GroupPercentGraphView(groupBy: \.category, title: "Wallet")
+            GroupPercentGraphView(datasource: datasource, title: nil)
                 .previewLayout(PreviewLayout.fixed(width: 350 , height: 100))
-                .preferredColorScheme(.dark)
+                .padding()
+
+//
+//            GroupPercentGraphView(groupBy: \.category, title: "Wallet")
+//                .previewLayout(PreviewLayout.fixed(width: 350 , height: 100))
+//                .preferredColorScheme(.dark)
         }
     }
 }
