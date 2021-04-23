@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct MaximunDayExpendingGraphView: View {
+struct MaximunDailyExpendingGraphView: View {
     
     @ObservedObject private var weekendViewModel: WeekendViewModel
     @State private var eventCount: [Date: Double] = [:]
@@ -17,7 +17,7 @@ struct MaximunDayExpendingGraphView: View {
     private let defaultOpacity: Double = 0.05
     
     init() {
-        let model = WeekendViewModel(date: Date(), mode: .weekend)
+        let model = WeekendViewModel(date: Date(), mode: .monthly)
         model.daysRowHeight = 120/7
         model.weekDayNames = DateFormatter.day.veryShortStandaloneWeekdaySymbols
         weekendViewModel = model
@@ -72,14 +72,9 @@ struct MaximunDayExpendingGraphView: View {
     }
     
     private func didPageChanged() {
-        Deferred {
-            Future<[Date: Double], Never> { promise in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    promise(.success(Service.sumEventsIn(month: weekendViewModel.selected)))
-                }
-            }
+        Promise {
+             Service.sumEventsIn(month: weekendViewModel.selected)
         }
-        .eraseToAnyPublisher()
         .receive(on: DispatchQueue.main)
         .sink { events in
             
@@ -113,7 +108,7 @@ struct MaxExpendingGraphView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            MaximunDayExpendingGraphView()
+            MaximunDailyExpendingGraphView()
                 .previewLayout(PreviewLayout.fixed(width: 220 , height: 320))
             //.preferredColorScheme(.dark)
             

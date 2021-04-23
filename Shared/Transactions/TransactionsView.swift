@@ -26,7 +26,13 @@ struct TransactionsView: View {
     }()
     
     init() {
-        weekendViewModel = WeekendViewModel(date: Date(), mode: .weekend)
+        
+        var date = Date()
+        if let current = UserDefaults.standard.value(forKey: "currentDate") as? Date {
+            date = current
+        }
+        
+        weekendViewModel = WeekendViewModel(date: date, mode: .weekend)
     }
     
     private var currentMonthView: some View {

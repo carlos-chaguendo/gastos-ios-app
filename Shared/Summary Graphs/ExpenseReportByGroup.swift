@@ -8,11 +8,18 @@
 import SwiftUI
 
 
-struct CategoriesReportView: View {
+struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
     
-    @ObservedObject var datasource = GroupPercentGraphView<Catagory>.DataSource(group: \.category)
+    public var title: LocalizedStringKey?
+    
+    @ObservedObject var datasource: SpendByGroupChartView<Group>.DataSource
     
     @State var points: [CGPoint] = []
+    
+    init(title: LocalizedStringKey, group: KeyPath<ExpenseItem, Group>) {
+        self.title = title
+        self.datasource = SpendByGroupChartView<Group>.DataSource.init(group: group)
+    }
     
     
     var body: some View {
@@ -49,12 +56,17 @@ struct CategoriesReportView: View {
                         
                     }.padding()
                     
-                    GroupPercentGraphView(datasource: self.datasource, title: nil, showNavigation: false)
+                    SpendByGroupChartView(datasource: self.datasource, title: nil, showNavigation: false)
                     
                     ForEach(datasource.categories, id: \.self) { category in
                         
                         let percent = (category.value * 100)/datasource.total
-                        NavigationLink(destination: TransactionsByCategoryView(for: category, in: datasource.calendarComponent, of: datasource.date)) {
+                        NavigationLink(destination: TransactionsByGroupView(
+                                        by: datasource.groupBy,
+                                        for: category,
+                                        in: datasource.calendarComponent,
+                                        of: datasource.date)) {
+                            
                             HStack(alignment: VerticalAlignment.firstTextBaseline) {
                                 Text(category.name)
                                     .font(.system(size: 15))
@@ -102,7 +114,7 @@ struct CategoriesReportView: View {
             datasource.getValuesGrouped()
             
         }
-        .navigationBarTitle("Categories", displayMode: .inline)
+        .navigationBarTitle(self.title!, displayMode: .inline)
     }
     
     

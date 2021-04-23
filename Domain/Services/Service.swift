@@ -76,7 +76,7 @@ public class Service {
         Logger.info("File", Realm.Configuration.defaultConfiguration.fileURL)
         
         let config = Realm.Configuration(
-            schemaVersion: 2,
+            schemaVersion: 3,
             migrationBlock: { migration, oldSchemaVersion in
 
                 if (oldSchemaVersion < 1) {
@@ -118,6 +118,24 @@ public class Service {
             NotificationCenter.default.post(name: .didAddNewTransaction, object: item.detached())
         }
     }
+    
+    @discardableResult
+    static func addGroup<Group: Entity & ExpensePropertyWithValue>(_ item: Group) -> Group {
+        try! realm.write {
+            
+            let local: Group = realm.findBy(id: item.id) ?? item
+            local.name = item.name
+            local.color = item.color
+            if local.realm == nil {
+                local.id = UUID().description
+            }
+            
+            realm.add(local)
+        }
+        
+        return item.detached()
+    }
+    
     
     @discardableResult
     static func addCategory(_ item: Catagory) -> Catagory {

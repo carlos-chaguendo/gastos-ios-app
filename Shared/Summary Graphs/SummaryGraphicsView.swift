@@ -23,15 +23,18 @@ struct SummaryGraphicsView: View {
                 VStack(alignment: .leading) {
                     
                     LazyVGrid(columns: columns, spacing: 16) {
-                        MaximunDayExpendingGraphView()
-                        ExpenseGraphView()
+                        MaximunDailyExpendingGraphView()
+                        SpendChartView()
                     }
    
                     VStack(spacing: 18 ) {
-                        GroupPercentGraphView(groupBy: \.category, title: "Category")
+                        SpendByGroupChartView(groupBy: \.category, title: "Category")
                     
-                        GroupPercentGraphView(groupBy: \.wallet, title: "Wallet", showTotal: false)
+                        SpendByGroupChartView(groupBy: \.wallet, title: "Wallet", showTotal: false)
                     }.cardView()
+                    
+                    TagsChartView()
+                        .cardView()
      
                 }.padding() // VStack
                 

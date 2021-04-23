@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct ExpenseGraphView: View {
+struct SpendChartView: View {
     
     @ObservedObject private var datasource = Datasource()
     @State var needRefreshPageCache = false
@@ -77,7 +77,7 @@ struct ExpenseGraphView: View {
     
 }
 
-extension ExpenseGraphView {
+extension SpendChartView {
     
     class Datasource: ObservableObject {
         

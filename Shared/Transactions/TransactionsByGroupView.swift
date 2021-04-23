@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct TransactionsByCategoryView: View {
+struct TransactionsByGroupView<Group: Entity & ExpensePropertyWithValue>: View {
     
-    let category: Catagory
+    let group: Group
+    let groupBy: KeyPath<ExpenseItem, Group>
     let componet: Calendar.Component
     let date: Date
     
@@ -22,8 +23,9 @@ struct TransactionsByCategoryView: View {
     @State private var max = 0.0
     @State private var min = 0.0
     
-    init(for category: Catagory, in component: Calendar.Component, of date: Date) {
-        self.category = category
+    init(by: KeyPath<ExpenseItem, Group>, for group: Group, in component: Calendar.Component, of date: Date) {
+        self.groupBy = by
+        self.group = group
         self.componet = component
         self.date = date
     }
@@ -43,7 +45,6 @@ struct TransactionsByCategoryView: View {
                                 .foregroundColor(Colors.title)
                             Text("Total (\(numberOfTransactions))")
                                 .font(.caption2)
-                                .fontWeight(.medium)
                                 .foregroundColor(Colors.subtitle)
                         }
                         
@@ -54,7 +55,6 @@ struct TransactionsByCategoryView: View {
                                 .foregroundColor(Colors.title)
                             Text("Maximun")
                                 .font(.caption2)
-                                .fontWeight(.medium)
                                 .foregroundColor(Colors.subtitle)
                         }
                         
@@ -65,7 +65,6 @@ struct TransactionsByCategoryView: View {
                                 .foregroundColor(Colors.title)
                             Text("Minimun")
                                 .font(.caption2)
-                                .fontWeight(.medium)
                                 .foregroundColor(Colors.subtitle)
                         }
                         
@@ -74,8 +73,7 @@ struct TransactionsByCategoryView: View {
                     //.padding(.horizontal)
                    
                     Chart.Lines(datasource: [
-                        //Chart.DataSet(points: self.datasource.points(of: Calendar.gregorian.date(byAdding: .month, value: -1, to: date)!), color: Color(UIColor.systemGroupedBackground)),
-                        Chart.DataSet(points: points, color: Color(Colors.primary).opacity(0.8)),
+                        Chart.DataSet(points: points, color: Color(UIColor.from(hex: UInt32(group.color)))),
                     ]).frame(height: 120)
                 }
                 .cardView()
@@ -85,23 +83,20 @@ struct TransactionsByCategoryView: View {
                     
                     Text(DateFormatter.day.string(from: date))
                         .font(.caption)
-                        .foregroundColor(Color.secondary)
+                        .foregroundColor(Colors.subtitle)
                         .padding(.vertical)
-                    
+                  
                     ForEach(transactions[date, default: []], id: \.self) { transaction in
                         PresentLinkView(destination: ExpenseItemFormView(transaction)) {
-                            ExpenseItemView(model: transaction)
+                            ExpenseItemView(model: transaction, displayCategory: false)
                         }
                     }
                 }.padding(.horizontal)
-   
-                
-                
-               
+  
             }.onAppear {
                 
                 
-                let items = Service.transactions(by: \.category, category, in: componet, of: date)
+                let items = Service.transactions(by: groupBy, group, in: componet, of: date)
                 let values = items.map { $0.value }
                 
                 self.max = values.max() ?? 0
@@ -127,21 +122,21 @@ struct TransactionsByCategoryView: View {
                 }
                 
                 self.points = points
-                
-                
-                
             }
         }
-
-        
         .padding(.vertical)
-        .navigationTitle(category.name)
+        .navigationTitle(group.name)
+        .navigationBarItems(trailing:
+                                PresentLinkView(destination: GroupFormView<Group>(group: groupBy, for: group)) {
+                Text("Edit")
+            }
+        )
     }
 }
 
 struct TransactionsByCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionsByCategoryView(for: Catagory {$0.name = "1"}, in: .month, of: Date())
+        TransactionsByGroupView(by: \.category, for: Catagory {$0.name = "1"}, in: .month, of: Date())
         
     }
 }

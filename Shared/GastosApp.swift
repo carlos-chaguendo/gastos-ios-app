@@ -7,7 +7,7 @@
 
 import SwiftUI
 import CoreServices
-
+import RealmSwift
 
 // https://www.hackingwithswift.com/quick-start/swiftui
 // https://github.com/SwiftUIX/SwiftUIX/
@@ -116,12 +116,6 @@ struct GastosApp: App {
                         TabBar.Page.Item(systemIconName: "homekit", tabName: "Home")
                     }
                 
-   
-                CapijaView()
-                    .tabBarItem {
-                        TabBar.Page.Item(systemIconName: "homepod.fill", tabName: "Categories")
-                    }
-                
                 NavigationView {
                     Text("Hola")
                         .navigationBarTitle("", displayMode: .inline)
@@ -131,6 +125,19 @@ struct GastosApp: App {
                     plusButton
                         .offset(y: -30)
                 }
+                
+   
+                CapijaView()
+                    .tabBarItem {
+                        TabBar.Page.Item(systemIconName: "homepod.fill", tabName: "Categories")
+                    }
+                
+                SettingsView()
+                    .tabBarItem {
+                        TabBar.Page.Item(systemIconName: "gearshape", tabName: "Settings")
+                    }
+                
+       
                 
             }
             .selectedIndex($selected)
@@ -155,7 +162,19 @@ struct CapijaView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(spacing: 10) {
+                
+                
+                Button("Iclod ba") {
+                    let backup = BackupService.init()
+                    try? backup.startBackup(fileURL: Realm.Configuration.defaultConfiguration.fileURL!)
+                }
+                
+                Button("Resrtore ba") {
+                    let backup = Restore.init()
+                    try? backup.getBackup()
+                }
+                
                 
                 Text("has \(number)")
                 Text("u \(Int.random(in: 0..<100))")
@@ -169,11 +188,7 @@ struct CapijaView: View {
                 
                 
                 
-                VStack {
-                         ColorPicker("Set the background color", selection: $bgColor)
-                     }
-                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                     .background(bgColor)
+      
                 
                 Button {
                     

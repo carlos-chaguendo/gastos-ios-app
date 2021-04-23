@@ -35,3 +35,9 @@ extension Publishers {
     }
     
 }
+
+extension String {
+    
+    var trimed: String { self.trimmingCharacters(in: .whitespacesAndNewlines) }
+    
+}

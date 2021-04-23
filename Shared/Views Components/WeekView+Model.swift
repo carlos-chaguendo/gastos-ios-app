@@ -70,7 +70,7 @@ public class WeekendViewModel: ObservableObject {
     init(date: Date, mode: WeekView.Mode = .monthly) {
         self.weekDayNames = DateFormatter.day.shortStandaloneWeekdaySymbols
         self.selected = Calendar.current.dateInterval(of: .day, for: date)!.start
-        self.mode = .monthly
+        self.mode = mode
     }
     
     public func createDatesForMonth(in date: Date) {

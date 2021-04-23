@@ -11,8 +11,8 @@ class Wallet: Entity, EntityWithName, ExpensePropertyWithValue {
     
     @objc public dynamic var name: String = ""
     @objc public dynamic var color: Int32 = 0x000
-    
     public var value: Double = 0.0
+    
     override class func ignoredProperties() -> [String] {
         ["value"]
     }

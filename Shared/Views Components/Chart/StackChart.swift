@@ -24,7 +24,7 @@ struct StackChart<Group: Entity & ExpensePropertyWithValue>: View {
                         Color(UIColor.from(hex: UInt32(category.color)))
                             .frame(width: reader.size.width * CGFloat(percent))
                             .transition(.leadingX)
-                            .opacity(0.5)
+                           
                     }
                 }
             }

@@ -25,9 +25,11 @@ extension View {
     
     
     @ViewBuilder
-    public func `if`<V: View>(_ condition: Bool, perform: (Self) -> V ) -> some View {
+    public func `if`<V: View>(_ condition: Bool, perform: (Self) -> V , else other: ((Self) -> V)? = nil ) -> some View {
         if condition {
             perform(self)
+        } else if let other = other {
+            other(self)
         } else {
             self
         }

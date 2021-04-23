@@ -8,7 +8,8 @@
 import SwiftUI
 import Combine
 
-struct GroupPercentGraphView<Group: Entity & ExpensePropertyWithValue>: View {
+
+struct SpendByGroupChartView<Group: Entity & ExpensePropertyWithValue>: View {
 
     @ObservedObject var datasource: DataSource
     
@@ -58,7 +59,7 @@ struct GroupPercentGraphView<Group: Entity & ExpensePropertyWithValue>: View {
                 )
 
                 if showNavigation {
-                    NavigationLink(destination: CategoriesReportView()) {
+                    NavigationLink(destination: ExpenseReportByGroup(title: title!, group: datasource.groupBy)) {
                         Image(systemName: "chevron.right.circle.fill")
                             .imageScale(.large)
                             .foregroundColor(.quaternaryLabel)
@@ -117,7 +118,7 @@ struct GroupPercentGraphView<Group: Entity & ExpensePropertyWithValue>: View {
 }
 
 
-extension GroupPercentGraphView {
+extension SpendByGroupChartView {
     
     class DataSource: ObservableObject, PropertyBuilder {
         
@@ -145,15 +146,9 @@ extension GroupPercentGraphView {
         }
         
         func getValuesGrouped() {
-            Deferred {
-                Future<[Group], Never> { promise in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        let result = Service.expenses(by: self.groupBy, in: self.calendarComponent, of: self.date)
-                        promise(.success(result))
-                    }
-                }
+            Promise {
+                Service.expenses(by: self.groupBy, in: self.calendarComponent, of: self.date)
             }
-            .eraseToAnyPublisher()
             .receive(on: DispatchQueue.main)
             .sink { values in
                 
@@ -185,7 +180,7 @@ extension GroupPercentGraphView {
 
 struct GroupPercentGraphView_Previews: PreviewProvider {
 
-    static let datasource = GroupPercentGraphView<Wallet>.DataSource(group: \.wallet)
+    static let datasource = SpendByGroupChartView<Wallet>.DataSource(group: \.wallet)
     .set(\.total, 1)
     .set(\.categories, [
         Wallet {
@@ -204,11 +199,11 @@ struct GroupPercentGraphView_Previews: PreviewProvider {
         Group {
             
 
-            GroupPercentGraphView(datasource: datasource, title: "Category")
+            SpendByGroupChartView(datasource: datasource, title: "Category")
                 .previewLayout(PreviewLayout.fixed(width: 350 , height: 100))
                 .padding()
             
-            GroupPercentGraphView(datasource: datasource, title: nil)
+            SpendByGroupChartView(datasource: datasource, title: nil)
                 .previewLayout(PreviewLayout.fixed(width: 350 , height: 100))
                 .padding()
 
