@@ -34,7 +34,7 @@ struct SpendByGroupChartView<Group: Entity & ExpensePropertyWithValue>: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 4) {
             
             if showTotal {
                 Text(NumberFormatter.currency.string(from: NSNumber(value: datasource.total)) ?? "")
@@ -100,9 +100,6 @@ struct SpendByGroupChartView<Group: Entity & ExpensePropertyWithValue>: View {
     }
     
     func fectDataSource(refresh: Bool = false, file: String = #file, line: Int = #line) {
-        
-        Logger.info("Fetch Datasource \(title)", file: file, line: line)
-        
         if refresh {
             datasource.categories.removeAll()
         }
@@ -111,6 +108,7 @@ struct SpendByGroupChartView<Group: Entity & ExpensePropertyWithValue>: View {
             return
         }
         
+        Logger.info("Fetch Datasource \(title)", file: file, line: line)
         datasource.getValuesGrouped()
     }
     

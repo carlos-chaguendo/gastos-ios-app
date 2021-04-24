@@ -64,7 +64,7 @@ struct GastosApp: App {
             
         }
     }
-    
+
     var body: some Scene {
         WindowGroup {
             if isFirstAppInstallation {
@@ -72,8 +72,8 @@ struct GastosApp: App {
             } else {
                 
                 TabBar {
-                    SummaryGraphicsView()
-                        .tabBarItem {
+                  
+                    SummaryGraphicsView().tabBarItem {
                             TabBar.Page.Item(systemIconName: "rectangle.3.offgrid", tabName: "Dashboard")
                         }
                     

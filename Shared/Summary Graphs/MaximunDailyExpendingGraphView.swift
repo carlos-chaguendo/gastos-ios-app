@@ -77,6 +77,9 @@ struct MaximunDailyExpendingGraphView: View {
         }
         .receive(on: DispatchQueue.main)
         .sink { events in
+            guard maximumAmount == 0.0 else {
+                return
+            }
             
            // let events = Service.sumEventsIn(month: weekendViewModel.selected)
             let maximumAmount = events.values.max() ?? 0

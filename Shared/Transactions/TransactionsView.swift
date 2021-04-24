@@ -183,8 +183,8 @@ struct TransactionsView: View {
     private func header(width: CGFloat) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(NumberFormatter.currency.string(from: NSNumber(value: total)) ?? "")
-                .font(.title)
-                .fontWeight(.bold)
+                .font(.title3)
+                .fontWeight(.semibold)
                 .foregroundColor(Colors.title)
         }
         .frame(width: width, alignment: .leading)

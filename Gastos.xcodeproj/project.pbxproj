@@ -107,6 +107,19 @@
 		2FE51A3325FBE4C6004518A0 /* NumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A3125FBE4C6004518A0 /* NumberFormatter.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		2F8BAE102634636900567E4B /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		2F2FB8A22613E44E00CE3E9E /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		2F2FB8A62613E50200CE3E9E /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
@@ -154,6 +167,8 @@
 		2F8BADEC2633961400567E4B /* ButtonStyleFormLarge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleFormLarge.swift; sourceTree = "<group>"; };
 		2F8BADF32633B92500567E4B /* NotificationsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsCategory.swift; sourceTree = "<group>"; };
 		2F8BADF92633BD8600567E4B /* DailyReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyReminderView.swift; sourceTree = "<group>"; };
+		2F8BAE032634636800567E4B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		2F8BAE052634636800567E4B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		2F915372260185010092033E /* ArrayBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayBuilder.swift; sourceTree = "<group>"; };
 		2F9500D22603A7C400C9ABFC /* Service+Publishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Publishers.swift"; sourceTree = "<group>"; };
 		2F9500D62603B04300C9ABFC /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -208,6 +223,7 @@
 				2F6B070F25F976D900A1D516 /* Shared */,
 				2F6B071925F976DA00A1D516 /* iOS */,
 				2F6B072025F976DA00A1D516 /* macOS */,
+				2F8BAE022634636800567E4B /* Frameworks */,
 				2F6B071825F976DA00A1D516 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -342,6 +358,15 @@
 			path = Notifications;
 			sourceTree = "<group>";
 		};
+		2F8BAE022634636800567E4B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2F8BAE032634636800567E4B /* WidgetKit.framework */,
+				2F8BAE052634636800567E4B /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2F91537F2601923D0092033E /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
@@ -423,6 +448,7 @@
 				2F6B071325F976DA00A1D516 /* Sources */,
 				2F6B071425F976DA00A1D516 /* Frameworks */,
 				2F6B071525F976DA00A1D516 /* Resources */,
+				2F8BAE102634636900567E4B /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
