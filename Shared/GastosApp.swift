@@ -6,42 +6,12 @@
 //
 
 import SwiftUI
-import CoreServices
 import RealmSwift
+import CoreServices
+import UserNotifications
 
 // https://www.hackingwithswift.com/quick-start/swiftui
 // https://github.com/SwiftUIX/SwiftUIX/
-
-//@main
-struct GastosAppDebug: App {
-    
-    @State  var selected: Int = 0
-    
-    var body: some Scene {
-        WindowGroup {
-            
-            TabBar {
-                
-                SummaryGraphicsView()
-                    .tabBarItem {
-                        Text("A")
-                    }
-                
-                SummaryGraphicsView()
-                    .tabBarItem {
-                        Text("B")
-                    }
-                
-                CapijaView()
-                    .tabBarItem {
-                        Text("C")
-                    }
-                
-                
-            }.selectedIndex($selected)
-        }
-    }
-}
 
 @main
 struct GastosApp: App {
@@ -120,7 +90,7 @@ struct GastosApp: App {
                         Logger.info("ssss", self.selected)
                     }.tabBarItem {
                         plusButton
-                            .offset(y: -30)
+                            .offset(y: -20)
                     }
                     
                     
@@ -141,6 +111,17 @@ struct GastosApp: App {
                 .set(\.background, Color(Colors.background))
                 .set(\.selectedColor, Color(Colors.primary))
                 .background(Colors.background)
+                .onAppear {
+                    let center = UNUserNotificationCenter.current()
+                    center.requestAuthorization(options: [.badge, .alert, .sound]) { granted, error in
+
+                        center.setNotificationCategories(NotificationsCategory.all())
+                        Logger.info("UNUserNotificationCenter granted", granted)
+                        Logger.info("respuesta notifica error:", error)
+   
+                        
+                    }
+                }
             }
         }
     }

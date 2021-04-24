@@ -84,7 +84,6 @@ struct iCloudBackupView: View {
                     self.status = .uploading
                     self.progress = 0
                     
-                    
                     backup.startBackup(fileURL: Realm.Configuration.defaultConfiguration.fileURL!)
                         .sink(
                             receiveCompletion: { completion in
@@ -104,10 +103,8 @@ struct iCloudBackupView: View {
             Spacer()
             Divider()
         }
-        .padding(.horizontal)
+        .padding()
         .navigationTitle("Backup copy")
-        
-        
     }
     
  

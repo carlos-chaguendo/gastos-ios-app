@@ -7,14 +7,13 @@
 
 import SwiftUI
 
-struct SettingsView: View {
+struct SettingsView: View, WithRows {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 0) {
                 
                 Row(title: "Backup copy", destination: iCloudBackupView())
-                Row(title: "Transaction Value", destination: Text("a"))
-                
+                Row(title: "Daily reminder", destination: DailyReminderView())
                 
                 Spacer()
             }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
@@ -25,6 +24,14 @@ struct SettingsView: View {
         
     }
     
+    
+}
+
+protocol WithRows {
+    
+}
+
+extension WithRows {
     
     func Row<Destination: View>(title: LocalizedStringKey, destination: Destination) -> some View {
         NavigationLink(destination: destination) {

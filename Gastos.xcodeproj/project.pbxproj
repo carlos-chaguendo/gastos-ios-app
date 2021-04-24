@@ -59,6 +59,8 @@
 		2F89BA412620B12E0009EA03 /* SpendByGroupChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA402620B12E0009EA03 /* SpendByGroupChartView.swift */; };
 		2F8BADE926336F5700567E4B /* iCloudRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8BADE826336F5700567E4B /* iCloudRestoreView.swift */; };
 		2F8BADED2633961400567E4B /* ButtonStyleFormLarge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8BADEC2633961400567E4B /* ButtonStyleFormLarge.swift */; };
+		2F8BADF42633B92500567E4B /* NotificationsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8BADF32633B92500567E4B /* NotificationsCategory.swift */; };
+		2F8BADFA2633BD8600567E4B /* DailyReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8BADF92633BD8600567E4B /* DailyReminderView.swift */; };
 		2F915373260185010092033E /* ArrayBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F915372260185010092033E /* ArrayBuilder.swift */; };
 		2F915374260185010092033E /* ArrayBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F915372260185010092033E /* ArrayBuilder.swift */; };
 		2F91537B26018FED0092033E /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5936325FC1231005A1B93 /* TabBar.swift */; };
@@ -150,6 +152,8 @@
 		2F89BA402620B12E0009EA03 /* SpendByGroupChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendByGroupChartView.swift; sourceTree = "<group>"; };
 		2F8BADE826336F5700567E4B /* iCloudRestoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudRestoreView.swift; sourceTree = "<group>"; };
 		2F8BADEC2633961400567E4B /* ButtonStyleFormLarge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleFormLarge.swift; sourceTree = "<group>"; };
+		2F8BADF32633B92500567E4B /* NotificationsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsCategory.swift; sourceTree = "<group>"; };
+		2F8BADF92633BD8600567E4B /* DailyReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyReminderView.swift; sourceTree = "<group>"; };
 		2F915372260185010092033E /* ArrayBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayBuilder.swift; sourceTree = "<group>"; };
 		2F9500D22603A7C400C9ABFC /* Service+Publishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Publishers.swift"; sourceTree = "<group>"; };
 		2F9500D62603B04300C9ABFC /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -211,6 +215,7 @@
 		2F6B070F25F976D900A1D516 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				2F8BADF22633B91600567E4B /* Notifications */,
 				2FA938B026331562006F1905 /* Settings */,
 				2F6B071225F976DA00A1D516 /* Assets.xcassets */,
 				2F98CE7A261589C50004F1B2 /* Categories */,
@@ -329,6 +334,14 @@
 			path = Chart;
 			sourceTree = "<group>";
 		};
+		2F8BADF22633B91600567E4B /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				2F8BADF32633B92500567E4B /* NotificationsCategory.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 		2F91537F2601923D0092033E /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
@@ -366,6 +379,7 @@
 				2FA938B92633158A006F1905 /* SettingsView.swift */,
 				2FA938BD26332103006F1905 /* iCloudBackupView.swift */,
 				2F8BADE826336F5700567E4B /* iCloudRestoreView.swift */,
+				2F8BADF92633BD8600567E4B /* DailyReminderView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -515,6 +529,7 @@
 				2F54798F2628DBB000730F13 /* Promise.swift in Sources */,
 				2F89BA30261F8DB30009EA03 /* MaximunDailyExpendingGraphView.swift in Sources */,
 				2F8BADED2633961400567E4B /* ButtonStyleFormLarge.swift in Sources */,
+				2F8BADFA2633BD8600567E4B /* DailyReminderView.swift in Sources */,
 				2F816D65261D26E8009FB091 /* SummaryGraphicsView.swift in Sources */,
 				2F6B076D25FA615D00A1D516 /* UIResponder+Current.swift in Sources */,
 				2F98CE602615508F0004F1B2 /* DocumentPickerViewController.swift in Sources */,
@@ -560,6 +575,7 @@
 				2F98CE7626156B620004F1B2 /* SelectorList.swift in Sources */,
 				2F6B073925F9793E00A1D516 /* ExpenseItemView.swift in Sources */,
 				2F89BA3D261FBB1B0009EA03 /* ApplicationData.swift in Sources */,
+				2F8BADF42633B92500567E4B /* NotificationsCategory.swift in Sources */,
 				2FBEBBFE260CF9EA001C4FCD /* Date.swift in Sources */,
 				2F9500D32603A7C400C9ABFC /* Service+Publishers.swift in Sources */,
 				2F98CE81261640270004F1B2 /* PresentLinkView.swift in Sources */,

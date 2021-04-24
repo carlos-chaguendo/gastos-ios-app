@@ -39,7 +39,7 @@ struct SummaryGraphicsView: View {
                 }.padding() // VStack
                 
             } // Scroll View
-            .navigationBarTitle("Expense",displayMode: .automatic)
+            .navigationBarTitle("Dashboard",displayMode: .automatic)
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
             .background(Colors.background)
             

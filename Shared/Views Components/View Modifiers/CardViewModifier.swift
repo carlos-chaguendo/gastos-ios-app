@@ -14,7 +14,7 @@ struct CardViewModifier: ViewModifier {
             .padding()
             .background(ColorSpace.color(light: .white, dark: UIColor.white.withAlphaComponent(0.05)))
             .cornerRadius(20)
-            .shadow(color: Color.black.opacity(0.2), radius: 10)
+            .shadow(color: Color.gray.opacity(0.3), radius: 10)
     }
     
     

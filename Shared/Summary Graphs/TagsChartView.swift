@@ -27,6 +27,7 @@ struct TagsChartView: View {
                     .accentColor(Color(Colors.subtitle))
                     .foregroundColor(Colors.primary)
                     .cornerRadius(3.0)
+                    .padding(2)
             }
         }.onAppear {
             self.tags = Service.getAll(Tag.self).sorted { $0.name > $1.name }
