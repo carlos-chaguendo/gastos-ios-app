@@ -51,6 +51,23 @@
 		2F8BAE47263468D800567E4B /* WidgetKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8BAE46263468D800567E4B /* WidgetKit.swift */; };
 		2F8BAE49263468D800567E4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F8BAE48263468D800567E4B /* Assets.xcassets */; };
 		2F8BAE4D263468D800567E4B /* WidgetKitExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2F8BAE42263468D800567E4B /* WidgetKitExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2F8BAE5826346A7E00567E4B /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA1D261EB43A0009EA03 /* Stack.swift */; };
+		2F8BAE5C26346A9300567E4B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 2F8BAE5B26346A9300567E4B /* Realm */; };
+		2F8BAE5E26346A9500567E4B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2F8BAE5D26346A9500567E4B /* RealmSwift */; };
+		2F8BAE6126346A9F00567E4B /* Service+Publishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9500D22603A7C400C9ABFC /* Service+Publishers.swift */; };
+		2F8BAE6426346AA400567E4B /* Restore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5479B52629EBA300730F13 /* Restore.swift */; };
+		2F8BAE6526346AA400567E4B /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2FB8A22613E44E00CE3E9E /* Service.swift */; };
+		2F8BAE6626346AA400567E4B /* BackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5479AA2629E51400730F13 /* BackupService.swift */; };
+		2F8BAE7126346AA900567E4B /* Entity+Detach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2FB8AF2613F45E00CE3E9E /* Entity+Detach.swift */; };
+		2F8BAE7226346AA900567E4B /* ApplicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA3C261FBB1B0009EA03 /* ApplicationData.swift */; };
+		2F8BAE7326346AA900567E4B /* ExpenseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B073E25F97AE200A1D516 /* ExpenseItem.swift */; };
+		2F8BAE7426346AA900567E4B /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F98CE70261569330004F1B2 /* Wallet.swift */; };
+		2F8BAE7526346AA900567E4B /* Catagory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F98CE5A26154EF50004F1B2 /* Catagory.swift */; };
+		2F8BAE7626346AA900567E4B /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2FB8A62613E50200CE3E9E /* Entity.swift */; };
+		2F8BAE7726346AA900567E4B /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F98CE64261553820004F1B2 /* Tag.swift */; };
+		2F8BAE7A26346AB800567E4B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9500D62603B04300C9ABFC /* Logger.swift */; };
+		2F8BAE7D26346ADA00567E4B /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBEBBFD260CF9EA001C4FCD /* Date.swift */; };
+		2F8BAE8026346AF000567E4B /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B075825F99C8100A1D516 /* Colors.swift */; };
 		2F915373260185010092033E /* ArrayBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F915372260185010092033E /* ArrayBuilder.swift */; };
 		2F91537C26018FED0092033E /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5936325FC1231005A1B93 /* TabBar.swift */; };
 		2F9500D32603A7C400C9ABFC /* Service+Publishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9500D22603A7C400C9ABFC /* Service+Publishers.swift */; };
@@ -195,6 +212,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F8BAE5E26346A9500567E4B /* RealmSwift in Frameworks */,
+				2F8BAE5C26346A9300567E4B /* Realm in Frameworks */,
 				2F8BAE44263468D800567E4B /* SwiftUI.framework in Frameworks */,
 				2F8BAE43263468D800567E4B /* WidgetKit.framework in Frameworks */,
 			);
@@ -313,6 +332,8 @@
 		2F89BA1C261EB42A0009EA03 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				2FBEBBFD260CF9EA001C4FCD /* Date.swift */,
+				2F9500D62603B04300C9ABFC /* Logger.swift */,
 				2F89BA1D261EB43A0009EA03 /* Stack.swift */,
 			);
 			path = Foundation;
@@ -415,9 +436,7 @@
 				2FE51A3125FBE4C6004518A0 /* NumberFormatter.swift */,
 				2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */,
 				2F915372260185010092033E /* ArrayBuilder.swift */,
-				2F9500D62603B04300C9ABFC /* Logger.swift */,
 				2F9500E32604061500C9ABFC /* View++.swift */,
-				2FBEBBFD260CF9EA001C4FCD /* Date.swift */,
 				2FBEBC01260D0DBE001C4FCD /* Array.swift */,
 				2FBEBC05260D2527001C4FCD /* AnyTransition.swift */,
 				2F89BA14261E89CF0009EA03 /* Numbers.swift */,
@@ -465,6 +484,10 @@
 			dependencies = (
 			);
 			name = WidgetKitExtension;
+			packageProductDependencies = (
+				2F8BAE5B26346A9300567E4B /* Realm */,
+				2F8BAE5D26346A9500567E4B /* RealmSwift */,
+			);
 			productName = WidgetKitExtension;
 			productReference = 2F8BAE42263468D800567E4B /* WidgetKitExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -602,7 +625,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F8BAE7426346AA900567E4B /* Wallet.swift in Sources */,
+				2F8BAE7D26346ADA00567E4B /* Date.swift in Sources */,
+				2F8BAE7126346AA900567E4B /* Entity+Detach.swift in Sources */,
+				2F8BAE6626346AA400567E4B /* BackupService.swift in Sources */,
+				2F8BAE6126346A9F00567E4B /* Service+Publishers.swift in Sources */,
+				2F8BAE5826346A7E00567E4B /* Stack.swift in Sources */,
+				2F8BAE7326346AA900567E4B /* ExpenseItem.swift in Sources */,
+				2F8BAE6426346AA400567E4B /* Restore.swift in Sources */,
 				2F8BAE47263468D800567E4B /* WidgetKit.swift in Sources */,
+				2F8BAE8026346AF000567E4B /* Colors.swift in Sources */,
+				2F8BAE7626346AA900567E4B /* Entity.swift in Sources */,
+				2F8BAE7226346AA900567E4B /* ApplicationData.swift in Sources */,
+				2F8BAE7526346AA900567E4B /* Catagory.swift in Sources */,
+				2F8BAE7A26346AB800567E4B /* Logger.swift in Sources */,
+				2F8BAE6526346AA400567E4B /* Service.swift in Sources */,
+				2F8BAE7726346AA900567E4B /* Tag.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -882,6 +920,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2F8BAE5B26346A9300567E4B /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2FBEBC31260E309D001C4FCD /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		2F8BAE5D26346A9500567E4B /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2FBEBC31260E309D001C4FCD /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
 		2FBEBC32260E309D001C4FCD /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2FBEBC31260E309D001C4FCD /* XCRemoteSwiftPackageReference "realm-cocoa" */;
