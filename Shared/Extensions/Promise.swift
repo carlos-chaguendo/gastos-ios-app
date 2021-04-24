@@ -24,6 +24,9 @@ func Promise<Output>( block: @escaping () -> Output) -> AnyPublisher<Output, Nev
     
 }
 
+func fistly<P: Publisher>(block: () -> P) -> P {
+    block()
+}
 
 extension Publisher {
     
@@ -36,7 +39,12 @@ extension Publisher {
     }
     
     func asVoid() -> Publishers.Map<Self, Void> {
-        self.map { _ in () }
+        self.map {
+            cureent in ()
+            
+            Logger.info("Valor ac tual ", cureent)
+            return ()
+        }
     }
     
 }

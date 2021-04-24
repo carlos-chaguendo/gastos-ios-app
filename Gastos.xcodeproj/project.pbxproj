@@ -57,6 +57,8 @@
 		2F89BA39261F8EC80009EA03 /* SpendChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA38261F8EC80009EA03 /* SpendChartView.swift */; };
 		2F89BA3D261FBB1B0009EA03 /* ApplicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA3C261FBB1B0009EA03 /* ApplicationData.swift */; };
 		2F89BA412620B12E0009EA03 /* SpendByGroupChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA402620B12E0009EA03 /* SpendByGroupChartView.swift */; };
+		2F8BADE926336F5700567E4B /* iCloudRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8BADE826336F5700567E4B /* iCloudRestoreView.swift */; };
+		2F8BADED2633961400567E4B /* ButtonStyleFormLarge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8BADEC2633961400567E4B /* ButtonStyleFormLarge.swift */; };
 		2F915373260185010092033E /* ArrayBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F915372260185010092033E /* ArrayBuilder.swift */; };
 		2F915374260185010092033E /* ArrayBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F915372260185010092033E /* ArrayBuilder.swift */; };
 		2F91537B26018FED0092033E /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5936325FC1231005A1B93 /* TabBar.swift */; };
@@ -83,7 +85,7 @@
 		2F98CE81261640270004F1B2 /* PresentLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F98CE80261640270004F1B2 /* PresentLinkView.swift */; };
 		2F98CE82261640270004F1B2 /* PresentLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F98CE80261640270004F1B2 /* PresentLinkView.swift */; };
 		2FA938BA2633158A006F1905 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA938B92633158A006F1905 /* SettingsView.swift */; };
-		2FA938BE26332103006F1905 /* IcloudBackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA938BD26332103006F1905 /* IcloudBackupView.swift */; };
+		2FA938BE26332103006F1905 /* iCloudBackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA938BD26332103006F1905 /* iCloudBackupView.swift */; };
 		2FB5935D25FC012B005A1B93 /* PropertyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */; };
 		2FB5935E25FC012B005A1B93 /* PropertyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */; };
 		2FBEBBFA260CEE4E001C4FCD /* ExpenseItemFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B075C25F9A31500A1D516 /* ExpenseItemFormView.swift */; };
@@ -146,6 +148,8 @@
 		2F89BA38261F8EC80009EA03 /* SpendChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendChartView.swift; sourceTree = "<group>"; };
 		2F89BA3C261FBB1B0009EA03 /* ApplicationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationData.swift; sourceTree = "<group>"; };
 		2F89BA402620B12E0009EA03 /* SpendByGroupChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendByGroupChartView.swift; sourceTree = "<group>"; };
+		2F8BADE826336F5700567E4B /* iCloudRestoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudRestoreView.swift; sourceTree = "<group>"; };
+		2F8BADEC2633961400567E4B /* ButtonStyleFormLarge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleFormLarge.swift; sourceTree = "<group>"; };
 		2F915372260185010092033E /* ArrayBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayBuilder.swift; sourceTree = "<group>"; };
 		2F9500D22603A7C400C9ABFC /* Service+Publishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Publishers.swift"; sourceTree = "<group>"; };
 		2F9500D62603B04300C9ABFC /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -160,7 +164,7 @@
 		2F98CE7B261589DE0004F1B2 /* CategorySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectionView.swift; sourceTree = "<group>"; };
 		2F98CE80261640270004F1B2 /* PresentLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentLinkView.swift; sourceTree = "<group>"; };
 		2FA938B92633158A006F1905 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		2FA938BD26332103006F1905 /* IcloudBackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IcloudBackupView.swift; sourceTree = "<group>"; };
+		2FA938BD26332103006F1905 /* iCloudBackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudBackupView.swift; sourceTree = "<group>"; };
 		2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyBuilder.swift; sourceTree = "<group>"; };
 		2FB5936325FC1231005A1B93 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		2FBEBBFD260CF9EA001C4FCD /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -217,7 +221,6 @@
 				2F816D5B261D101B009FB091 /* Localizable.strings */,
 				2F816D63261D26BF009FB091 /* Summary Graphs */,
 				2F91537F2601923D0092033E /* Transactions */,
-				2F6B076025FA610800A1D516 /* View Modifiers */,
 				2F6B073325F9790A00A1D516 /* Views Components */,
 			);
 			path = Shared;
@@ -252,6 +255,7 @@
 		2F6B073325F9790A00A1D516 /* Views Components */ = {
 			isa = PBXGroup;
 			children = (
+				2F6B076025FA610800A1D516 /* View Modifiers */,
 				2F89BA33261F8E3C0009EA03 /* Chart */,
 				2F6B073425F9791C00A1D516 /* FlexibleView.swift */,
 				2FB5936325FC1231005A1B93 /* TabBar.swift */,
@@ -263,6 +267,7 @@
 				2F98CE80261640270004F1B2 /* PresentLinkView.swift */,
 				2F816D29261CF072009FB091 /* CurrencyTextField.swift */,
 				2F89BA18261EA1880009EA03 /* PageView.swift */,
+				2F8BADEC2633961400567E4B /* ButtonStyleFormLarge.swift */,
 			);
 			path = "Views Components";
 			sourceTree = "<group>";
@@ -359,7 +364,8 @@
 			isa = PBXGroup;
 			children = (
 				2FA938B92633158A006F1905 /* SettingsView.swift */,
-				2FA938BD26332103006F1905 /* IcloudBackupView.swift */,
+				2FA938BD26332103006F1905 /* iCloudBackupView.swift */,
+				2F8BADE826336F5700567E4B /* iCloudRestoreView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -508,6 +514,7 @@
 				2FE51A2625FBE485004518A0 /* DateFormatter.swift in Sources */,
 				2F54798F2628DBB000730F13 /* Promise.swift in Sources */,
 				2F89BA30261F8DB30009EA03 /* MaximunDailyExpendingGraphView.swift in Sources */,
+				2F8BADED2633961400567E4B /* ButtonStyleFormLarge.swift in Sources */,
 				2F816D65261D26E8009FB091 /* SummaryGraphicsView.swift in Sources */,
 				2F6B076D25FA615D00A1D516 /* UIResponder+Current.swift in Sources */,
 				2F98CE602615508F0004F1B2 /* DocumentPickerViewController.swift in Sources */,
@@ -519,6 +526,7 @@
 				2F89BA15261E89CF0009EA03 /* Numbers.swift in Sources */,
 				2FA938BA2633158A006F1905 /* SettingsView.swift in Sources */,
 				2F2FB8B02613F45E00CE3E9E /* Entity+Detach.swift in Sources */,
+				2F8BADE926336F5700567E4B /* iCloudRestoreView.swift in Sources */,
 				2F5479A72629049E00730F13 /* TagsChartView.swift in Sources */,
 				2F5479B62629EBA300730F13 /* Restore.swift in Sources */,
 				2F98CE5B26154EF50004F1B2 /* Catagory.swift in Sources */,
@@ -543,7 +551,7 @@
 				2FBEBC06260D2527001C4FCD /* AnyTransition.swift in Sources */,
 				2F98CE65261553820004F1B2 /* Tag.swift in Sources */,
 				2F54798B2628A35600730F13 /* TransactionsByGroupView.swift in Sources */,
-				2FA938BE26332103006F1905 /* IcloudBackupView.swift in Sources */,
+				2FA938BE26332103006F1905 /* iCloudBackupView.swift in Sources */,
 				2F5479A32628EE2000730F13 /* GroupFormView.swift in Sources */,
 				2F6B075925F99C8100A1D516 /* Colors.swift in Sources */,
 				2F54798726288CE800730F13 /* StackChart.swift in Sources */,

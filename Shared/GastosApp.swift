@@ -52,6 +52,8 @@ struct GastosApp: App {
     private let addButtonSize: CGFloat = 60
     private let addButtonBorderSize : CGFloat = 34
     
+    @AppStorage("isFirstAppInstallation") private var isFirstAppInstallation = true
+    
     init() {
         
         #if !os(macOS)
@@ -67,86 +69,82 @@ struct GastosApp: App {
         UITableView.appearance().backgroundColor = .clear // ColorSpace.color(light: systemBackground, dark: systemBackground)
         
         #endif
+        
+        
     }
     
     @ViewBuilder var plusButton: some View {
-//        PresentLinkView(destination:  ExpenseItemFormView()) {
-            ZStack {
-                Circle()
-                    .foregroundColor(.white)
-                    .frame(width:  addButtonSize, height: addButtonSize)
-                    .shadow(radius: 4)
-                Image(systemName: "plus")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: addButtonSize - addButtonBorderSize , height: addButtonSize - addButtonBorderSize)
-                    .foregroundColor(Colors.primary)
-            }
-            .onTapGesture {
-                self.showingDetail.toggle()
-            }
-//        }
-        
-        
-
-        
+        //        PresentLinkView(destination:  ExpenseItemFormView()) {
+        ZStack {
+            Circle()
+                .foregroundColor(.white)
+                .frame(width:  addButtonSize, height: addButtonSize)
+                .shadow(radius: 4)
+            Image(systemName: "plus")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: addButtonSize - addButtonBorderSize , height: addButtonSize - addButtonBorderSize)
+                .foregroundColor(Colors.primary)
+        }
+        .onTapGesture {
+            self.showingDetail.toggle()
+        }
         .fullScreenCover(isPresented: $showingDetail) {
             ExpenseItemFormView()
-          
+            
         }
     }
-    
-    var transactionsView = TransactionsView()
-    
-    var summary = SummaryGraphicsView()
-    
-    var capj = CapijaView()
     
     var body: some Scene {
         WindowGroup {
-            TabBar {
-                summary
-                    .tabBarItem {
-                        TabBar.Page.Item(systemIconName: "rectangle.3.offgrid", tabName: "Dashboard")
+            if isFirstAppInstallation {
+                iCloudRestoreView(restorationTerminated: $isFirstAppInstallation)
+            } else {
+                
+                TabBar {
+                    SummaryGraphicsView()
+                        .tabBarItem {
+                            TabBar.Page.Item(systemIconName: "rectangle.3.offgrid", tabName: "Dashboard")
+                        }
+                    
+                    
+                    TransactionsView()
+                        .tabBarItem {
+                            TabBar.Page.Item(systemIconName: "homekit", tabName: "Home")
+                        }
+                    
+                    NavigationView {
+                        Text("Hola")
+                            .navigationBarTitle("", displayMode: .inline)
+                    }.onAppear {
+                        Logger.info("ssss", self.selected)
+                    }.tabBarItem {
+                        plusButton
+                            .offset(y: -30)
                     }
-                
-                
-                transactionsView
-                    .tabBarItem {
-                        TabBar.Page.Item(systemIconName: "homekit", tabName: "Home")
-                    }
-                
-                NavigationView {
-                    Text("Hola")
-                        .navigationBarTitle("", displayMode: .inline)
-                }.onAppear {
-                    Logger.info("ssss", self.selected)
-                }.tabBarItem {
-                    plusButton
-                        .offset(y: -30)
+                    
+                    
+                    CapijaView()
+                        .tabBarItem {
+                            TabBar.Page.Item(systemIconName: "homepod.fill", tabName: "Categories")
+                        }
+                    
+                    SettingsView()
+                        .tabBarItem {
+                            TabBar.Page.Item(systemIconName: "gearshape", tabName: "Settings")
+                        }
+                    
+                    
+                    
                 }
-                
-   
-                CapijaView()
-                    .tabBarItem {
-                        TabBar.Page.Item(systemIconName: "homepod.fill", tabName: "Categories")
-                    }
-                
-                SettingsView()
-                    .tabBarItem {
-                        TabBar.Page.Item(systemIconName: "gearshape", tabName: "Settings")
-                    }
-                
-       
-                
+                .selectedIndex($selected)
+                .set(\.background, Color(Colors.background))
+                .set(\.selectedColor, Color(Colors.primary))
+                .background(Colors.background)
             }
-            .selectedIndex($selected)
-            .set(\.background, Color(Colors.background))
-            .set(\.selectedColor, Color(Colors.primary))
-            .background(Colors.background)
         }
     }
-
+    
 }
 
 
@@ -188,24 +186,24 @@ struct CapijaView: View {
                 
                 
                 
-      
+                
                 
                 Button {
                     
                     
-              
+                    
                     
                     let color: UInt32 = 0x257D81
                     let uicolor = ColorSpace.from(hex: color)
                     
                 } label: {
-            
+                    
                     
                 }
                 
                 Button("Add Category") {
                     Service.addCategory(Catagory {
-                         $0.name = "Comida"
+                        $0.name = "Comida"
                     })
                     
                     Service.addTag(Tag{
@@ -235,9 +233,9 @@ struct CapijaView: View {
                     Service.addWallet(Wallet {
                         $0.name = "Davivienda"
                     })
-                
+                    
                 }
-        }
+            }
         }
     }
 }

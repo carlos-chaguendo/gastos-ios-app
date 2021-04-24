@@ -12,7 +12,7 @@ struct SettingsView: View {
         NavigationView {
             VStack(alignment: .leading, spacing: 0) {
                 
-                Row(title: "Backup copy", destination: IcloudBackupView())
+                Row(title: "Backup copy", destination: iCloudBackupView())
                 Row(title: "Transaction Value", destination: Text("a"))
                 
                 

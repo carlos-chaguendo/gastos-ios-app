@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 import RealmSwift
 
-struct IcloudBackupView: View {
+struct iCloudBackupView: View {
     
     enum Status {
         case uploading
@@ -39,6 +39,11 @@ struct IcloudBackupView: View {
         VStack(alignment: .leading, spacing: 20) {
             
             VStack(alignment: .leading) {
+                
+                Image(systemName: "arrow.counterclockwise.icloud.fill")
+                    .font(.title)
+                    .foregroundColor(Colors.primary)
+                
                 Text("Ultima copia")
                     .font(.body)
                     .foregroundColor(Colors.title)
@@ -70,45 +75,47 @@ struct IcloudBackupView: View {
                 
             case .failure(let error):
                 
-                Text(error.localizedFailureReason ?? error.localizedFailureReason ?? error.description)
+                Text(error.localizedFailureReason ?? error.localizedDescription )
+                    .font(.body)
+                    .foregroundColor(.red)
                 
             case .none:
                 Button("Respaladar Ahora (\(bf.string(for: fileSize) ?? ""))") {
                     self.status = .uploading
-                    
+                    self.progress = 0
                     
                     
                     backup.startBackup(fileURL: Realm.Configuration.defaultConfiguration.fileURL!)
                         .sink(
                             receiveCompletion: { completion in
+                                Logger.info("completion", completion)
                             switch completion {
                             case .finished: self.status = .none
                             case .failure(let error):  self.status = .failure(error)
                             }
                         }, receiveValue: { progress in
+                            Logger.info("progreso", progress)
                             self.progress = progress.rounded(toPlaces: 2)
                         }).store(in: &cancellables)
                 }
+                //.buttonStyle(ButtonStyleFormLarge())
                 
             }
             Spacer()
             Divider()
         }
         .padding(.horizontal)
+        .navigationTitle("Backup copy")
         
         
     }
     
-    
-    
-    
-    
-    
+ 
 }
 
 
 struct IcloudBackupView_Previews: PreviewProvider {
     static var previews: some View {
-        IcloudBackupView()
+        iCloudBackupView()
     }
 }
