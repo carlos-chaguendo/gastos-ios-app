@@ -39,12 +39,7 @@ extension Publisher {
     }
     
     func asVoid() -> Publishers.Map<Self, Void> {
-        self.map {
-            cureent in ()
-            
-            Logger.info("Valor ac tual ", cureent)
-            return ()
-        }
+        self.map { _ in () }
     }
     
 }

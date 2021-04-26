@@ -62,14 +62,14 @@ class BackupService {
     }
     
     
-    func getBackup(fileURL: URL) -> AnyPublisher<Double, NSError> {
+    func getBackup(named fileName: String, fileURL: URL) -> AnyPublisher<Double, NSError> {
         
         guard let containerURL = FileManager.default.url(forUbiquityContainerIdentifier: nil) else {
             let error = NSError(domain: "upload", code: 1, userInfo: [NSLocalizedDescriptionKey : " The App Not Have Access to iCloud"])
             return Fail(error: error).eraseToAnyPublisher()
         }
         
-        let fileName = fileURL.lastPathComponent
+        //let fileName = fileURL.lastPathComponent
         let query = NSMetadataQuery.init()
         query.operationQueue = .main
         query.searchScopes = [NSMetadataQueryUbiquitousDataScope]
@@ -101,7 +101,7 @@ class BackupService {
     func searchBackup(fileName: String) -> AnyPublisher<NSMetadataItem, NSError> {
         return Deferred {
             Future<NSMetadataItem, NSError> { seal in
-                
+                Logger.info("Buscando...", fileName)
                 let query = NSMetadataQuery.init()
                 query.operationQueue = .main
                 query.searchScopes = [NSMetadataQueryUbiquitousDataScope]
@@ -110,8 +110,7 @@ class BackupService {
                     query.start()
                     query.enableUpdates()
                 }
-                
-                
+
                 NotificationCenter.default.addObserver(forName: NSNotification.Name.NSMetadataQueryDidUpdate, object: query, queue: query.operationQueue) { (notification) in
                     guard let fileItem = query.resultsFor(fileName: fileName) else {
                         return

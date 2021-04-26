@@ -25,6 +25,7 @@ struct iCloudRestoreView: View {
     @State private var date: Date! = Date()
     @State private var fileSize: Double! = 0.0
     @State private var progress = 0.0
+    @State private var url: URL!
     
     @Binding public var restorationTerminated: Bool
     
@@ -80,10 +81,11 @@ struct iCloudRestoreView: View {
                     Button("Restaurar") {
                         self.status = .downloadig
                         self.progress = 0
-                        let file = Realm.Configuration.defaultConfiguration.fileURL!
+                        let file = Service.fileURL
+                        let backup = self.url.lastPathComponent
                         
                         fistly {
-                            BackupService().getBackup(fileURL: file)
+                            BackupService().getBackup(named: backup, fileURL: file)
                         }.sink { completion in
                             self.status = .restaured
                         } receiveValue: { progress in
@@ -136,9 +138,7 @@ struct iCloudRestoreView: View {
             
             .onAppear {
                 
-                let file = Realm.Configuration.defaultConfiguration.fileURL!
-                
-                BackupService().searchBackup(fileName: file.lastPathComponent)
+                BackupService().searchBackup(fileName: "default.realm")
                     .delay(for: 2, scheduler: RunLoop.main)
                     .sink(receiveCompletion: { completion in
                         print("comple", completion)
@@ -152,6 +152,7 @@ struct iCloudRestoreView: View {
                         self.date = metadata.value(forKey: "kMDItemFSContentChangeDate") as? Date
                         self.fileSize = metadata.value(forAttribute: "kMDItemFSSize") as? Double ?? 0.0
                         self.status = .found
+                        self.url = metadata.value(forAttribute: NSMetadataItemURLKey) as? URL
                         
                     }).store(in: &cancellables)
                 

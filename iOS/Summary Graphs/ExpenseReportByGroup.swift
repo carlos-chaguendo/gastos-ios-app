@@ -119,36 +119,3 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
     
     
 }
-
-
-//
-//struct CategoriesReportView_Previews: PreviewProvider {
-//
-//
-//    static var previews: some View {
-//        NavigationView {
-//            CategoriesReportView(
-//                total: 10000,
-//                catagories: [
-//                    Catagory {
-//                        $0.id = "1"
-//                        $0.name = "Comida"
-//                        $0.value = 5000
-//                    },
-//
-//                    Catagory {
-//                        $0.name = "Trago"
-//                        $0.value = 2500
-//                    },
-//                ],
-//                colorsByCategory: [
-//                    "1": Color(Colors.primary)
-//                ]
-//            ).navigationTitle("Categories")
-//            //.preferredColorScheme(.dark)
-//
-//        }
-//
-//    }
-//}
-

@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Combine
+import WidgetKit
 import RealmSwift
 import CoreServices
 import UserNotifications
@@ -121,6 +123,10 @@ struct GastosApp: App {
    
                         
                     }
+                }.onReceive(Publishers.didAddNewTransaction) { item in
+                    WidgetCenter.shared.reloadAllTimelines()
+                }.onReceive(Publishers.didEditTransaction) { item in
+                    WidgetCenter.shared.reloadAllTimelines()
                 }
             }
         }

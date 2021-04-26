@@ -34,7 +34,6 @@ struct StackChart<Group: Entity & ExpensePropertyWithValue>: View {
         .cornerRadius(8.0)
     }
 
-    
 }
 
 struct StackChart_Previews: PreviewProvider {

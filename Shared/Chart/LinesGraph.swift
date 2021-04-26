@@ -63,7 +63,6 @@ struct LineGraph_Previews: PreviewProvider {
                 .init(points: points.dropLast().dropLast(), color: Color(UIColor.systemGroupedBackground)),
                 .init(points: points.reversed(), color: .green),
             ])
-            .cardView()
             .padding()
             .previewLayout(PreviewLayout.fixed(width: 220 , height: 220))
            
@@ -71,7 +70,6 @@ struct LineGraph_Previews: PreviewProvider {
                 .init(points: points.reversed(), color: Color(UIColor.systemGroupedBackground)),
                 .init(points: points, color: .green),
             ])
-            .cardView()
             .padding()
             .previewLayout(PreviewLayout.fixed(width: 120 , height: 120))
             .preferredColorScheme(.dark)

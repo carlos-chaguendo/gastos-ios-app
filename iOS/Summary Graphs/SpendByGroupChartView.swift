@@ -8,9 +8,8 @@
 import SwiftUI
 import Combine
 
-
 struct SpendByGroupChartView<Group: Entity & ExpensePropertyWithValue>: View {
-
+    
     @ObservedObject var datasource: DataSource
     
     @State public var cancellables = Set<AnyCancellable>()
@@ -41,7 +40,7 @@ struct SpendByGroupChartView<Group: Entity & ExpensePropertyWithValue>: View {
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundColor(Colors.title)
-     
+                
             }
             
             if let title = title {
@@ -57,7 +56,7 @@ struct SpendByGroupChartView<Group: Entity & ExpensePropertyWithValue>: View {
                     total: datasource.total,
                     categories: datasource.categories
                 )
-
+                
                 if showNavigation {
                     NavigationLink(destination: ExpenseReportByGroup(title: title!, group: datasource.groupBy)) {
                         Image(systemName: "chevron.right.circle.fill")
@@ -66,26 +65,25 @@ struct SpendByGroupChartView<Group: Entity & ExpensePropertyWithValue>: View {
                     }
                 }
             }
-
             
-    
+            
             FlexibleView(data: datasource.categories) { category in
                 HStack(alignment: .center, spacing: 0) {
                     Text("•")
                         .font(.caption)
                         .fontWeight(.black)
                         .foregroundColor(UIColor.from(hex: UInt32(category.color)))
-                        
+                    
                     
                     Text(category.name)
                         .font(.caption2)
                         .padding(.trailing, 2)
                         .foregroundColor(Colors.subtitle)
-                        
-                        
+                    
+                    
                 }
-            }//.padding(.top, -8)
-         
+            }
+            
         }
         
         //.cardView()
@@ -112,7 +110,7 @@ struct SpendByGroupChartView<Group: Entity & ExpensePropertyWithValue>: View {
         datasource.getValuesGrouped()
     }
     
-
+    
 }
 
 
@@ -129,10 +127,11 @@ extension SpendByGroupChartView {
         @Published var categories: [Group] = []
         @Published var cancellables = Set<AnyCancellable>()
         
-        init(group: KeyPath<ExpenseItem, Group>) {
+        init(group: KeyPath<ExpenseItem, Group>, categories: [Group] = []) {
             self.groupBy = group
+            self.categories = categories
+            self.total = categories.map { $0.value }.reduce(0, +)
         }
-        
         
         var calendarComponent: Calendar.Component { mode == "M" ? .month:   mode == "Y" ? .year : .weekOfMonth }
         
@@ -155,11 +154,18 @@ extension SpendByGroupChartView {
                 self.interval = self.getInterval(mode: self.mode, date: self.date)
                 self.categories = values
                 self.total = values.map { $0.value }.reduce(0, +)
-//                self.categories.forEach {
-//                    $0.color = Int32(Color.random.uicolor.toHexInt())
-//                }
-
+                
             }.store(in: &cancellables)
+        }
+        
+        /// para widgetKit
+        /// - Returns: description
+        func prepareValues()  {
+            let values = Service.expenses(by: self.groupBy, in: self.calendarComponent, of: self.date)
+            Logger.info("Obteneiendo resultados \(self.mode)", self.groupBy)
+            self.interval = self.getInterval(mode: self.mode, date: self.date)
+            self.categories = values
+            self.total = values.map { $0.value }.reduce(0, +)
         }
         
         func previousPage() {
@@ -171,32 +177,28 @@ extension SpendByGroupChartView {
             date = Calendar.gregorian.date(byAdding: calendarComponent, value: 1, to: date) ?? date
             self.getValuesGrouped()
         }
-        
     }
     
 }
 
 struct GroupPercentGraphView_Previews: PreviewProvider {
-
-    static let datasource = SpendByGroupChartView<Wallet>.DataSource(group: \.wallet)
-    .set(\.total, 1)
-    .set(\.categories, [
-        Wallet {
-            $0.name = "One"
-            $0.value = 0.25
-        },
-        Wallet {
-            $0.id = "2"
-            $0.name = "Comida"
-            $0.value = 0.75
-        }
-    ])
     
-
+    static let datasource = SpendByGroupChartView<Wallet>.DataSource(group: \.wallet)
+        .set(\.total, 1)
+        .set(\.categories, [
+            Wallet {
+                $0.name = "One"
+                $0.value = 0.25
+            },
+            Wallet {
+                $0.id = "2"
+                $0.name = "Comida"
+                $0.value = 0.75
+            }
+        ])
+    
     static var previews: some View {
         Group {
-            
-
             SpendByGroupChartView(datasource: datasource, title: "Category")
                 .previewLayout(PreviewLayout.fixed(width: 350 , height: 100))
                 .padding()
@@ -204,11 +206,6 @@ struct GroupPercentGraphView_Previews: PreviewProvider {
             SpendByGroupChartView(datasource: datasource, title: nil)
                 .previewLayout(PreviewLayout.fixed(width: 350 , height: 100))
                 .padding()
-
-//
-//            GroupPercentGraphView(groupBy: \.category, title: "Wallet")
-//                .previewLayout(PreviewLayout.fixed(width: 350 , height: 100))
-//                .preferredColorScheme(.dark)
         }
     }
 }
