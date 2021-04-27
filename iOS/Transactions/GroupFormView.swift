@@ -83,6 +83,7 @@ struct GroupFormView<Group: Entity & ExpensePropertyWithValue>: View {
                 }
             }
             .padding()
+            .background(Colors.background)
             .navigationBarTitle("Group", displayMode: .inline)
             .navigationBarItems(
                 leading: Button {
