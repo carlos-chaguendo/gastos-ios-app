@@ -26,6 +26,9 @@ struct GastosApp: App {
     
     @AppStorage("isFirstAppInstallation") private var isFirstAppInstallation = true
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
+    
     init() {
         
         #if !os(macOS)
@@ -116,13 +119,11 @@ struct GastosApp: App {
                 .onAppear {
                     let center = UNUserNotificationCenter.current()
                     center.requestAuthorization(options: [.badge, .alert, .sound]) { granted, error in
-
                         center.setNotificationCategories(NotificationsCategory.all())
                         Logger.info("UNUserNotificationCenter granted", granted)
                         Logger.info("respuesta notifica error:", error)
-   
-                        
                     }
+                    
                 }.onReceive(Publishers.didAddNewTransaction) { item in
                     WidgetCenter.shared.reloadAllTimelines()
                 }.onReceive(Publishers.didEditTransaction) { item in

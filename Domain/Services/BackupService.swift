@@ -106,39 +106,25 @@ class BackupService {
                 query.operationQueue = .main
                 query.searchScopes = [NSMetadataQueryUbiquitousDataScope]
                 query.predicate = NSPredicate(format: "%K LIKE %@", NSMetadataItemFSNameKey, fileName)
+        
+                NotificationCenter.default.addObserver(forName: NSNotification.Name.NSMetadataQueryDidFinishGathering, object: query, queue: query.operationQueue) { (notification) in
+                    defer {
+                        query.disableUpdates()
+                        query.operationQueue?.addOperation { query.stop() }
+                        self.cancellables.removeAll()
+                    }
+
+                    guard let fileItem = query.resultsFor(fileName: fileName) else {
+                        seal(Result.failure(NSError(domain: "backup", code: 1, userInfo: [NSLocalizedDescriptionKey: "Not found '\(fileName)'"])))
+                        return
+                    }
+         
+                    seal(Result.success(fileItem))
+                }
+                
                 query.operationQueue?.addOperation {
                     query.start()
                     query.enableUpdates()
-                }
-
-                NotificationCenter.default.addObserver(forName: NSNotification.Name.NSMetadataQueryDidUpdate, object: query, queue: query.operationQueue) { (notification) in
-                    guard let fileItem = query.resultsFor(fileName: fileName) else {
-                        return
-                    }
-                    query.disableUpdates()
-                    query.operationQueue?.addOperation { query.stop() }
-                    self.cancellables.removeAll()
-                    seal(Result.success(fileItem))
-                }
-                
-                NotificationCenter.default.addObserver(forName: NSNotification.Name.NSMetadataQueryGatheringProgress, object: query, queue: query.operationQueue) { (notification) in
-                    guard let fileItem = query.resultsFor(fileName: fileName) else {
-                        return
-                    }
-                    query.disableUpdates()
-                    query.operationQueue?.addOperation { query.stop() }
-                    self.cancellables.removeAll()
-                    seal(Result.success(fileItem))
-                }
-                
-                NotificationCenter.default.addObserver(forName: NSNotification.Name.NSMetadataQueryDidUpdate, object: query, queue: query.operationQueue) { (notification) in
-                    guard let fileItem = query.resultsFor(fileName: fileName) else {
-                        return
-                    }
-                    query.disableUpdates()
-                    query.operationQueue?.addOperation { query.stop() }
-                    self.cancellables.removeAll()
-                    seal(Result.success(fileItem))
                 }
                 
                 

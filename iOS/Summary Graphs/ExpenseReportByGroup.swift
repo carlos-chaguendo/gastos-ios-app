@@ -21,7 +21,6 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
         self.datasource = SpendByGroupChartView<Group>.DataSource.init(group: group)
     }
     
-    
     var body: some View {
         GeometryReader { reader in
             

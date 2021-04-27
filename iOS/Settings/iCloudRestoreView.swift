@@ -135,31 +135,32 @@ struct iCloudRestoreView: View {
             }
             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
-            
             .onAppear {
-                
-                BackupService().searchBackup(fileName: "default.realm")
-                    .delay(for: 2, scheduler: RunLoop.main)
-                    .sink(receiveCompletion: { completion in
-                        print("comple", completion)
-                        switch completion {
-                        case .finished: self.status = .found
-                        case .failure(let error):  self.status = .failure(error)
-                        }
-                    }, receiveValue: { metadata in
-                        
-                        Logger.info("Listo para descargar")
-                        self.date = metadata.value(forKey: "kMDItemFSContentChangeDate") as? Date
-                        self.fileSize = metadata.value(forAttribute: "kMDItemFSSize") as? Double ?? 0.0
-                        self.status = .found
-                        self.url = metadata.value(forAttribute: NSMetadataItemURLKey) as? URL
-                        
-                    }).store(in: &cancellables)
+                fistly {
+                    BackupService().searchBackup(fileName: "defaults.realm")
+                }
+                .delay(for: 2, scheduler: RunLoop.main)
+                .sink(receiveCompletion: { completion in
+                    print("comple", completion)
+                    switch completion {
+                    case .finished: self.status = .found
+                    case .failure:
+                        self.restorationTerminated = false
+                    }
+                }, receiveValue: { metadata in
+                    
+                    Logger.info("Listo para descargar")
+                    self.date = metadata.value(forKey: "kMDItemFSContentChangeDate") as? Date
+                    self.fileSize = metadata.value(forAttribute: "kMDItemFSSize") as? Double ?? 0.0
+                    self.status = .found
+                    self.url = metadata.value(forAttribute: NSMetadataItemURLKey) as? URL
+                    
+                }).store(in: &cancellables)
                 
                 
             }.navigationBarTitle("", displayMode: .inline)
             .navigationBarItems(trailing: Button("Skip") {
-                
+                self.restorationTerminated = false
             })
         }
     }

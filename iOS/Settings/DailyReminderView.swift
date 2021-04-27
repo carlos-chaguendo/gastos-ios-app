@@ -56,7 +56,10 @@ struct DailyReminderView: View {
             nextFireDate = df.string(from: next)
         }.onDisappear {
             
-            let components = Calendar.gregorian.dateComponents([.hour, .minute], from: date)
+            var components = DateComponents()
+            components.hour = Calendar.gregorian.component(.hour, from: date)
+            components.minute = Calendar.gregorian.component(.minute, from: date)
+            
             let center = UNUserNotificationCenter.current()
             
             let request = UNNotificationRequest(

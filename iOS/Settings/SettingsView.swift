@@ -19,7 +19,7 @@ struct SettingsView: View, WithRows {
             }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
             //.background(.red)
-            .navigationBarTitle("Settings", displayMode: .large)
+            .navigationBarTitle("Settings", displayMode: .inline)
         }
         
     }
