@@ -21,12 +21,6 @@ extension Date {
     }
     
     public func isSame(_ component: Calendar.Component, to another: Date, in timezone: TimeZone = .current) -> Bool {
-//        var calendar = Calendar(identifier: .gregorian)
-//        calendar.timeZone = timezone
-//        let thisComponent: Int = calendar.component(component, from: self)
-//        let anotherComponent: Int = calendar.component(component, from: another)
-//        return thisComponent == anotherComponent
-//
         return Calendar.gregorian.isDate(self, equalTo: another, toGranularity: component)
     }
     
@@ -64,6 +58,14 @@ extension Date {
         }
 
         return result
+    }
+    
+    public func component(_ component: Calendar.Component) -> Int {
+        Calendar.gregorian.component(component, from: self)
+    }
+    
+    public func adding(_ component: Calendar.Component, value: Int) -> Date? {
+        Calendar.gregorian.date(byAdding: component, value: value, to: self)
     }
 
 }

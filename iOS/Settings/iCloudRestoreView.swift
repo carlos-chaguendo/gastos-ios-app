@@ -137,7 +137,7 @@ struct iCloudRestoreView: View {
             .padding(.horizontal)
             .onAppear {
                 fistly {
-                    BackupService().searchBackup(fileName: "defaults.realm")
+                    BackupService().searchBackup(fileName: "default.realm")
                 }
                 .delay(for: 2, scheduler: RunLoop.main)
                 .sink(receiveCompletion: { completion in

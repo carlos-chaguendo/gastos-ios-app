@@ -133,7 +133,7 @@ extension SpendByGroupChartView {
             self.total = categories.map { $0.value }.reduce(0, +)
         }
         
-        var calendarComponent: Calendar.Component { mode == "M" ? .month:   mode == "Y" ? .year : .weekOfMonth }
+        var calendarComponent: Calendar.Component { mode == "D" ? .day: mode == "M" ? .month:   mode == "Y" ? .year : .weekOfMonth }
         
         private func getInterval(mode: String, date: Date = Date()) -> DateInterval {
             let componet = calendarComponent

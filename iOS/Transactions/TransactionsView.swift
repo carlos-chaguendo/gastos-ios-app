@@ -18,7 +18,7 @@ struct TransactionsView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
-    private let backcolor = Colors.groupedBackground
+    private let backcolor = Colors.background
     private let systemBackground = Colors.background
             
     public private(set) var monthNames: [String] = {

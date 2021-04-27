@@ -27,26 +27,6 @@ struct GastosApp: App {
     @AppStorage("isFirstAppInstallation") private var isFirstAppInstallation = true
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
-    
-    init() {
-        
-        #if !os(macOS)
-        UINavigationBar.appearance().shadowImage = UIImage()
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        UINavigationBar.appearance().isTranslucent = true
-        
-        UINavigationBar.appearance().tintColor = Colors.primary // Colores de los botones de navegacion
-        UINavigationBar.appearance().barTintColor = .red // Color de fondo
-        
-        UITableView.appearance().separatorStyle = .none
-        UITableView.appearance().separatorInset = UIEdgeInsets(top: 0, left: 100, bottom: 0, right: 0)
-        UITableView.appearance().backgroundColor = .clear // ColorSpace.color(light: systemBackground, dark: systemBackground)
-        
-        #endif
-        
-        
-    }
     
     @ViewBuilder var plusButton: some View {
         //        PresentLinkView(destination:  ExpenseItemFormView()) {
@@ -147,83 +127,29 @@ struct CapijaView: View {
     @State private var bgColor = Color.red
     
     var body: some View {
-        NavigationView {
+        ScrollView {
             VStack(spacing: 10) {
                 
-                
-                Button("Iclod ba") {
-                    let backup = BackupService.init()
-                    try? backup.startBackup(fileURL: Realm.Configuration.defaultConfiguration.fileURL!)
-                }
-                
-                Button("Resrtore ba") {
-                    let backup = Restore.init()
-                    try? backup.getBackup()
-                }
-                
-                
+ 
                 Text("has \(number)")
                 Text("u \(Int.random(in: 0..<100))")
                 Text("updateView \(updateView)")
                     .onAppear {
                         self.updateView += 1
-                    }
+                }
                 
                 FileImportButton()
                     .padding()
-                
-                
-                
-                
-                
-                Button {
-                    
-                    
-                    
-                    
-                    let color: UInt32 = 0x257D81
-                    let uicolor = ColorSpace.from(hex: color)
-                    
-                } label: {
-                    
-                    
+
+                ForEach([-1.0,-0.9,-0.8,-0.7,-0.6,-0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.8,1.0], id: \.self) { i in
+                    Text("\(i)")
+                        .background(Colors.background.shadeColor(factor: CGFloat(i)))
                 }
-                
-                Button("Add Category") {
-                    Service.addCategory(Catagory {
-                        $0.name = "Comida"
-                    })
-                    
-                    Service.addTag(Tag{
-                        $0.name = "Comida"
-                    })
-                    
-                    Service.addTag(Tag{
-                        $0.name = "Trago"
-                    })
-                    
-                    Service.addTag(Tag{
-                        $0.name = "Marisol"
-                    })
-                    
-                    Service.addTag(Tag{
-                        $0.name = "Popayan"
-                    })
-                    
-                    Service.addWallet(Wallet {
-                        $0.name = "Bancolombia"
-                    })
-                    
-                    Service.addWallet(Wallet {
-                        $0.name = "Efectivo"
-                    })
-                    
-                    Service.addWallet(Wallet {
-                        $0.name = "Davivienda"
-                    })
-                    
-                }
+
+                Divider()
+        
             }
-        }
+        }.background(Colors.background)
+        
     }
 }

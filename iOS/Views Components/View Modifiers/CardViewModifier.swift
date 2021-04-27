@@ -12,9 +12,9 @@ struct CardViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding()
-            .background(ColorSpace.color(light: .white, dark: UIColor.white.withAlphaComponent(0.05)))
+            .background(Colors.Card.background)
             .cornerRadius(20)
-            .shadow(color: Color.gray.opacity(0.3), radius: 10)
+            .shadow(color: Color(Colors.Card.shadown), radius: 10)
     }
     
     

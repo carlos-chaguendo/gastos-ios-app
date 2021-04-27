@@ -109,6 +109,10 @@
 		2FE51A2D25FBE4AA004518A0 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A2C25FBE4AA004518A0 /* Font.swift */; };
 		2FE51A3225FBE4C6004518A0 /* NumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A3125FBE4C6004518A0 /* NumberFormatter.swift */; };
 		2FFE1241263867AF006F696C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE123E2638676C006F696C /* AppDelegate.swift */; };
+		2FFE124D26386C9C006F696C /* ExpenseByGroupWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE124526386C59006F696C /* ExpenseByGroupWidget.swift */; };
+		2FFE12582638718A006F696C /* ExpensStackChartWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE125026386D0C006F696C /* ExpensStackChartWidget.swift */; };
+		2FFE125D263873EC006F696C /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A2525FBE485004518A0 /* DateFormatter.swift */; };
+		2FFE12602638933A006F696C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2F816D5B261D101B009FB091 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -213,6 +217,8 @@
 		2FE51A2C25FBE4AA004518A0 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		2FE51A3125FBE4C6004518A0 /* NumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatter.swift; sourceTree = "<group>"; };
 		2FFE123E2638676C006F696C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2FFE124526386C59006F696C /* ExpenseByGroupWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseByGroupWidget.swift; sourceTree = "<group>"; };
+		2FFE125026386D0C006F696C /* ExpensStackChartWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensStackChartWidget.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,9 +262,10 @@
 			isa = PBXGroup;
 			children = (
 				2F89BA33261F8E3C0009EA03 /* Chart */,
-				2F8BAE8E26346CF000567E4B /* View Components */,
-				2F8BAE8A26346CCF00567E4B /* Extensions */,
 				2F6B075825F99C8100A1D516 /* Colors.swift */,
+				2F8BAE8A26346CCF00567E4B /* Extensions */,
+				2F816D5B261D101B009FB091 /* Localizable.strings */,
+				2F8BAE8E26346CF000567E4B /* View Components */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -282,7 +289,6 @@
 				2F5479AE2629E73400730F13 /* Gastos.entitlements */,
 				2F6B071025F976D900A1D516 /* GastosApp.swift */,
 				2F6B071A25F976DA00A1D516 /* Info.plist */,
-				2F816D5B261D101B009FB091 /* Localizable.strings */,
 				2F8BADF22633B91600567E4B /* Notifications */,
 				2FA938B026331562006F1905 /* Settings */,
 				2F816D63261D26BF009FB091 /* Summary Graphs */,
@@ -391,9 +397,11 @@
 		2F8BAE45263468D800567E4B /* WidgetKit */ = {
 			isa = PBXGroup;
 			children = (
-				2F8BAE46263468D800567E4B /* WidgetKit.swift */,
 				2F8BAE48263468D800567E4B /* Assets.xcassets */,
+				2FFE124526386C59006F696C /* ExpenseByGroupWidget.swift */,
+				2FFE125026386D0C006F696C /* ExpensStackChartWidget.swift */,
 				2F8BAE4A263468D800567E4B /* Info.plist */,
+				2F8BAE46263468D800567E4B /* WidgetKit.swift */,
 			);
 			path = WidgetKit;
 			sourceTree = "<group>";
@@ -582,6 +590,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F8BAE49263468D800567E4B /* Assets.xcassets in Resources */,
+				2FFE12602638933A006F696C /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -684,8 +693,11 @@
 				2F8BAE47263468D800567E4B /* WidgetKit.swift in Sources */,
 				2F8BAE9226346D2200567E4B /* View++.swift in Sources */,
 				2F8BAE8026346AF000567E4B /* Colors.swift in Sources */,
+				2FFE125D263873EC006F696C /* DateFormatter.swift in Sources */,
 				2F8BAE7626346AA900567E4B /* Entity.swift in Sources */,
+				2FFE124D26386C9C006F696C /* ExpenseByGroupWidget.swift in Sources */,
 				2F8BAE7226346AA900567E4B /* ApplicationData.swift in Sources */,
+				2FFE12582638718A006F696C /* ExpensStackChartWidget.swift in Sources */,
 				2F8BAE7526346AA900567E4B /* Catagory.swift in Sources */,
 				2F8BAE7A26346AB800567E4B /* Logger.swift in Sources */,
 				2F8BAE6526346AA400567E4B /* Service.swift in Sources */,

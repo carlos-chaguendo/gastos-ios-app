@@ -137,6 +137,8 @@ public class Service {
         
     }
     
+    /// Cuenta el numero detos por dia
+    /// - Returns: Numero de gastos por dia en un mes
     static func countEventsIn(month date: Date) -> [Date: Int] {
         realm.objects(ExpenseItem.self)
             .filter { Calendar.current.isDate($0.date, equalTo: date, toGranularity: .month)  }
@@ -146,12 +148,37 @@ public class Service {
     
     /// Suma de costos por dia
     /// - Parameter date: Fecha
-    /// - Returns: Dicionario de costos diarios
+    /// - Returns: Dicionario de costos diarios, solo las fechas que tiene datos
     static func sumEventsIn(month date: Date) -> [Date: Double] {
         realm.objects(ExpenseItem.self)
             .filter { $0.date.isSame(.month, to: date) }
             .groupBy { $0.date.withStart(of: .day) }
             .mapValues { $0.map { $0.value}.reduce(0, +) }
+    }
+    
+    
+    /// Diccionario de gastos por fehca
+    /// - Parameters:
+    ///   - componet: El rango de consulta , dia, mes, anio
+    ///   - date: la fecha en la cual se requiere buscar
+    /// - Returns: datos por dia, Zero si en una fecha no hay transaciones
+    static func expenses(in componet: Calendar.Component, of date: Date) -> [Date: Double] {
+        let expensesByDay = realm.objects(ExpenseItem.self)
+            .filter { $0.date.isSame(componet, to: date) }
+            .groupBy { $0.date.withStart(of: .day) }
+            .mapValues { $0.map { $0.value}.reduce(0, +) }
+        
+        let start = date.withStart(of: componet)
+        let end = date.withEnd(of: componet)
+        let dates = start.enumerate(.day, until: end)
+        
+        var result: [Date: Double] = [:]
+        
+        for day in dates {
+            result[day] = expensesByDay[day, default: 0.0]
+        }
+        
+        return result
     }
     
     static func getItems(in date: Date) -> [ExpenseItem] {

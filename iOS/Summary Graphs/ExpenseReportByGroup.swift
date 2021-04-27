@@ -30,7 +30,7 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                     
                     
                     Picker("", selection: $datasource.mode) {
-                        ForEach(["W", "M","Y"], id:\.self) { mode in
+                        ForEach(["D","W", "M","Y"], id:\.self) { mode in
                             Text(mode)
                         }
                     }.pickerStyle(SegmentedPickerStyle())
@@ -55,8 +55,16 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                         
                     }.padding()
                     
-                    SpendByGroupChartView(datasource: self.datasource, title: nil, showNavigation: false)
+                    Text(NumberFormatter.currency.string(from: NSNumber(value: datasource.total)) ?? "")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(Colors.title)
                     
+                    StackChart<Group>(
+                        total: datasource.total,
+                        categories: datasource.categories
+                    )
+                                        
                     ForEach(datasource.categories, id: \.self) { category in
                         
                         let percent = (category.value * 100)/datasource.total
@@ -66,7 +74,13 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                                         in: datasource.calendarComponent,
                                         of: datasource.date)) {
                             
-                            HStack(alignment: VerticalAlignment.firstTextBaseline) {
+                            HStack(alignment: VerticalAlignment.center) {
+                                
+                                Color(UIColor.from(hex: UInt32(category.color)))
+                                    .frame(width: 4, height: 4)
+                                    .cornerRadius(2)
+                                
+                                
                                 Text(category.name)
                                     .font(.system(size: 15))
                                     //.fontWeight(.medium)

@@ -55,6 +55,8 @@ public class WeekendViewModel: ObservableObject {
     /// la fecha debe de ser al inicio del dia
     @Published public var marked: [Date] = []
     
+    private var navBackgroundColor: ColorSpace? = nil
+    
     public var daysRowHeight: CGFloat = 40 {
         didSet {
             withAnimation(.easeInOut) {
@@ -103,4 +105,17 @@ public class WeekendViewModel: ObservableObject {
         }
     }
     
+}
+
+extension WeekendViewModel {
+    
+    func clearNavColor(color: ColorSpace) {
+        self.navBackgroundColor = UINavigationBar.appearance().compactAppearance?.backgroundColor
+        UINavigationBar.appearance().compactAppearance?.backgroundColor = color
+    }
+    
+    func restoreNavColor() {
+        guard let color = navBackgroundColor else { return}
+        UINavigationBar.appearance().compactAppearance?.backgroundColor = color
+    }
 }

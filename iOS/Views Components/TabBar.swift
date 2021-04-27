@@ -42,7 +42,7 @@ struct TabBar: View {
                     Spacer()
                     
                     ZStack {
-                        HStack {
+                        HStack(spacing: 0) {
                             
                             ForEach(0..<pages.count) { i in
                                 pages[i].tab
@@ -135,7 +135,7 @@ extension TabBar.Page {
                     .frame(width: width, height: height)
                     .padding(.top, 10)
                 Text(tabName)
-                    .font(.footnote)
+                    .font(.caption2)
                 Spacer()
             }
         }

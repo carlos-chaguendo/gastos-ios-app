@@ -96,7 +96,7 @@ struct iCloudBackupView: View {
                             Logger.info("progreso", progress)
                             self.progress = progress.rounded(toPlaces: 2)
                         }).store(in: &cancellables)
-                }
+                }.foregroundColor(Colors.primary)
                 //.buttonStyle(ButtonStyleFormLarge())
                 
             }
@@ -105,6 +105,7 @@ struct iCloudBackupView: View {
         }
         .padding()
         .navigationTitle("Backup copy")
+        .background(Colors.background)
     }
     
  

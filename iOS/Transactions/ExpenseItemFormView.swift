@@ -143,6 +143,7 @@ struct ExpenseItemFormView: View {
                 }
             }
             .padding()
+            .background(Colors.background)
             .navigationBarTitle("Expense",displayMode: .inline)
             .navigationBarItems(
                 leading: Button {

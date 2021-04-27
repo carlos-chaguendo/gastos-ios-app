@@ -20,6 +20,10 @@ extension OSLogger {
 
 public struct Logger {
     
+    private init() {
+        
+    }
+    
 
     public static func info(_ items: String, file: String = #file, line: Int = #line) {
         let other: String? = nil

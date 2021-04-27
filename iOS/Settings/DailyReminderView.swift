@@ -47,6 +47,7 @@ struct DailyReminderView: View {
             Spacer()
         }
         .padding()
+        .background(Colors.background)
         .onAppear {
             self.date = df.date(from: appDailyDate) ?? Date()
         }.onChange(of: date) { newDate in

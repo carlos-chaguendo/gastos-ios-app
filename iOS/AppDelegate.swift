@@ -12,6 +12,31 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         print("Your code here")
         
         
+        #if !os(macOS)
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.backgroundColor = Colors.background
+        appearance.titleTextAttributes = [.foregroundColor: Colors.title]
+        appearance.largeTitleTextAttributes = [.foregroundColor: Colors.title]
+        appearance.shadowImage = UIImage()
+        appearance.shadowColor = Colors.background
+        
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().tintColor = Colors.primary // Colores de los botones de
+        UINavigationBar.appearance().isTranslucent = true
+        
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().shadowImage = UIImage()
+        
+        UITableView.appearance().separatorStyle = .none
+        UITableView.appearance().separatorInset = UIEdgeInsets(top: 0, left: 100, bottom: 0, right: 0)
+        UITableView.appearance().backgroundColor = .clear // ColorSpace.color(light: systemBackground, dark: systemBackground)
+        
+        #endif
+        
         UNUserNotificationCenter.current().delegate = self
         return true
     }

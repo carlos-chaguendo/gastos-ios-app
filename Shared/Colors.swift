@@ -73,6 +73,16 @@ enum Colors {
         public static let value: ColorSpace = .color(light: #colorLiteral(red: 0.09411764706, green: 0.1725490196, blue: 0.2941176471, alpha: 1), dark: .white)
     }
     
+    struct Tags {
+        public static let background: ColorSpace = .color(light: .systemGroupedBackground, dark: Colors.background)
+        
+    }
+    
+    struct Card {
+        public static let background: ColorSpace =  .color(light: .white, dark: #colorLiteral(red: 0, green: 0.1479207078, blue: 0.1882454439, alpha: 1).shadeColor(factor: -0.1))
+        public static let shadown: ColorSpace = .color(light:  ColorSpace.gray.withAlphaComponent(0.3),  dark: ColorSpace.gray.withAlphaComponent(0.1))
+    }
+    
     
     public static let shadown: ColorSpace = ColorSpace.color(light: #colorLiteral(red: 0.7540688515, green: 0.7540867925, blue: 0.7540771365, alpha: 1), dark: #colorLiteral(red: 0.370555222, green: 0.3705646992, blue: 0.3705595732, alpha: 1)).withAlphaComponent(0.2)
     
@@ -86,6 +96,20 @@ extension ColorSpace {
             blue: .random(in: 0...1),
             alpha: 1
         )
+    }
+    
+    func shadeColor(factor: CGFloat) -> ColorSpace {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        let t: CGFloat = factor < 0 ? 0 : 1
+        let p: CGFloat = factor < 0 ? -factor : factor
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+        r = (t - r) * p + r
+        g = (t - g) * p + g
+        b = (t - b) * p + b
+        return .init(red: r, green: g, blue: b, alpha: a)
     }
 }
 
@@ -102,3 +126,5 @@ extension Color {
         UIColor(self)
     }
 }
+
+

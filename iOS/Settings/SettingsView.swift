@@ -18,7 +18,7 @@ struct SettingsView: View, WithRows {
                 Spacer()
             }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
-            //.background(.red)
+            .background(Colors.background)
             .navigationBarTitle("Settings", displayMode: .inline)
         }
         
