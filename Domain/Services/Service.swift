@@ -10,7 +10,6 @@ import RealmSwift
 
 public class Service {
     
-    
     public static var fileURL = FileManager
         .default
         .containerURL(forSecurityApplicationGroupIdentifier: "group.com.mayorgafirm.gastos.shared")!
@@ -25,23 +24,26 @@ public class Service {
         let config = Realm.Configuration(
             fileURL: fileURL,
             schemaVersion: 3,
-            migrationBlock: { migration, oldSchemaVersion in
-
-                if (oldSchemaVersion < 1) {
-        
+            migrationBlock: { _, oldSchemaVersion in
+                
+                if oldSchemaVersion < 1 {
+                    
                 }
-        })
+            })
         Realm.Configuration.defaultConfiguration = config
         Logger.info("File", Realm.Configuration.defaultConfiguration.fileURL)
-        let realm = try! Realm(configuration: Realm.Configuration.defaultConfiguration)
-        return realm
+        do {
+            let realm = try Realm(configuration: Realm.Configuration.defaultConfiguration)
+            return realm
+        } catch {
+            preconditionFailure(error.localizedDescription)
+        }
     }()
-    
     
     private init() {}
     
     static func addItem(_ item: ExpenseItem) {
-        try! realm.write {
+        realm.rwrite {
             
             let local: ExpenseItem = realm.findBy(id: item.id) ?? item
             
@@ -59,7 +61,7 @@ public class Service {
             
             realm.add(local)
         }
-
+        
         if item.hasId() {
             NotificationCenter.default.post(name: .didEditTransaction, object: item.detached())
         } else {
@@ -69,7 +71,7 @@ public class Service {
     
     @discardableResult
     static func addGroup<Group: Entity & ExpensePropertyWithValue>(_ item: Group) -> Group {
-        try! realm.write {
+        realm.rwrite {
             
             let local: Group = realm.findBy(id: item.id) ?? item
             local.name = item.name
@@ -84,10 +86,9 @@ public class Service {
         return item.detached()
     }
     
-    
     @discardableResult
     static func addCategory(_ item: Catagory) -> Catagory {
-        try! realm.write {
+        realm.rwrite {
             item.id = UUID().description
             realm.add(item)
         }
@@ -96,14 +97,14 @@ public class Service {
     }
     
     static func addTag(_ item: Tag) {
-        try! realm.write {
+        realm.rwrite {
             item.id = UUID().description
             realm.add(item)
         }
     }
     
     static func addWallet(_ item: Wallet) -> Wallet {
-        try! realm.write {
+        realm.rwrite {
             item.id = UUID().description
             realm.add(item)
         }
@@ -111,20 +112,18 @@ public class Service {
         return item.detached()
     }
     
-    static func remove(_ item:ExpenseItem) {
+    static func remove(_ item: ExpenseItem) {
         guard let local = realm.object(ofType: ExpenseItem.self, forPrimaryKey: item.id) else {
             preconditionFailure()
         }
         
-        try! realm.write {
+        realm.rwrite {
             if !local.isInvalidated {
                 realm.delete(local)
             }
             Logger.info("Eliminando", local)
         }
     }
-    
-
     
     /// Retorna todas las fechas que almenos tiene una transaccion
     /// - Parameter date: El mes el cual se quiere consultar
@@ -156,7 +155,6 @@ public class Service {
             .mapValues { $0.map { $0.value}.reduce(0, +) }
     }
     
-    
     /// Diccionario de gastos por fehca
     /// - Parameters:
     ///   - componet: El rango de consulta , dia, mes, anio
@@ -181,22 +179,43 @@ public class Service {
         return result
     }
     
+    /// Los gastos en un dia
+    /// - Parameter date: Dia
+    /// - Returns: las transacciones que se realizaron en un dia especificado
     static func getItems(in date: Date) -> [ExpenseItem] {
         realm.objects(ExpenseItem.self)
             .filter { Calendar.current.isDate($0.date, equalTo: date, toGranularity: .day) }
             .detached
             .sorted(by: {$0.id > $1.id })
-    
+        
     }
     
-    static func transactions<Group: Entity & ExpensePropertyWithValue>(by group: KeyPath<ExpenseItem, Group>, _ category: Group, in componet: Calendar.Component, of date: Date) -> [ExpenseItem] {
+    /// Consulta las transacciones por grupo
+    /// - Parameters:
+    ///   - group: Path para el grupo
+    ///   - category: Valor para filtrar
+    ///   - componet: El rango de consulta month. year
+    ///   - date: la fecha de consulta
+    /// - Returns: Listato de transaciones segun una categoria en unas fecha especificas
+    static func transactions<Group: Entity & ExpensePropertyWithValue>( by group: KeyPath<ExpenseItem, Group>,
+                                                                        _ category: Group, in componet: Calendar.Component,
+                                                                        of date: Date
+    ) -> [ExpenseItem] {
         realm.objects(ExpenseItem.self)
             .filter { $0.date.isSame(componet, to: date) && $0[keyPath: group].id == category.id }
             .detached
             .sorted(by: {$0.id > $1.id })
     }
     
-    static func expenses<Group: Entity & ExpensePropertyWithValue>(by group: KeyPath<ExpenseItem, Group>, in componet: Calendar.Component, of date: Date) -> [Group] {
+    /// Consulta los gastos por grupo
+    /// - Parameters:
+    ///   - group: Path para el grupo
+    ///   - componet: Valor para filtrar
+    ///   - date: la fecha de consulta
+    /// - Returns: Agrupa los gastos en un periodo por grupo
+    static func expenses<Group: Entity & ExpensePropertyWithValue>(by group: KeyPath<ExpenseItem, Group>,
+                                                                   in componet: Calendar.Component,
+                                                                   of date: Date) -> [Group] {
         
         setColorsIfNeeded(to: Group.self)
         
@@ -218,6 +237,9 @@ public class Service {
         
     }
     
+    /// Obtiene todos los elemntos de una entidad
+    /// - Parameter type: Entidad
+    /// - Returns: Todos los elementos
     static func getAll<Object: Entity>(_ type: Object.Type) -> [Object] {
         realm.objects(Object.self)
             .detached
@@ -227,7 +249,7 @@ public class Service {
         let groups = realm.objects(group.self)
             .filter { $0.color == 0x000 }
         
-        try! realm.write {
+        realm.rwrite {
             groups.forEach {
                 $0.color = Int32(ColorSpace.random.toHexInt())
             }

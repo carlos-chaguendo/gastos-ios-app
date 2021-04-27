@@ -70,8 +70,18 @@ extension Realm {
             .compactMap { id -> Element? in
                 self.findBy(id: id)
             }
-        .forEach { result.append($0)}
+            .forEach { result.append($0)}
         return result
+    }
+    
+    public func rwrite(block: () throws -> Void) {
+        do {
+            try self.write {
+                try block()
+            }
+        } catch {
+            preconditionFailure(error.localizedDescription)
+        }
     }
     
 }

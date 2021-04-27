@@ -9,9 +9,8 @@ import SwiftUI
 
 @_functionBuilder
 public struct ArrayBuilder<Element> {
-    
+
     public static func buildBlock(_ components: Element?...) -> [Element] {
         return components.compactMap { $0 }
     }
 }
-

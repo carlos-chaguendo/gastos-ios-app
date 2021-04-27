@@ -18,4 +18,3 @@ class ButtonStyleFormLarge: ButtonStyle {
             .cornerRadius(4.0)
     }
 }
-

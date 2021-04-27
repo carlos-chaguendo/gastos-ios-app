@@ -7,12 +7,11 @@
 
 import SwiftUI
 
-
 struct CategorySelectionView: View {
-    
+
     @State var values: [Catagory] = []
     @Binding var selection: Set<Catagory>
-    
+
     var body: some View {
         NavigationView {
             SelectorList(
@@ -20,7 +19,7 @@ struct CategorySelectionView: View {
                 values: values,
                 selected: $selection,
                 destination: Text("sss"),
-                content:  {
+                content: {
                     Text($0.name)
                         .foregroundColor(Colors.Form.value)
                 }
@@ -32,14 +31,14 @@ struct CategorySelectionView: View {
             }
         }
     }
-    
+
 }
 
 struct TagSelectionView: View {
-    
+
     @State var values: [Tag] = []
     @Binding var selection: Set<Tag>
-    
+
     var body: some View {
         NavigationView {
             SelectorList(
@@ -47,7 +46,7 @@ struct TagSelectionView: View {
                 values: values,
                 selected: $selection,
                 destination: Text("new Tag"),
-                content:  {
+                content: {
                     Text($0.name)
                         .foregroundColor(Colors.Form.value)
                 }
@@ -58,15 +57,14 @@ struct TagSelectionView: View {
             }
         }
     }
-    
+
 }
 
-
 struct WalletsSelectionView: View {
-    
+
     @State var values: [Wallet] = []
     @Binding var selection: Set<Wallet>
-    
+
     var body: some View {
         NavigationView {
             SelectorList(
@@ -74,7 +72,7 @@ struct WalletsSelectionView: View {
                 values: values,
                 selected: $selection,
                 destination: Text("new Wallet"),
-                content:  {
+                content: {
                     Text($0.name)
                         .foregroundColor(Colors.Form.value)
                 }
@@ -85,5 +83,5 @@ struct WalletsSelectionView: View {
             }
         }
     }
-    
+
 }

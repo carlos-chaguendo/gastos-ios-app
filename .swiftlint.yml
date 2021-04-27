@@ -1,0 +1,14 @@
+excluded:
+    -/Views\ Components/CurrencyTextField.swift
+identifier_name:
+    excluded:
+        - id
+        - x
+        - y
+        - j
+        - i
+        - p
+        - h
+        - l
+disabled_rules:
+  - trailing_whitespace

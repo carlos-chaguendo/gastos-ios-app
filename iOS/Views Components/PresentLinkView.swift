@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct PresentLinkView<Label: View, Destination: View>: View {
-    
+
     @State var isPresented: Bool = false
-    
+
     var destination: () -> Destination
     var addNavigation = false
     var label: Label
-    
+
     init(addNavigation: Bool = false, destination: @escaping @autoclosure () -> Destination, @ViewBuilder label: () -> Label) {
         self.destination = destination
         self.label = label()
         self.addNavigation = addNavigation
     }
-    
+
     var body: some View {
         Button {
             self.isPresented.toggle()
@@ -28,7 +28,7 @@ struct PresentLinkView<Label: View, Destination: View>: View {
         } label: {
             label
         }.sheet(isPresented: $isPresented) {
-            
+
             if addNavigation {
                 NavigationView {
                     destination()
@@ -38,24 +38,23 @@ struct PresentLinkView<Label: View, Destination: View>: View {
             }
         }
     }
-    
+
 }
 
-
 struct FullScreenCover<Label: View, Destination: View>: View {
-    
+
     @State var isPresented: Bool = false
-    
+
     var destination: () -> Destination
     var addNavigation = false
     var label: Label
-    
+
     init(addNavigation: Bool = false, destination: @escaping @autoclosure () -> Destination, @ViewBuilder label: () -> Label) {
         self.destination = destination
         self.label = label()
         self.addNavigation = addNavigation
     }
-    
+
     var body: some View {
         Button {
             self.isPresented.toggle()
@@ -63,7 +62,7 @@ struct FullScreenCover<Label: View, Destination: View>: View {
         } label: {
             label
         }.fullScreenCover(isPresented: $isPresented) {
-            
+
             if addNavigation {
                 NavigationView {
                     destination()
@@ -73,5 +72,5 @@ struct FullScreenCover<Label: View, Destination: View>: View {
             }
         }
     }
-    
+
 }

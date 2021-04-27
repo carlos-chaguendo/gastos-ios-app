@@ -41,28 +41,26 @@ extension Collection where Index == Int {
  - agregar el valor minuimo y maximo
  - pasar esta configuracion al modelo
  */
-struct PageView<SelectionValue : Hashable, Content: View>: View  {
-    
+struct PageView<SelectionValue: Hashable, Content: View>: View {
+
     public var continuePage: Bool = true
     @Binding public var needsRefresh: Bool
     @Binding public var currentPage: SelectionValue
     @State private var isAnimatingPageChanged = false
     @State private var offset: CGFloat = 0
-   
-    
+
     @State private var prevOffset: CGFloat = 0
 
     public let content: (SelectionValue) -> Content
-    
+
     public let next: (SelectionValue) -> SelectionValue
     public let prev: (SelectionValue) -> SelectionValue
 
     @State private var pages: Stack<Content> = []
     @State private var index: Stack<SelectionValue> = []
 
-    
     @State private var availableWidth: CGFloat = 0
-    
+
     public init(
         continuePage: Bool,
         needsRefresh: Binding<Bool>,
@@ -70,8 +68,7 @@ struct PageView<SelectionValue : Hashable, Content: View>: View  {
         @ViewBuilder content: @escaping (SelectionValue) -> Content,
         next: @escaping (SelectionValue) -> SelectionValue,
         prev: @escaping (SelectionValue) -> SelectionValue
-    )
-    {
+    ) {
         self.continuePage = true
         self._needsRefresh = needsRefresh
         self._currentPage = currentPage
@@ -79,27 +76,27 @@ struct PageView<SelectionValue : Hashable, Content: View>: View  {
         self.next = next
         self.prev = prev
     }
-    
-    //@ViewBuilder
+
+    // @ViewBuilder
     func getpage(at i: Int) -> Content {
         if needsRefresh {
             return invokeContentGenerator(at: index[i])
         }
-        
+
         return pages[i]
     }
-    
+
     func invokeContentGenerator(at i: SelectionValue) -> Content {
         Logger.info("generando contenido ", i)
         return content(i)
     }
-    
+
     var body: some View {
         GeometryReader { reader in
- 
+
             let width = reader.size.width
             let tolerance = width * 1/5
-            
+
             if pages.isEmpty || needsRefresh {
                 Text("loasing")
                     .frame(width: width)
@@ -108,8 +105,7 @@ struct PageView<SelectionValue : Hashable, Content: View>: View  {
                         generatePages()
                     }
             } else {
-        
-             
+
                 if continuePage {
                     getpage(at: 0)
                         .if(isAnimatingPageChanged) {
@@ -119,31 +115,29 @@ struct PageView<SelectionValue : Hashable, Content: View>: View  {
                         }.frame(width: width)
                 }
                    // .background(.systemBlue)
-                    
-                
+
                 ScrollView(.horizontal, showsIndicators: false) {
-                    
+
                     Group {
                         getpage(at: continuePage ? 1 : 0)
                             .frame(width: width)
                             .offset(x: self.offset, y: 0)
                     }.readOffset(named: "scrollViewCoordinateSpaceID") { y in
-                        
+
                         prevOffset = y.origin.x
-                   
+
                         if y.maxX < width - tolerance {
                             pageChangeAnimation(screenWidth: -width)
                         }
-                        
+
                         if y.minX > tolerance {
                             pageChangeAnimation(screenWidth: width)
                         }
                     }
-                    
+
                 }
                 .coordinateSpace(name: "scrollViewCoordinateSpaceID")
-              
-                
+
                 if continuePage {
                     getpage(at: 2)
                         .if(isAnimatingPageChanged) {
@@ -152,13 +146,12 @@ struct PageView<SelectionValue : Hashable, Content: View>: View  {
                             $0.offset(x: width + prevOffset, y: 0)
                         }.frame(width: width)
                 }
-                
-                
+
             }
-            
+
         }.clipped()
     }
-    
+
     func generatePages() {
         if continuePage {
             index = [prev(currentPage), currentPage, next(currentPage) ]
@@ -168,58 +161,54 @@ struct PageView<SelectionValue : Hashable, Content: View>: View  {
             pages = [invokeContentGenerator(at: currentPage)]
         }
     }
-    
-    
+
     /// Ejecuta la animacion de cambiar pagina
     /// - Parameter size: tancho de la pantalla
     /// - Parameter updateSelected: un boleano que indica si tien que actualizar la fecha selecionada actualmente al cambiar de pagina
     func pageChangeAnimation(screenWidth size: CGFloat, updateSelected: Bool = true) {
         guard !isAnimatingPageChanged else { return }
-        
 
-        //isScrollEnabled = false
-        
+        // isScrollEnabled = false
+
         isAnimatingPageChanged = true
-        withAnimation(.easeInOut)  {
+        withAnimation(.easeInOut) {
             self.offset = size
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            
+
             self.offset = -size
-            
+
             if updateSelected {
                 let sign = size < 0 ? 1 : -1
                 print("Update select", sign)
-                
+
                 if sign > 0 {
                     /// =====>
-     
+
                     let rightIndex = index.last
                     let newRight = next(rightIndex)
-                    
+
                     index.right(newRight)
                     pages.right(invokeContentGenerator(at: newRight))
                     print("indices", index)
-                    
-                    
+
                     currentPage = rightIndex
-                    
-                    
+
                 } else {
                     /// <=====
-        
+
                     let leftIndex = index.first
                     let newleft = prev(leftIndex)
-                    
+
                     index.left(newleft)
                     pages.left(invokeContentGenerator(at: newleft))
                     print("indices", index)
-                    
+
                     currentPage = leftIndex
                 }
 
             }
-            
+
             if continuePage {
                 self.offset = 0
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
@@ -233,27 +222,25 @@ struct PageView<SelectionValue : Hashable, Content: View>: View  {
                     }
                 }
             }
-            
-      
+
         }
     }
 }
 
 extension PageView where SelectionValue: Numeric {
-    
+
     init(continuePage: Bool = true, steps: SelectionValue, currentPage: Binding<SelectionValue>, content: @escaping (SelectionValue) -> Content) {
-        self.init(continuePage: continuePage, needsRefresh: .constant(false), currentPage: currentPage, content: content, next:  { current in
+        self.init(continuePage: continuePage, needsRefresh: .constant(false), currentPage: currentPage, content: content, next: { current in
             return current + steps
         }, prev: {
             $0 - steps
         })
 
     }
-    
-    
+
 }
 
-//struct PageView_Previews: PreviewProvider {
+// struct PageView_Previews: PreviewProvider {
 //    @State static var selected: Int = 0
 //
 //    static var previews: some View {
@@ -272,4 +259,4 @@ extension PageView where SelectionValue: Numeric {
 //        }
 //
 //    }
-//}
+// }

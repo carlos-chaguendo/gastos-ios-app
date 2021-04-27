@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 extension NumberFormatter {
-    
+
     public static var currency: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
@@ -18,5 +18,5 @@ extension NumberFormatter {
         formatter.generatesDecimalNumbers = true
         return formatter
     }()
-    
+
 }

@@ -8,28 +8,26 @@ import SwiftUI
 import Foundation
 
 public protocol PropertyBuilder {
-    
+
 }
 
-extension PropertyBuilder where Self : AnyObject {
-    
+extension PropertyBuilder where Self: AnyObject {
+
         @discardableResult
         public func set<Value>(_ key: ReferenceWritableKeyPath<Self, Value>, _ value: Value) -> Self {
             self[keyPath: key] = value
             return self
         }
-    
+
 }
 
 extension NSObject: PropertyBuilder { }
 
-//extension PropertyBuilder where Self: View {
+// extension PropertyBuilder where Self: View {
 //
 //    @discardableResult
 //    public func set<Value>(_ key: ReferenceWritableKeyPath<Self, Value>, _ value: Value) -> Self {
 //        self[keyPath: key] = value
 //        return self
 //    }
-//}
-
-
+// }

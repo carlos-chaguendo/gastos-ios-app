@@ -8,21 +8,21 @@
 import SwiftUI
 
 extension Chart {
-    
+
     class DataSet: Identifiable {
         let points: [CGPoint]
         let color: Color
-        
+
         init(points: [CGPoint], color: Color) {
             self.points = points
             self.color = color
         }
     }
-    
+
     struct Lines: View {
-        
+
         let datasource: [DataSet]
-        
+
         var body: some View {
             VStack(spacing: 4) {
                 ZStack {
@@ -38,43 +38,42 @@ extension Chart {
                     .foregroundColor(.tertiaryLabel)
                     .scaleEffect(CGSize(width: 0.95, height: 1))
             }
-            
+
         }
 
     }
 }
 
-
 //
 struct LineGraph_Previews: PreviewProvider {
-    
+
     static let points: [CGPoint] = [
         CGPoint(x: 0, y: 100),
         CGPoint(x: 0, y: 20),
         CGPoint(x: 0, y: 40),
         CGPoint(x: 0, y: 60),
-        CGPoint(x: 0, y:  50),
+        CGPoint(x: 0, y: 50),
         CGPoint(x: 0, y: 300)
     ]
-    
+
     static var previews: some View {
         Group {
             Chart.Lines(datasource: [
                 .init(points: points.dropLast().dropLast(), color: Color(UIColor.systemGroupedBackground)),
-                .init(points: points.reversed(), color: .green),
+                .init(points: points.reversed(), color: .green)
             ])
             .padding()
-            .previewLayout(PreviewLayout.fixed(width: 220 , height: 220))
-           
+            .previewLayout(PreviewLayout.fixed(width: 220, height: 220))
+
             Chart.Lines(datasource: [
                 .init(points: points.reversed(), color: Color(UIColor.systemGroupedBackground)),
-                .init(points: points, color: .green),
+                .init(points: points, color: .green)
             ])
             .padding()
-            .previewLayout(PreviewLayout.fixed(width: 120 , height: 120))
+            .previewLayout(PreviewLayout.fixed(width: 120, height: 120))
             .preferredColorScheme(.dark)
-            
+
         }
-        
+
     }
 }

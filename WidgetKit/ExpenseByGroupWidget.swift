@@ -10,9 +10,9 @@ import SwiftUI
 import Combine
 
 struct Provider<Group: Entity & ExpensePropertyWithValue>: TimelineProvider {
-    
+
     public let groupBy: KeyPath<ExpenseItem, Group>
-    
+
     func placeholder(in context: Context) -> SimpleEntry<Group> {
         SimpleEntry<Group>(date: Date(), source: .init(group: groupBy, categories: [
             Group {
@@ -32,18 +32,18 @@ struct Provider<Group: Entity & ExpensePropertyWithValue>: TimelineProvider {
             }
         ]))
     }
-    
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry<Group>) -> ()) {
+
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry<Group>) -> Void) {
         let entry = placeholder(in: context)
         completion(entry)
     }
-    
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        
+
+    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+
         let currentDate = Date()
         let source = SpendByGroupChartView<Group>.DataSource(group: groupBy)
         let timeline = Timeline(entries: [SimpleEntry(date: currentDate, source: source)], policy: .never)
-        
+
         source.prepareValues()
         completion(timeline)
     }
@@ -55,10 +55,10 @@ struct SimpleEntry<Group: Entity & ExpensePropertyWithValue>: TimelineEntry {
 }
 
 struct WidgetKitEntryView<Group: Entity & ExpensePropertyWithValue> : View {
-    
+
     var entry: Provider<Group>.Entry
     var title: LocalizedStringKey
-    
+
     var body: some View {
         VStack(spacing: 8) {
             SpendByGroupChartView(datasource: entry.source, title: title, showNavigation: false)
@@ -66,18 +66,15 @@ struct WidgetKitEntryView<Group: Entity & ExpensePropertyWithValue> : View {
     }
 }
 
-
-
 struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
     init(title: LocalizedStringKey, group: KeyPath<ExpenseItem, Group>) {
-        
+
     }
-    
+
     var body: some View {
         Text("support")
     }
 }
-
 
 // MARK: - Widget
 struct WalletWidget: Widget {

@@ -10,9 +10,9 @@ import SwiftUI
 import CoreServices
 
 struct DocumentPickerViewController: UIViewControllerRepresentable {
-    
+
     var type: CFString
-    var callback: (URL) -> ()
+    var callback: (URL) -> Void
 
     func makeCoordinator() -> Coordinator {
         return Coordinator(documentController: self)

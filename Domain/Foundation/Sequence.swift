@@ -53,7 +53,7 @@ extension Sequence {
         }
         return dict
     }
-    
+
 }
 
 extension Sequence where Iterator.Element: Hashable {

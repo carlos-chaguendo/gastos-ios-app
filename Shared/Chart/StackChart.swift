@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct StackChart<Group: Entity & ExpensePropertyWithValue>: View {
-    
+
     var total: Double = 1
     let categories: [Group]
-    
+
     var body: some View {
         GeometryReader { reader in
             HStack(spacing: 0.5) {
@@ -20,11 +20,11 @@ struct StackChart<Group: Entity & ExpensePropertyWithValue>: View {
                 } else {
                     ForEach(categories, id: \.self) { category in
                         let percent = ((category.value * 100)/self.total/100)
-                        
+
                         Color(UIColor.from(hex: UInt32(category.color)))
                             .frame(width: reader.size.width * CGFloat(percent))
                             .transition(.leadingX)
-                           
+
                     }
                 }
             }
@@ -38,13 +38,13 @@ struct StackChart<Group: Entity & ExpensePropertyWithValue>: View {
 
 struct StackChart_Previews: PreviewProvider {
     static var previews: some View {
-        
+
         StackChart<Wallet>(categories: [
             .init {
                 $0.name = "Hola"
                 $0.value = 0.5
             },
-            
+
             .init {
                 $0.name = "Beats"
                 $0.value = 0.25

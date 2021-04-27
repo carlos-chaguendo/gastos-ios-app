@@ -7,9 +7,9 @@
 import SwiftUI
 
 extension Font {
-    
+
     public static func menlo(size: CGFloat) -> Font {
         Font.custom("Menlo", size: size)
     }
-    
+
 }

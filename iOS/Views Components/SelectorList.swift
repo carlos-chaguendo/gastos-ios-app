@@ -8,21 +8,21 @@
 import SwiftUI
 
 struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: View>: View {
-    
+
     var title: LocalizedStringKey
     var values: [Value]
     var selected: Binding<Set<Value>>
     var destination: Destination?
     var content: (Value) -> Content
-    
+
     @Environment(\.presentationMode) private var presentation
     @State private var addNew = false
     @State private var selectedIdentifiers = Set<Value.ID>()
-    
+
     var allowMultipleSelection = false
-    
+
     var body: some View {
-        
+
         List(selection: selected) {
             Section(header: EmptyView(), footer: footerView) {
                 ForEach(values, id: \.id) { item in
@@ -39,15 +39,15 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
                                 Image(systemName: self.selectedIdentifiers.contains(item.id) ? "checkmark.circle.fill": "circle")
                                     .imageScale(.large)
                                     .foregroundColor(Colors.primary)
-                               
+
                             }
                         }
-    
+
                     } else {
                         Button {
                             self.selected.wrappedValue.removeAll()
                             self.selected.wrappedValue.insert(item)
-                            
+
                             self.selectedIdentifiers.removeAll()
                             self.selectedIdentifiers.insert(item.id)
                             self.presentation.wrappedValue.dismiss()
@@ -69,45 +69,43 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
         //        .environment(\.editMode, .constant(allowMultipleSelection ? .active : .inactive))
         .navigationBarTitle(title)
         .listStyle(PlainListStyle())
-        
+
         .navigationBarItems(leading: Button {
             self.presentation.wrappedValue.dismiss()
         } label: {
             Image(systemName: "xmark")
                 .imageScale(.medium)
-        },trailing: Button("Done") {
+        }, trailing: Button("Done") {
             self.presentation.wrappedValue.dismiss()
-            
+
             let valuesById = Dictionary(grouping: values, by: { $0.id }).compactMapValues { $0.first }
             selected.wrappedValue.removeAll()
-            
+
             selectedIdentifiers.forEach {
                 Logger.info("seleccionando", $0)
                 if let value = valuesById[$0] {
                     selected.wrappedValue.insert(value)
                 }
             }
-            
+
         }).onAppear {
             selected.wrappedValue.forEach {
                 selectedIdentifiers.insert($0.id)
             }
         }.foregroundColor(Colors.primary)
     }
-    
-    
+
     @ViewBuilder var footerView: some View {
         if let addNew = destination {
             VStack {
                 NavigationLink(destination: addNew) {
                     Text("Add New")
-                        //.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0,idealHeight: 40, maxHeight: .infinity)
-                        //.background(Color(Colors.primary))
+                        // .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0,idealHeight: 40, maxHeight: .infinity)
+                        // .background(Color(Colors.primary))
                         .foregroundColor(Colors.primary)
                         .cornerRadius(3)
                 }
-                
-                
+
             }
         } else {
             EmptyView()
@@ -115,15 +113,12 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
     }
 }
 
-
-
 struct SelectorList_Previews: PreviewProvider {
-    
+
     @State private static var categories = Set<Category>()
-    
+
     static var previews: some View {
         CategorySelectionView(selection: .constant(Set()))
             .preferredColorScheme(.dark)
     }
 }
-

@@ -8,23 +8,21 @@
 import SwiftUI
 
 struct ExpenseItemView: View {
-    
-    
+
     let model: ExpenseItem
-    
+
     var displayCategory: Bool = true
-    
+
     var body: some View {
-        
+
         HStack {
             VStack(alignment: .leading, spacing: 0) {
-                
+
                 if displayCategory {
                     Text(model.category?.name.trimed ?? "N/A")
                         .foregroundColor(Colors.title)
                 }
-                   
-                
+
                 if !model.title.trimed.isEmpty {
                     Text(model.title.trimed)
                         .if(displayCategory) { text in
@@ -37,20 +35,18 @@ struct ExpenseItemView: View {
                 FlexibleView(data: model.tags.toArray()) { item in
                     Text(verbatim: item.name)
                         .font(.caption2)
-                        //.fontWeight(.medium)
+                        // .fontWeight(.medium)
                         .padding(3)
                         .foregroundColor(Colors.Form.value)
                         .background(
                             RoundedRectangle(cornerRadius: 2)
                                 .fill(Color(.secondarySystemBackground))
                         ).padding(.vertical, 3)
-                }//.background(.blue)
+                }// .background(.blue)
 
-               
                 Spacer().frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 0, maxHeight: 0)
             }
-            
-            
+
             Spacer()
             Text(NumberFormatter.currency.string(from: NSNumber(value: model.value)) ?? "")
                 .fontWeight(.regular)
@@ -61,12 +57,10 @@ struct ExpenseItemView: View {
 }
 
 struct ExpenseItemView_Previews: PreviewProvider {
-    
-    
+
     static var previews: some View {
         VStack {
-            
-            
+
             ExpenseItemView(
                 model: .init {
                     $0.title = "Tamal"
@@ -83,7 +77,7 @@ struct ExpenseItemView_Previews: PreviewProvider {
                 }
             )
             .preferredColorScheme(.dark)
-            
+
             ExpenseItemView(
                 model: .init {
                     $0.title = "Jack Jhonas"
@@ -100,7 +94,7 @@ struct ExpenseItemView_Previews: PreviewProvider {
                 }
             )
             .preferredColorScheme(.light)
-            
+
             ExpenseItemView(
                 model: .init {
                     $0.title = " gafas "
@@ -112,8 +106,7 @@ struct ExpenseItemView_Previews: PreviewProvider {
                 }
             )
             .preferredColorScheme(.light)
-            
-            
+
             ExpenseItemView(
                 model: .init {
                     $0.value = 3500
@@ -124,11 +117,11 @@ struct ExpenseItemView_Previews: PreviewProvider {
                 }
             )
             .preferredColorScheme(.light)
-            
+
         }
-        
+
         .padding()
-        //.previewLayout(PreviewLayout.fixed(width: 350, height: 100))
-        
+        // .previewLayout(PreviewLayout.fixed(width: 350, height: 100))
+
     }
 }

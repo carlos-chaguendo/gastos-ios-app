@@ -8,24 +8,23 @@
 import SwiftUI
 import Combine
 
-
 public class ExpenseItemFormViewModel: ObservableObject {
     private(set) var item: ExpenseItem?
-    
+
     @Published var amount: Double?
     @Published var note: String = ""
     @Published var date = Date()
-    
+
     @Published var wallets = Set<Wallet>()
     @Published var tags = Set<Tag>()
     @Published var categories = Set<Catagory>()
-    
+
     init() {
         if let current = UserDefaults.standard.value(forKey: "currentDate") as? Date {
             date = current
         }
     }
-    
+
     init(_ item: ExpenseItem) {
         self.item = item
         self.amount = item.value
@@ -35,7 +34,7 @@ public class ExpenseItemFormViewModel: ObservableObject {
         item.tags.forEach { self.tags.insert($0) }
         self.wallets.insert(item.wallet)
     }
-    
+
     func getValues() -> ExpenseItem {
         let selection = item ?? ExpenseItem()
         selection.title = note
@@ -49,47 +48,46 @@ public class ExpenseItemFormViewModel: ObservableObject {
 }
 
 struct ExpenseItemFormView: View {
-    
 
     @Environment(\.presentationMode) private var presentation
-    
+
     public let textChangePublisher = PassthroughSubject<String, Never>()
-    
+
     private let backcolor = Colors.groupedBackground
     private let systemBackground = Colors.background
-    
+
     @ObservedObject private var viewModel: ExpenseItemFormViewModel
-    
+
     init() {
         viewModel = .init()
     }
-    
+
     init(_ item: ExpenseItem) {
         viewModel = .init(item)
         Logger.info("Formularo", item.value)
     }
-    
+
     func setup( block: (Self) -> Self ) -> Self {
         return  block(self)
     }
-    
+
     var body: some View {
         NavigationView {
-            
+
             ScrollView {
                 VStack {
-           
+
                     CurrencyTextField(NSLocalizedString("Transaction Value", comment: ":"), value: $viewModel.amount, foregroundColor: Colors.Form.value, accentColor: Colors.Form.value)
                     .font(.title)
                     .frame(height: 50)
-                    
+
                     TextField("Description", text: $viewModel.note)
                         .font(.body)
                         .frame(height: 50)
                         .accentColor(Colors.Form.value)
                         .foregroundColor(Colors.Form.value)
                         .autocapitalization(.words)
-                    
+
                     /// Date picker
                     HStack {
                         Button("Today") {}
@@ -99,7 +97,7 @@ struct ExpenseItemFormView: View {
                             .accentColor(Color(Colors.subtitle))
                             .foregroundColor(Colors.primary)
                             .cornerRadius(3.0)
-                        
+
                         Button("Yesterday") {}
                             .padding()
                             .frame(height: 34)
@@ -107,7 +105,7 @@ struct ExpenseItemFormView: View {
                             .foregroundColor(Colors.primary)
                             .accentColor(Color(Colors.subtitle))
                             .cornerRadius(3.0)
-                        
+
                         DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
                             .labelsHidden()
                             .accentColor(Color(Colors.subtitle))
@@ -116,35 +114,35 @@ struct ExpenseItemFormView: View {
                             .cornerRadius(3.0)
                         Spacer()
                     }.frame(height: 60)
-                    
+
                     /// Categories picker
                     PresentLinkView(destination: CategorySelectionView(selection: $viewModel.categories)) {
-                        Row(icon: "square.stack.3d.up.fill", withArrow: true) {
+                        row(icon: "square.stack.3d.up.fill", withArrow: true) {
                             ListLabel(items: $viewModel.categories, empty: "Category")
                         }
                     }
-                    
+
                     /// Tags picker
                     PresentLinkView(destination: TagSelectionView(selection: $viewModel.tags)) {
-                        Row(icon: "tag.fill", withArrow: true) {
+                        row(icon: "tag.fill", withArrow: true) {
                             TagsLabel(items: $viewModel.tags, empty: "Tags")
                         }
                     }
-                    
+
                     /// Wallet picker
                     PresentLinkView(destination: WalletsSelectionView(selection: $viewModel.wallets)) {
-                        Row(icon: "wallet.pass.fill", withArrow: true) {
+                        row(icon: "wallet.pass.fill", withArrow: true) {
                             ListLabel(items: $viewModel.wallets, empty: "Wallet")
                         }
                     }
 
                     Spacer()
-                    
+
                 }
             }
             .padding()
             .background(Colors.background)
-            .navigationBarTitle("Expense",displayMode: .inline)
+            .navigationBarTitle("Expense", displayMode: .inline)
             .navigationBarItems(
                 leading: Button {
                     self.presentation.wrappedValue.dismiss()
@@ -155,28 +153,27 @@ struct ExpenseItemFormView: View {
                 .frame(width: 30, height: 30)
                 .foregroundColor(Colors.primary)
                 .offset(x: -8, y: 0),
-                
+
                 trailing: Button(viewModel.item == nil ? "Create" : "Edit") {
                     self.saveAction()
                 }.foregroundColor(Colors.primary)
-                
+
             )
         }
-        
+
     }
-    
+
     private func saveAction() {
         let selection = viewModel.getValues()
-        
+
         Service.addItem(selection)
         self.presentation.wrappedValue.dismiss()
     }
-    
+
     public func onTextChange( action: @escaping (String) -> Void) -> SubscriptionView<AnyPublisher<String, Never>, Self> {
         self.onReceive(textChangePublisher.eraseToAnyPublisher(), perform: action) as! SubscriptionView<AnyPublisher<String, Never>, ExpenseItemFormView>
     }
-    
-    
+
     @ViewBuilder
     func ListLabel<Value: Entity & EntityWithName>(items: Binding<Set<Value>>, empty: LocalizedStringKey) -> some View {
         if items.wrappedValue.isEmpty {
@@ -190,17 +187,16 @@ struct ExpenseItemFormView: View {
                     .font(.caption)
                     .padding(.bottom, 1)
                     .foregroundColor(Colors.Form.label)
-                
+
                 ForEach(Array(items.wrappedValue), id: \.self) {
                     Text($0.name)
                         .foregroundColor(Colors.Form.value)
                 }
-                
-                
+
             }.padding(.vertical)
         }
     }
-    
+
     @ViewBuilder
     func TagsLabel<Value: Entity & EntityWithName>(items: Binding<Set<Value>>, empty: LocalizedStringKey) -> some View {
         if items.wrappedValue.isEmpty {
@@ -213,7 +209,7 @@ struct ExpenseItemFormView: View {
                     .font(.caption)
                     .padding(.bottom, 1)
                     .foregroundColor(Colors.Form.label)
-                
+
                 FlexibleView(data: items.wrappedValue) { item in
                     Text(verbatim: item.name)
                         .font(.callout)
@@ -223,19 +219,18 @@ struct ExpenseItemFormView: View {
                         .background(
                             RoundedRectangle(cornerRadius: 4)
                                 .fill(Color(.secondarySystemBackground))
-                            //.fill(Color.gray.opacity(0.2))
+                            // .fill(Color.gray.opacity(0.2))
                         )
-                }//.padding(.top, -6)
+                }// .padding(.top, -6)
             }.padding(.vertical)
-            
-            
+
         }
     }
-    
+
     @ViewBuilder
-    func Row<Content: View>(icon: String, withArrow: Bool = false, @ViewBuilder buildContent: () -> Content) -> some View {
+    func row<Content: View>(icon: String, withArrow: Bool = false, @ViewBuilder buildContent: () -> Content) -> some View {
         HStack {
-            //Image(systemName: icon)
+            // Image(systemName: icon)
             buildContent()
             if withArrow {
                 Spacer()
@@ -245,18 +240,18 @@ struct ExpenseItemFormView: View {
             }
         }
     }
-    
+
 }
 
 struct ExpenseItemFormView_Previews: PreviewProvider {
-    
+
     @State private static var showingDetail = false
-    
+
     static var previews: some View {
         Group {
             ExpenseItemFormView()
                 .preferredColorScheme(.dark)
-            
+
             ExpenseItemFormView()
                 .preferredColorScheme(.light)
                 .environment(\.locale, Locale(identifier: "es_Co"))

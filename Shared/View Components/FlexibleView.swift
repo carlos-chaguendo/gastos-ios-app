@@ -59,11 +59,11 @@ struct FlexibleView<Data: Collection, Content: View>: View where Data.Element: H
   let data: Data
   let spacing: CGFloat = 2
   let alignment: HorizontalAlignment = .leading
-    
+
   let content: (Data.Element) -> Content
-    
+
   @State private var availableWidth: CGFloat = 0
-    
+
   var body: some View {
     ZStack(alignment: Alignment(horizontal: alignment, vertical: .center)) {
           Color.clear
@@ -82,4 +82,3 @@ struct FlexibleView<Data: Collection, Content: View>: View where Data.Element: H
     }
   }
 }
-

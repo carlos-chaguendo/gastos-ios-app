@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 func Promise<Output>( block: @escaping () -> Output) -> AnyPublisher<Output, Never> {
-    
+
     #if DEBUG
     return Just(block()).eraseToAnyPublisher()
     #else
@@ -21,7 +21,7 @@ func Promise<Output>( block: @escaping () -> Output) -> AnyPublisher<Output, Nev
         }
     }.eraseToAnyPublisher()
     #endif
-    
+
 }
 
 func fistly<P: Publisher>(block: () -> P) -> P {
@@ -29,18 +29,17 @@ func fistly<P: Publisher>(block: () -> P) -> P {
 }
 
 extension Publisher {
-    
+
     func retainValue<T, P>(maxPublishers: Subscribers.Demand = .unlimited, _ transform: @escaping (Self.Output) -> P)
     -> Publishers.Zip<Self, Publishers.FlatMap<P, Self>>
-    where T == P.Output, P : Publisher, Self.Failure == P.Failure {
-        
+    where T == P.Output, P: Publisher, Self.Failure == P.Failure {
+
         return Publishers.Zip(self, self.flatMap(transform))
-        
+
     }
-    
+
     func asVoid() -> Publishers.Map<Self, Void> {
         self.map { _ in () }
     }
-    
-}
 
+}

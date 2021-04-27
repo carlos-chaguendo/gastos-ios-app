@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct TagsChartView: View {
-    
+
     @State var tags: [Tag] = []
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("Tags")
                 .font(.title3)
                 .fontWeight(.semibold)
                 .foregroundColor(Colors.title)
-            
+
             FlexibleView(data: tags) { item in
                 Text(item.name)
                     .font(.callout)

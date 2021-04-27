@@ -13,13 +13,13 @@ import Combine
 /// Es posible configurar multiples widgets `WidgetBundle`
 @main
 struct WidgetsBundle: WidgetBundle {
-    
+
     @WidgetBundleBuilder
     var body: some Widget {
         WalletWidget()
         CategoryWidget()
-        
+
         ExpensStackChartWidget()
     }
-    
+
 }

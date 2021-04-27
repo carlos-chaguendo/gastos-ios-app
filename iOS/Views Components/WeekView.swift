@@ -8,79 +8,74 @@
 import SwiftUI
 import Combine
 
-
 extension Notification.Name {
-    
+
     enum WeekView {
         static var didSelectDate = Notification.Name(rawValue: "WeekViewDidSelectDate")
     }
 }
 
-
-
-
 public struct WeekView: View {
-    
+
     public enum Mode: Int, Equatable {
         case weekend
         case monthly
     }
-    
+
     /// El usuario seleciono una fecha
     static var didSelectDate: AnyPublisher<Date, Never> {
         NotificationCenter.default.publisher(for: Notification.Name.WeekView.didSelectDate)
             .compactMap { $0.object as? Date }
             .eraseToAnyPublisher()
     }
-    
+
     @Namespace private var currentDayID
     @State private var isScrollEnabled = false
     @State private var isAnimatingPageChanged = false
     @State private var offset: CGFloat = 0
     @State private var dayOffset: CGFloat = 0
-    
+
     @ObservedObject private var viewModel: WeekendViewModel
-    
+
     /// La altura de los dias de la semana, segun el tipo de fuente `caption`
     private let daysNamesHeight: CGFloat = 12
-    
+
     /// El tamanio del una fila de dias
     private var daysRowHeight: CGFloat { viewModel.daysRowHeight }
-    
+
     private var today = Date()
-    
+
     private var datesByWeek: [WeekendViewModel.Row] { viewModel.datesByWeek }
     private var currentWeekOfMonth: Int { viewModel.currentWeekOfMonth }
-    
+
     public var dayGenerator: ((Date, CGFloat) -> AnyView)?
-    
+
     init() {
         self.init(date: Date())
     }
-    
+
     init(date: Date = Date()) {
         self.viewModel = WeekendViewModel(date: date)
         self.today = Calendar.current.dateInterval(of: .day, for: date)!.start
     }
-    
+
     init(model: WeekendViewModel) {
         self.viewModel = model
         self.today = Calendar.current.dateInterval(of: .day, for: Date())!.start
     }
-    
+
     init(model: WeekendViewModel, content: ((Date, CGFloat) -> AnyView)?) {
         self.init(model: model)
         self.dayGenerator = content
     }
-    
-    
+
     public var body: some View {
         GeometryReader { reader in
             let width = reader.size.width
-            let dayWidth = (width / CGFloat(viewModel.weekDayNames.count)) //- 1
-            
+            let dayWidth = (width / CGFloat(viewModel.weekDayNames.count)) // - 1
+
             VStack(alignment: .center, spacing: 0) {
-                
+
                 /// Weekend day names
                 HStack(alignment: .center, spacing: 0) {
                     ForEach(viewModel.weekDayNames, id: \.self) { day in
@@ -90,11 +85,10 @@ public struct WeekView: View {
                             .frame(width: dayWidth, height: 14)
                     }
                 }
-                
-                
+
                 /// Weekend Day Numbers
-                ScrollView(isScrollEnabled ? .horizontal : [] , showsIndicators: false) {
-                    
+                ScrollView(isScrollEnabled ? .horizontal : [], showsIndicators: false) {
+
                     Group {
                         switch viewModel.mode {
                         case .weekend:
@@ -106,7 +100,7 @@ public struct WeekView: View {
                                     )
                                 )
                                 .animation(.default)
-                            
+
                         case .monthly:
                             ForEach(datesByWeek, id: \.i) { week in
                                 weekDayNumbers(dayWidth, dates: week.dates)
@@ -114,13 +108,13 @@ public struct WeekView: View {
                                     .animation(.default)
                             }
                         }
-                        
+
                     }.readOffset(named: "WeekendDayNumbers") { y in
                         let tolerance = dayWidth / 2
                         if y.maxX < width - tolerance {
                             pageChangeAnimation(screenWidth: -width)
                         }
-                        
+
                         if y.minX > tolerance {
                             pageChangeAnimation(screenWidth: width)
                         }
@@ -137,36 +131,35 @@ public struct WeekView: View {
             }
         }.frame(height: viewModel.rowsHeight + 14)
     }
-    
-    
+
     /// Ejecuta la animacion de cambiar pagina
     /// - Parameter size: tancho de la pantalla
     /// - Parameter updateSelected: un boleano que indica si tien que actualizar la fecha selecionada actualmente al cambiar de pagina
     func pageChangeAnimation(screenWidth size: CGFloat, updateSelected: Bool = true) {
         guard !isAnimatingPageChanged else { return }
-        
+
         Logger.info("Page change", size)
-        //isScrollEnabled = false
-        
+        // isScrollEnabled = false
+
         isAnimatingPageChanged = true
-        withAnimation(.easeInOut)  {
+        withAnimation(.easeInOut) {
             self.offset = size
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            
+
             self.offset = -size
-            
+
             if updateSelected {
                 let sign = size < 0 ? 1 : -1
                 switch viewModel.mode {
                 case .weekend:
                     self.viewModel.selected = Calendar.current.date(byAdding: .day, value: 7 * sign, to: viewModel.selected)!
-                    
+
                 case .monthly: ()
                     self.viewModel.selected = Calendar.current.date(byAdding: .month, value: 1 * sign, to: viewModel.selected)!
                 }
             }
-            
+
             withAnimation(.easeInOut) {
                 self.offset = 0
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
@@ -175,7 +168,7 @@ public struct WeekView: View {
             }
         }
     }
-    
+
     /// Envuelve un text dentro de una vista, con margenes para le numero del dia
     /// - Parameters:
     ///   - number: Numero del dia
@@ -200,7 +193,7 @@ public struct WeekView: View {
                 text.background(Colors.primary)
                     .foregroundColor(.white)
                     .id(currentDayID)
-                
+
             }.if(!Calendar.current.isDate(viewModel.selected, equalTo: date, toGranularity: .month)) { text in
                 text.opacity(0.2)
             }.clipped()
@@ -213,11 +206,11 @@ public struct WeekView: View {
                 if date < viewModel.month.start {
                     pageChangeAnimation(screenWidth: UIScreen.main.bounds.size.width, updateSelected: false)
                 }
-                
+
                 self.viewModel.selected = date
             }
     }
-    
+
     @ViewBuilder
     func weekDayNumbers(_ dayWidth: CGFloat, dates: [Date]) -> some View {
         HStack(alignment: VerticalAlignment.firstTextBaseline, spacing: 0) {
@@ -226,7 +219,7 @@ public struct WeekView: View {
                     generator(date, daysRowHeight)
                         .frame(width: dayWidth, height: daysRowHeight)
                         .offset(x: self.offset, y: 0)
-                        
+
                 } else {
                     dayView(date: date, size: daysRowHeight - 6)
                         .frame(width: dayWidth, height: daysRowHeight)
@@ -241,7 +234,7 @@ public struct WeekView: View {
 struct WeekView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            VStack{
+            VStack {
                 let date = Calendar.gregorian.date(byAdding: .month, value: -2, to: Date())!
                 WeekView(date: date)
                 Text(DateFormatter.day.string(from: date))
@@ -255,13 +248,13 @@ struct WeekView_Previews: PreviewProvider {
             .navigationBarItems(leading: VStack {
                 Text("MAR.")
                     .textCase(.uppercase)
-                
+
                 Text("2020")
                     .font(.caption)
                     .fontWeight(.semibold)
                     .padding(.leading, -12)
             }, trailing: Text("CaemJ"))
-            
+
         }.preferredColorScheme(.dark)
     }
 }
