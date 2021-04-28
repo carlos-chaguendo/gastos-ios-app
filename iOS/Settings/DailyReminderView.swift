@@ -68,7 +68,14 @@ struct DailyReminderView: View {
                 content: UNMutableNotificationContent()
                     .set(\.sound, includeSound ? UNNotificationSound.default : nil)
                     .set(\.categoryIdentifier, NotificationsCategory.dailyReminder.rawValue)
-                    .set(\.body, message),
+                    .set(\.body, message)
+                    .set(\.userInfo, [
+                        "aps": [
+                            /// Si 'contentAvailable == true' significa que la notificacion necesita ejecutarse en segundo plano
+                            /// para descargar o actualizar informacion de la aplicacion
+                            "content-available": true
+                        ]
+                    ]),
                 trigger: UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
             )
 
