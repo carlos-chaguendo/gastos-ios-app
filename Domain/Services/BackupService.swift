@@ -189,6 +189,8 @@ class BackupService {
                     query.operationQueue?.addOperation {
                         query.stop()
                     }
+                    
+                    Service.registreNewBackup()
                     self.cancellables.removeAll()
 
                 } else if let error = fileValues?.ubiquitousItemUploadingError {

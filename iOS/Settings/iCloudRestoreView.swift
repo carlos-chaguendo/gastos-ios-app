@@ -134,14 +134,14 @@ struct iCloudRestoreView: View {
                     BackupService().searchBackup(fileName: "default.realm")
                 }
                 .delay(for: 2, scheduler: RunLoop.main)
-                .sink(receiveCompletion: { completion in
+                .sink { completion in
                     print("comple", completion)
                     switch completion {
                     case .finished: self.status = .found
                     case .failure:
                         self.restorationTerminated = false
                     }
-                }, receiveValue: { metadata in
+                } receiveValue: { metadata in
 
                     Logger.info("Listo para descargar")
                     self.date = metadata.value(forKey: "kMDItemFSContentChangeDate") as? Date
@@ -149,7 +149,7 @@ struct iCloudRestoreView: View {
                     self.status = .found
                     self.url = metadata.value(forAttribute: NSMetadataItemURLKey) as? URL
 
-                }).store(in: &cancellables)
+                }.store(in: &cancellables)
 
             }.navigationBarTitle("", displayMode: .inline)
             .navigationBarItems(trailing: Button("Skip") {

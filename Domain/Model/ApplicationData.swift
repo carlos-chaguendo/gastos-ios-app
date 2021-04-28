@@ -11,6 +11,7 @@ import Realm
 class ApplicationData: Entity {
 
     @objc public dynamic var currentCalendarDate: Date?
+    @objc public dynamic var lastBackup: Date?
 
     required init() {
         super.init()

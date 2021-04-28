@@ -23,7 +23,7 @@ public class Service {
         
         let config = Realm.Configuration(
             fileURL: fileURL,
-            schemaVersion: 3,
+            schemaVersion: 4,
             migrationBlock: { _, oldSchemaVersion in
                 
                 if oldSchemaVersion < 1 {
@@ -254,6 +254,20 @@ public class Service {
                 $0.color = Int32(ColorSpace.random.toHexInt())
             }
         }
+    }
+    
+    /// Registra la ultima creacion de un a copia de seguridad
+    public static func registreNewBackup() {
+        let local = realm.object(ofType: ApplicationData.self, forPrimaryKey: "-1") ?? ApplicationData()
+        
+        realm.rwrite {
+            local.lastBackup = Date()
+            realm.add(local, update: .all)
+        }
+    }
+    
+    static func getApplicationData() -> ApplicationData {
+        realm.object(ofType: ApplicationData.self, forPrimaryKey: "-1")!.detached()
     }
     
 }
