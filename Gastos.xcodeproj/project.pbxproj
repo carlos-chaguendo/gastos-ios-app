@@ -18,6 +18,7 @@
 		2F5479A32628EE2000730F13 /* GroupFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5479A22628EE2000730F13 /* GroupFormView.swift */; };
 		2F5479A72629049E00730F13 /* TagsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5479A62629049E00730F13 /* TagsChartView.swift */; };
 		2F5479AB2629E51400730F13 /* BackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5479AA2629E51400730F13 /* BackupService.swift */; };
+		2F5D669D2639B14A00819EC9 /* CircularChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5D669C2639B14A00819EC9 /* CircularChart.swift */; };
 		2F6B072325F976DA00A1D516 /* GastosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B071025F976D900A1D516 /* GastosApp.swift */; };
 		2F6B072525F976DA00A1D516 /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B071125F976D900A1D516 /* TransactionsView.swift */; };
 		2F6B072725F976DA00A1D516 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F6B071225F976DA00A1D516 /* Assets.xcassets */; };
@@ -149,6 +150,8 @@
 		2F5479A62629049E00730F13 /* TagsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsChartView.swift; sourceTree = "<group>"; };
 		2F5479AA2629E51400730F13 /* BackupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupService.swift; sourceTree = "<group>"; };
 		2F5479AE2629E73400730F13 /* Gastos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Gastos.entitlements; path = iOS/Gastos.entitlements; sourceTree = SOURCE_ROOT; };
+		2F5D669326390BDE00819EC9 /* DocumentInteractionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentInteractionController.swift; sourceTree = "<group>"; };
+		2F5D669C2639B14A00819EC9 /* CircularChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularChart.swift; sourceTree = "<group>"; };
 		2F6B071025F976D900A1D516 /* GastosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GastosApp.swift; sourceTree = "<group>"; };
 		2F6B071125F976D900A1D516 /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
 		2F6B071225F976DA00A1D516 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -308,6 +311,7 @@
 				2F816D29261CF072009FB091 /* CurrencyTextField.swift */,
 				2F89BA18261EA1880009EA03 /* PageView.swift */,
 				2F8BADEC2633961400567E4B /* ButtonStyleFormLarge.swift */,
+				2F5D669326390BDE00819EC9 /* DocumentInteractionController.swift */,
 			);
 			path = "Views Components";
 			sourceTree = "<group>";
@@ -366,8 +370,9 @@
 		2F89BA33261F8E3C0009EA03 /* Chart */ = {
 			isa = PBXGroup;
 			children = (
-				2F89BA29261F76C40009EA03 /* LinesGraph.swift */,
 				2F54798226288CA700730F13 /* Chart.swift */,
+				2F5D669C2639B14A00819EC9 /* CircularChart.swift */,
+				2F89BA29261F76C40009EA03 /* LinesGraph.swift */,
 				2F54798626288CE800730F13 /* StackChart.swift */,
 			);
 			path = Chart;
@@ -637,6 +642,7 @@
 				2FE51A1E25FAEB8F004518A0 /* TextColor.swift in Sources */,
 				2F89BA412620B12E0009EA03 /* SpendByGroupChartView.swift in Sources */,
 				2F89BA15261E89CF0009EA03 /* Numbers.swift in Sources */,
+				2F5D669D2639B14A00819EC9 /* CircularChart.swift in Sources */,
 				2FA938BA2633158A006F1905 /* SettingsView.swift in Sources */,
 				2F2FB8B02613F45E00CE3E9E /* Entity+Detach.swift in Sources */,
 				2F8BADE926336F5700567E4B /* iCloudRestoreView.swift in Sources */,
