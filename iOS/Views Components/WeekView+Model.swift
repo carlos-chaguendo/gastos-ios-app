@@ -32,7 +32,7 @@ public class WeekendViewModel: ObservableObject {
             calculateRowsHeight()
         }
     }
-
+    
     @Published public var selected = Date() {
         didSet {
             /// >=  el rango incluye el inicio del siguiente periodo
@@ -45,8 +45,7 @@ public class WeekendViewModel: ObservableObject {
                 Logger.info("Listo crearrr un nuevo mes antes")
                 createDatesForMonth(in: selected)
             }
-
-            NotificationCenter.default.post(name: Notification.Name.WeekView.didSelectDate, object: selected)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "WeekViewDidSelectDate+\(namespace)"), object: selected)
         }
     }
 
@@ -67,11 +66,15 @@ public class WeekendViewModel: ObservableObject {
 
     /// El numero de la semana en el mes
     public var currentWeekOfMonth: Int { selected.number(of: .weekOfMonth, since: firstWeek.start)}
+    
+    private var namespace: String
 
     init(date: Date, mode: WeekView.Mode = .monthly) {
+        self.namespace = UUID().description
         self.weekDayNames = DateFormatter.day.shortStandaloneWeekdaySymbols
         self.selected = Calendar.current.dateInterval(of: .day, for: date)!.start
         self.mode = mode
+    
     }
 
     public func createDatesForMonth(in date: Date) {
@@ -103,6 +106,13 @@ public class WeekendViewModel: ObservableObject {
         case .monthly: rowsHeight = daysRowHeight * CGFloat(datesByWeek.count)
         }
     }
+    
+    var didSelectDate: AnyPublisher<Date, Never> {
+        NotificationCenter.default.publisher(for: Notification.Name(rawValue: "WeekViewDidSelectDate+\(namespace)"))
+            .compactMap { $0.object as? Date }
+            .eraseToAnyPublisher()
+    }
+
 
 }
 
