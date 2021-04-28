@@ -59,7 +59,8 @@ struct MaximunDailyExpendingGraphView: View {
                 )
             }
             .cornerRadius(6)
-            .onReceive(WeekView.didSelectDate) { _ in
+            .onReceive(weekendViewModel.didSelectDate) { _ in
+                eventCount.removeAll()
                 didPageChanged()
             }
             .onAppear {
@@ -74,9 +75,11 @@ struct MaximunDailyExpendingGraphView: View {
         }
         .receive(on: DispatchQueue.main)
         .sink { events in
-            guard maximumAmount == 0.0 else {
+            guard eventCount.count == 0 else {
                 return
             }
+            
+            Logger.info("Cargando ", DateFormatter.day.string(from: weekendViewModel.selected))
 
            // let events = Service.sumEventsIn(month: weekendViewModel.selected)
             let maximumAmount = events.values.max() ?? 0

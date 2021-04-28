@@ -8,25 +8,11 @@
 import SwiftUI
 import Combine
 
-extension Notification.Name {
-
-    enum WeekView {
-        static var didSelectDate = Notification.Name(rawValue: "WeekViewDidSelectDate")
-    }
-}
-
 public struct WeekView: View {
 
     public enum Mode: Int, Equatable {
         case weekend
         case monthly
-    }
-
-    /// El usuario seleciono una fecha
-    static var didSelectDate: AnyPublisher<Date, Never> {
-        NotificationCenter.default.publisher(for: Notification.Name.WeekView.didSelectDate)
-            .compactMap { $0.object as? Date }
-            .eraseToAnyPublisher()
     }
 
     @Namespace private var currentDayID
@@ -55,8 +41,7 @@ public struct WeekView: View {
     }
 
     init(date: Date = Date()) {
-        self.viewModel = WeekendViewModel(date: date)
-        self.today = Calendar.current.dateInterval(of: .day, for: date)!.start
+        self.init(model: WeekendViewModel(date: date))
     }
 
     init(model: WeekendViewModel) {

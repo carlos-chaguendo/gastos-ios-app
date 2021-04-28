@@ -57,6 +57,8 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundColor(Colors.title)
+                    
+          
 
                     StackChart<Group>(
                         total: datasource.total,

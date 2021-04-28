@@ -155,7 +155,7 @@ struct TransactionsView: View {
                     self.weekendViewModel.marked = Service.summaryOf(month: weekendViewModel.selected)
                     Logger.info("Edito una nueva transaccion", item)
 
-                }.onReceive(WeekView.didSelectDate) { date in
+                }.onReceive(weekendViewModel.didSelectDate) { date in
                     self.datasource.removeAll()
                     self.loadDataSource()
                     self.weekendViewModel.marked = Service.summaryOf(month: weekendViewModel.selected)
