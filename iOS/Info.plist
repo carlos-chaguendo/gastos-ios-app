@@ -20,12 +20,31 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSUbiquitousContainers</key>
+	<dict>
+		<key>iCloud.$(PRODUCT_BUNDLE_IDENTIFIER)</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>$(PRODUCT_NAME)</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
+		</dict>
+	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<true/>
 	</dict>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
+	</array>
+	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchScreen</key>
 	<dict/>
@@ -46,22 +65,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>UIFileSharingEnabled</key>
-    <true/>
     
-    
-    <key>NSUbiquitousContainers</key>
-    <dict>
-    <key>iCloud.$(PRODUCT_BUNDLE_IDENTIFIER)</key>
-    <dict>
-    <key>NSUbiquitousContainerIsDocumentScopePublic</key>
-    <true/>
-    <key>NSUbiquitousContainerName</key>
-    <string>$(PRODUCT_NAME)</string>
-    <key>NSUbiquitousContainerSupportedFolderLevels</key>
-    <string>Any</string>
-    </dict>
-    </dict>
-    
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>com.mayorgafirm.Gastos.backup</string>
+    </array>
 </dict>
 </plist>

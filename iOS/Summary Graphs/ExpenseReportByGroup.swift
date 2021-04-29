@@ -41,8 +41,19 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                         }
 
                         Spacer()
-                        Text(DateIntervalFormatter.duration(range: datasource.interval))
-                            .foregroundColor(Color.primary)
+                        switch(datasource.mode) {
+                        case "M":
+                            Text(DateFormatter.longMonth.string(from: datasource.date))
+                                .foregroundColor(Color.primary)
+                            
+                        case "Y":
+                            Text(DateFormatter.year.string(from: datasource.date))
+                                .foregroundColor(Color.primary)
+                        default:
+                            Text(DateIntervalFormatter.duration(range: datasource.interval))
+                                .foregroundColor(Color.primary)
+                        }
+                
                         Spacer()
 
                         Button(action: datasource.nextPage) {
@@ -51,14 +62,13 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                                 .foregroundColor(.quaternaryLabel)
                         }
 
-                    }.padding()
+                    }.padding(.vertical)
 
                     Text(NumberFormatter.currency.string(from: NSNumber(value: datasource.total)) ?? "")
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundColor(Colors.title)
-                    
-          
+                        
 
                     StackChart<Group>(
                         total: datasource.total,
@@ -77,8 +87,8 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                             HStack(alignment: VerticalAlignment.center) {
 
                                 Color(UIColor.from(hex: UInt32(category.color)))
-                                    .frame(width: 4, height: 4)
-                                    .cornerRadius(2)
+                                    .frame(width: 8, height: 8)
+                                    .cornerRadius(4)
 
                                 Text(category.name)
                                     .font(.system(size: 15))
@@ -99,7 +109,7 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                                     .imageScale(.medium)
                                     .foregroundColor(.quaternaryLabel)
                             }
-                        }.padding(.vertical, 10)
+                        }.padding(.vertical)
 
                     }
 

@@ -33,43 +33,31 @@ struct TransactionsByGroupView<Group: Entity & ExpensePropertyWithValue>: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
+                
+                
+//                VStack {
+//                Text(DateFormatter.longMonth.string(from: date))
+//                    .fontWeight(.semibold)
+//                    .foregroundColor(Colors.title)
+//                    
+//                    Text(DateFormatter.year.string(from: date))
+//                        .fontWeight(.semibold)
+//                        .foregroundColor(Colors.subtitle)
+//                }.padding(.horizontal)
 
                 VStack {
-                    HStack(spacing: 10) {
-
-                        VStack {
+                    VStack(alignment: .leading) {
+                            Text("Total spending")
+                                .font(.caption)
+                                .foregroundColor(Colors.subtitle)
+                            
                             Text(NumberFormatter.currency.string(from: NSNumber(value: total)) ?? "")
                                 .font(.title3)
                                 .fontWeight(.medium)
                                 .foregroundColor(Colors.title)
-                            Text("Total (\(numberOfTransactions))")
-                                .font(.caption2)
-                                .foregroundColor(Colors.subtitle)
-                        }
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
-                        VStack {
-                            Text(NumberFormatter.currency.string(from: NSNumber(value: max)) ?? "")
-                                .font(.title3)
-                                .fontWeight(.medium)
-                                .foregroundColor(Colors.title)
-                            Text("Maximun")
-                                .font(.caption2)
-                                .foregroundColor(Colors.subtitle)
                         }
-
-                        VStack {
-                            Text(NumberFormatter.currency.string(from: NSNumber(value: min)) ?? "")
-                                .font(.title3)
-                                .fontWeight(.medium)
-                                .foregroundColor(Colors.title)
-                            Text("Minimun")
-                                .font(.caption2)
-                                .foregroundColor(Colors.subtitle)
-                        }
-
-                    }
-                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                    // .padding(.horizontal)
 
                     Chart.Lines(datasource: [
                         Chart.DataSet(points: points, color: Color(UIColor.from(hex: UInt32(group.color))))
@@ -87,7 +75,8 @@ struct TransactionsByGroupView<Group: Entity & ExpensePropertyWithValue>: View {
 
                     ForEach(transactions[date, default: []], id: \.self) { transaction in
                         PresentLinkView(destination: ExpenseItemFormView(transaction)) {
-                            ExpenseItemView(model: transaction, displayCategory: false)
+                            ExpenseItemView(model: transaction, displayCategory: true)
+                                .padding(.vertical, 4)
                         }
                     }
                 }.padding(.horizontal)

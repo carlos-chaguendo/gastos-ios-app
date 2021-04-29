@@ -267,7 +267,11 @@ public class Service {
     }
     
     static func getApplicationData() -> ApplicationData {
-        realm.object(ofType: ApplicationData.self, forPrimaryKey: "-1")!.detached()
+        guard let local = realm.object(ofType: ApplicationData.self, forPrimaryKey: "-1") else {
+            return ApplicationData()
+        }
+        
+        return local.detached()
     }
     
 }

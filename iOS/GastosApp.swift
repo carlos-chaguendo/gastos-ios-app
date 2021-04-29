@@ -12,6 +12,8 @@ import RealmSwift
 import CoreServices
 import UserNotifications
 
+import BackgroundTasks
+
 // https://www.hackingwithswift.com/quick-start/swiftui
 // https://github.com/SwiftUIX/SwiftUIX/
 
@@ -44,9 +46,13 @@ struct GastosApp: App {
         .onTapGesture {
             self.showingDetail.toggle()
         }
-        .fullScreenCover(isPresented: $showingDetail) {
+        .sheet(isPresented: $showingDetail) {
             ExpenseItemFormView()
 
+        }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { not in
+            appDelegate.scheduleAppAutoBackup()
+        }.onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { not in
+            Logger.info("Enter fore ground")
         }
     }
 
@@ -118,6 +124,14 @@ struct CapijaView: View {
     @State var updateView = 0
 
     @State private var bgColor = Color.red
+    
+    @State private var notifications:[UNNotificationRequest] = []
+    
+    @State private var tasks: [BGTaskRequest] = []
+    
+    private let df = DateFormatter()
+        .set(\.dateStyle, .full)
+        .set(\.timeStyle, .full)
 
     var body: some View {
         ScrollView {
@@ -133,15 +147,60 @@ struct CapijaView: View {
                 FileImportButton()
                     .padding()
 
+                Button("Open log") {
+                    let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log.txt")
+                    
+                    
+                    let contenido = try! String(contentsOf: url)
+                    
+                    print("contenido", contenido)
+                    
+                }
+
                 ForEach([-1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.8, 1.0], id: \.self) { i in
                     Text("\(i)")
                         .background(Colors.background.shadeColor(factor: CGFloat(i)))
+                }
+                
+                ForEach(notifications, id: \.identifier) { request in
+                    
+                    VStack {
+                        Text(request.content.body)
+                        
+                        if let calendar =  request.trigger as? UNCalendarNotificationTrigger, let date = calendar.nextTriggerDate() {
+                            Text(df.string(from: date))
+                        }
+                    }
+                    
+                }
+                
+                Divider()
+                ForEach(tasks, id: \.identifier) { request in
+                    VStack {
+                        Text(request.identifier)
+                        if let date = request.earliestBeginDate {
+                        Text(df.string(from: date))
+                        }
+                    }
                 }
 
                 Divider()
 
             }
         }.background(Colors.background)
+        .onAppear {
+            UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+                Logger.info("requests ", requests.count)
+                
+                notifications = requests
+            }
+            
+
+            BGTaskScheduler.shared.getPendingTaskRequests { reuqest in
+                Logger.info("tasks ", reuqest.count)
+                tasks = reuqest
+            }
+        }
 
     }
 }

@@ -18,7 +18,7 @@ struct WidgetsBundle: WidgetBundle {
     var body: some Widget {
         WalletWidget()
         CategoryWidget()
-
+        RingWidget()
         ExpensStackChartWidget()
     }
 

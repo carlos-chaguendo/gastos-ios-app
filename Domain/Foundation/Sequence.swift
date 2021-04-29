@@ -67,3 +67,11 @@ extension Sequence where Iterator.Element: Hashable {
     }
 
 }
+
+extension Collection where Index == Int {
+
+    /// nil si el indice es menor a 0 o mayor a tamanio del array
+    public subscript(safe index: Int) -> Element? {
+        return index >= 0 && index < count ? self[index] : nil
+    }
+}

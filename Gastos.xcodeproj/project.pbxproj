@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F0BF055263A051300D68C03 /* CircularChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0BF054263A051300D68C03 /* CircularChart.swift */; };
+		2F0BF056263A051300D68C03 /* CircularChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0BF054263A051300D68C03 /* CircularChart.swift */; };
 		2F2FB8A32613E44E00CE3E9E /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2FB8A22613E44E00CE3E9E /* Service.swift */; };
 		2F2FB8A72613E50200CE3E9E /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2FB8A62613E50200CE3E9E /* Entity.swift */; };
 		2F2FB8B02613F45E00CE3E9E /* Entity+Detach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2FB8AF2613F45E00CE3E9E /* Entity+Detach.swift */; };
@@ -18,7 +20,7 @@
 		2F5479A32628EE2000730F13 /* GroupFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5479A22628EE2000730F13 /* GroupFormView.swift */; };
 		2F5479A72629049E00730F13 /* TagsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5479A62629049E00730F13 /* TagsChartView.swift */; };
 		2F5479AB2629E51400730F13 /* BackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5479AA2629E51400730F13 /* BackupService.swift */; };
-		2F5D669D2639B14A00819EC9 /* CircularChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5D669C2639B14A00819EC9 /* CircularChart.swift */; };
+		2F5D669D2639B14A00819EC9 /* RingChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5D669C2639B14A00819EC9 /* RingChart.swift */; };
 		2F6B072325F976DA00A1D516 /* GastosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B071025F976D900A1D516 /* GastosApp.swift */; };
 		2F6B072525F976DA00A1D516 /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B071125F976D900A1D516 /* TransactionsView.swift */; };
 		2F6B072725F976DA00A1D516 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F6B071225F976DA00A1D516 /* Assets.xcassets */; };
@@ -96,6 +98,8 @@
 		2FA938BA2633158A006F1905 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA938B92633158A006F1905 /* SettingsView.swift */; };
 		2FA938BE26332103006F1905 /* iCloudBackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA938BD26332103006F1905 /* iCloudBackupView.swift */; };
 		2FB5935D25FC012B005A1B93 /* PropertyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */; };
+		2FB95DB0263B28AD006765E4 /* RingWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB95DAF263B28AD006765E4 /* RingWidget.swift */; };
+		2FB95DB1263B28DF006765E4 /* RingChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5D669C2639B14A00819EC9 /* RingChart.swift */; };
 		2FBEBBFE260CF9EA001C4FCD /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBEBBFD260CF9EA001C4FCD /* Date.swift */; };
 		2FBEBC02260D0DBE001C4FCD /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBEBC01260D0DBE001C4FCD /* Array.swift */; };
 		2FBEBC06260D2527001C4FCD /* AnyTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBEBC05260D2527001C4FCD /* AnyTransition.swift */; };
@@ -138,6 +142,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2F0BF054263A051300D68C03 /* CircularChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularChart.swift; sourceTree = "<group>"; };
 		2F2FB8A22613E44E00CE3E9E /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		2F2FB8A62613E50200CE3E9E /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		2F2FB8AF2613F45E00CE3E9E /* Entity+Detach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+Detach.swift"; sourceTree = "<group>"; };
@@ -151,7 +156,7 @@
 		2F5479AA2629E51400730F13 /* BackupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupService.swift; sourceTree = "<group>"; };
 		2F5479AE2629E73400730F13 /* Gastos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Gastos.entitlements; path = iOS/Gastos.entitlements; sourceTree = SOURCE_ROOT; };
 		2F5D669326390BDE00819EC9 /* DocumentInteractionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentInteractionController.swift; sourceTree = "<group>"; };
-		2F5D669C2639B14A00819EC9 /* CircularChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularChart.swift; sourceTree = "<group>"; };
+		2F5D669C2639B14A00819EC9 /* RingChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingChart.swift; sourceTree = "<group>"; };
 		2F6B071025F976D900A1D516 /* GastosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GastosApp.swift; sourceTree = "<group>"; };
 		2F6B071125F976D900A1D516 /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
 		2F6B071225F976DA00A1D516 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -205,6 +210,7 @@
 		2FA938BD26332103006F1905 /* iCloudBackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudBackupView.swift; sourceTree = "<group>"; };
 		2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyBuilder.swift; sourceTree = "<group>"; };
 		2FB5936325FC1231005A1B93 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		2FB95DAF263B28AD006765E4 /* RingWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingWidget.swift; sourceTree = "<group>"; };
 		2FBEBBFD260CF9EA001C4FCD /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		2FBEBC01260D0DBE001C4FCD /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		2FBEBC05260D2527001C4FCD /* AnyTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyTransition.swift; sourceTree = "<group>"; };
@@ -371,9 +377,10 @@
 			isa = PBXGroup;
 			children = (
 				2F54798226288CA700730F13 /* Chart.swift */,
-				2F5D669C2639B14A00819EC9 /* CircularChart.swift */,
+				2F5D669C2639B14A00819EC9 /* RingChart.swift */,
 				2F89BA29261F76C40009EA03 /* LinesGraph.swift */,
 				2F54798626288CE800730F13 /* StackChart.swift */,
+				2F0BF054263A051300D68C03 /* CircularChart.swift */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -403,6 +410,7 @@
 				2FFE125026386D0C006F696C /* ExpensStackChartWidget.swift */,
 				2F8BAE4A263468D800567E4B /* Info.plist */,
 				2F8BAE46263468D800567E4B /* WidgetKit.swift */,
+				2FB95DAF263B28AD006765E4 /* RingWidget.swift */,
 			);
 			path = WidgetKit;
 			sourceTree = "<group>";
@@ -641,8 +649,9 @@
 				2F6B072525F976DA00A1D516 /* TransactionsView.swift in Sources */,
 				2FE51A1E25FAEB8F004518A0 /* TextColor.swift in Sources */,
 				2F89BA412620B12E0009EA03 /* SpendByGroupChartView.swift in Sources */,
+				2F0BF055263A051300D68C03 /* CircularChart.swift in Sources */,
 				2F89BA15261E89CF0009EA03 /* Numbers.swift in Sources */,
-				2F5D669D2639B14A00819EC9 /* CircularChart.swift in Sources */,
+				2F5D669D2639B14A00819EC9 /* RingChart.swift in Sources */,
 				2FA938BA2633158A006F1905 /* SettingsView.swift in Sources */,
 				2F2FB8B02613F45E00CE3E9E /* Entity+Detach.swift in Sources */,
 				2F8BADE926336F5700567E4B /* iCloudRestoreView.swift in Sources */,
@@ -704,9 +713,11 @@
 				2F8BAEA426346E3200567E4B /* Numbers.swift in Sources */,
 				2F8BAE8F26346CFC00567E4B /* FlexibleView.swift in Sources */,
 				2F8BAE9E26346DA400567E4B /* Chart.swift in Sources */,
+				2FB95DB1263B28DF006765E4 /* RingChart.swift in Sources */,
 				2F8BAEA726346E5A00567E4B /* AnyTransition.swift in Sources */,
 				2F8BAE5826346A7E00567E4B /* Stack.swift in Sources */,
 				2F8BAE7326346AA900567E4B /* ExpenseItem.swift in Sources */,
+				2F0BF056263A051300D68C03 /* CircularChart.swift in Sources */,
 				2F8BAE9D26346DA400567E4B /* LinesGraph.swift in Sources */,
 				2F8BAE8726346CB400567E4B /* SpendByGroupChartView.swift in Sources */,
 				2F8BAE47263468D800567E4B /* WidgetKit.swift in Sources */,
@@ -722,6 +733,7 @@
 				2F8BAE6526346AA400567E4B /* Service.swift in Sources */,
 				2F8BAE9726346D6500567E4B /* NumberFormatter.swift in Sources */,
 				2F8BAE7726346AA900567E4B /* Tag.swift in Sources */,
+				2FB95DB0263B28AD006765E4 /* RingWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
