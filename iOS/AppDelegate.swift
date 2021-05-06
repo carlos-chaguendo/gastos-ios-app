@@ -15,7 +15,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     private let df = DateFormatter()
         .set(\.dateStyle, .short)
-        .set(\.timeStyle, .medium)
+        .set(\.timeStyle, .short)
     
 
     private static let file: FileHandlerOutputStream? = {
@@ -109,9 +109,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         } catch {
             self.pprint("Could not schedule app refresh: \(error)")
         }
-        
-        
-        
     }
     
     func handleAppBackUp(task: BGProcessingTask) {
@@ -119,43 +116,30 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
         
-        let backup = BackupService()
-        
         pprint("Iniciando backup automatico")
-        backup.startBackup(fileURL: Service.fileURL, notifyProgress: true, operation: queue)
+        BackupService().startBackup(fileURL: Service.fileURL, notifyProgress: true, operation: queue)
             .sink { completion in
-                Logger.info("completion", completion)
+                self.pprint("completion \(completion)")
                 switch completion {
                 case .finished:
                             self.pprint("Termino la operacion")
                             task.setTaskCompleted(success: true)
                     
                 case .failure(let error):
-                            self.pprint("Termino la operacion")
+                    self.pprint("Termino la operacion \(error.description)")
                             task.setTaskCompleted(success: false)
                     
                 }
             } receiveValue: { progress in
                 self.pprint("progreso \( progress)")
-             
             }.store(in: &self.cancellables)
 
-        
-//        let backupOperation = FileUploadOperation(log: pprint)
-        
         // After all operations are cancelled, the completion block below is called to set the task to complete.
         task.expirationHandler = {
             self.pprint("Expiration")
             self.cancellables.forEach { $0.cancel() }
             queue.cancelAllOperations()
         }
-        
-//        backupOperation.completionBlock = {
-//            self.pprint("Termino la operacion")
-//            task.setTaskCompleted(success: true)
-//        }
-        
-//        queue.addOperation(backupOperation)
     }
     
     func pprint(_ message: String) {
@@ -172,7 +156,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Logger.info("didRegisterForRemoteNotificationsWithDeviceToken")
-        
     }
     
     func userNotificationCenter( _ center: UNUserNotificationCenter,
@@ -181,17 +164,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         Logger.info("Notification while the app is in foreground with UNUserNotificationCenterDelegate:: [didReceive]: UNNotificationResponse")
         Logger.info("Response:", response)
         Logger.info("Info:", response.notification.request.content.userInfo)
-        
-        
-        Logger.info("UIApplication.shared.applicationState", UIApplication.shared.applicationState.rawValue)
-        if UIApplication.shared.applicationState == .background {
-            scheduleAppAutoBackup()
-        }
-      
-        
-        
-        
-        
         completionHandler()
     }
     
@@ -201,6 +173,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         Logger.info("Es una notificacion remota, con la app activa, debe mostrar Notificacion solo si no es interna")
         Logger.info(notification.debugDescription)
         completionHandler([.banner, .sound])
+        
     }
 }
 

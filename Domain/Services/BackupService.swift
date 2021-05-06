@@ -61,8 +61,13 @@ class BackupService {
             subject.send(completion: .failure(error as NSError))
         }
     }
-
-    func getBackup(named fileName: String, fileURL: URL) -> AnyPublisher<Double, NSError> {
+    
+    /// Description
+    /// - Parameters:
+    ///   - fileName: fileName description
+    ///   - fileURL: fileURL description
+    /// - Returns: description
+    func restoreBackup(named fileName: String, fileURL: URL) -> AnyPublisher<Double, NSError> {
 
         // let fileName = fileURL.lastPathComponent
         let query = NSMetadataQuery.init()
@@ -174,7 +179,10 @@ class BackupService {
         let subject = PassthroughSubject<Double, NSError>()
         Publishers.icloudFileUploadUpdate(for: query)
             .receive(on: query.operationQueue!)
-            .sink { _ in
+            .sink { completion in
+                /// Nunca se ejecuta, notification center nunca envia el evento completado
+                Logger.info("Completion", completion)
+            } receiveValue: { _ in
                 guard
                     let fileItem = query.resultsFor(fileName: fileName),
                     let fileItemURL = fileItem.value(forAttribute: NSMetadataItemURLKey) as? URL
@@ -195,11 +203,11 @@ class BackupService {
                     query.operationQueue?.addOperation {
                         query.stop()
                     }
-                    
+
                     DispatchQueue.main.async {
                         Service.registreNewBackup()
                     }
-                   
+
                     self.cancellables.removeAll()
 
                 } else if let error = fileValues?.ubiquitousItemUploadingError {
@@ -219,7 +227,6 @@ class BackupService {
                         subject.send(fileProgress)
                     }
                 }
-
             }.store(in: &cancellables)
 
         return subject.eraseToAnyPublisher()
@@ -234,6 +241,9 @@ extension Publishers {
         let start = center.publisher(for: .NSMetadataQueryDidStartGathering, object: query)
         let progress = center.publisher(for: .NSMetadataQueryGatheringProgress, object: query)
         let update = center.publisher(for: .NSMetadataQueryDidUpdate, object: query)
+        
+  
+        
         return MergeMany(
             start.compactMap { $0.userInfo},
             progress.compactMap { $0.userInfo},

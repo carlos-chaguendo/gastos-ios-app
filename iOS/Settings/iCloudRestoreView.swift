@@ -81,7 +81,7 @@ struct iCloudRestoreView: View {
                         let backup = self.url.lastPathComponent
 
                         fistly {
-                            BackupService().getBackup(named: backup, fileURL: file)
+                            BackupService().restoreBackup(named: backup, fileURL: file)
                         }.sink { _ in
                             self.status = .restaured
                         } receiveValue: { progress in

@@ -99,7 +99,6 @@
 		2F98CE81261640270004F1B2 /* PresentLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F98CE80261640270004F1B2 /* PresentLinkView.swift */; };
 		2FA938BA2633158A006F1905 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA938B92633158A006F1905 /* SettingsView.swift */; };
 		2FA938BE26332103006F1905 /* iCloudBackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA938BD26332103006F1905 /* iCloudBackupView.swift */; };
-		2FB0079E2643878100506350 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0079D2643878100506350 /* AsyncOperation.swift */; };
 		2FB5935D25FC012B005A1B93 /* PropertyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */; };
 		2FB95DB0263B28AD006765E4 /* RingWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB95DAF263B28AD006765E4 /* RingWidget.swift */; };
 		2FB95DB1263B28DF006765E4 /* RingChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5D669C2639B14A00819EC9 /* RingChart.swift */; };
@@ -213,7 +212,6 @@
 		2F98CE80261640270004F1B2 /* PresentLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentLinkView.swift; sourceTree = "<group>"; };
 		2FA938B92633158A006F1905 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2FA938BD26332103006F1905 /* iCloudBackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudBackupView.swift; sourceTree = "<group>"; };
-		2FB0079D2643878100506350 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyBuilder.swift; sourceTree = "<group>"; };
 		2FB5936325FC1231005A1B93 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		2FB95DAF263B28AD006765E4 /* RingWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingWidget.swift; sourceTree = "<group>"; };
@@ -305,7 +303,6 @@
 				2F816D63261D26BF009FB091 /* Summary Graphs */,
 				2F91537F2601923D0092033E /* Transactions */,
 				2F6B073325F9790A00A1D516 /* Views Components */,
-				2FB0079D2643878100506350 /* AsyncOperation.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -668,7 +665,6 @@
 				2F98CE5B26154EF50004F1B2 /* Catagory.swift in Sources */,
 				2F89BA1E261EB43A0009EA03 /* Stack.swift in Sources */,
 				2FBEBC02260D0DBE001C4FCD /* Array.swift in Sources */,
-				2FB0079E2643878100506350 /* AsyncOperation.swift in Sources */,
 				2F9500E42604061500C9ABFC /* View++.swift in Sources */,
 				2F6B073525F9791C00A1D516 /* FlexibleView.swift in Sources */,
 				2F89BA39261F8EC80009EA03 /* SpendChartView.swift in Sources */,
