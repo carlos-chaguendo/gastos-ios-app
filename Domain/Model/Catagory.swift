@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol EntityWithName: class {
+protocol EntityWithName: AnyObject {
     var name: String { get set }
 }
 

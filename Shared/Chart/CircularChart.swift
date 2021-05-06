@@ -84,29 +84,79 @@ struct CircularChart: View {
     
 }
 
+struct ContentX: View {
+    
+    @State var value: Double = 0.5
+    
+    @State  var selected = "2"
+    @State   var values = ["1", "2", "3"]
+
+    
+    var body: some View {
+        VStack {
+            ZStack {
+                 CircularChart([
+                     .init(color: .yellow, value: 0.25),
+                     .init(color: .yellow, value: 0.25),
+                     .init(color: .yellow, value: 0.2),
+                     .init(color: .yellow, value: 0.2),
+                     .init(color: .yellow, value: 0.1)
+                 ]).padding().padding()
+                 
+                 CircularChart([
+                     .init(color: .red, value: 0.333),
+                     .init(color: .red, value: 0.333),
+                     .init(color: .red, value: 0.333),
+                 ])
+                 
+                 CircularChart([
+                    .init(color: .green, value: CGFloat(value)),
+                 ]).padding()
+                
+
+             
+            
+            }
+     
+            VStack {
+                
+                Text("Value \(value)")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .blendMode(.overlay)
+                
+                ProgressView("s", value: 0.5)
+                    
+                
+                Slider(value: $value, in: 0...1)
+          
+            }.padding().background(LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing))
+            
+           
+            Text("Clipped text in a circle")
+                .frame(width: 175, height: 100)
+                .foregroundColor(Color.white)
+                .background(Color.blue)
+                .clipShape(RoundedRectangle(cornerRadius: 30, style: .circular))
+        
+            
+            SegmentedView(values, selected: $selected) { e in
+                Text(e)
+            }
+            
+        }
+    }
+}
+
 struct CircularChart_Previews: PreviewProvider {
+    
+
+    
     static var previews: some View {
-       ZStack {
-            CircularChart([
-                .init(color: .yellow, value: 0.25),
-                .init(color: .yellow, value: 0.25),
-                .init(color: .yellow, value: 0.2),
-                .init(color: .yellow, value: 0.2),
-                .init(color: .yellow, value: 0.1)
-            ]).padding().padding()
-            
-            CircularChart([
-                .init(color: .red, value: 0.333),
-                .init(color: .red, value: 0.333),
-                .init(color: .red, value: 0.333),
-            ])
-            
-            CircularChart([
-                .init(color: .green, value: 0.3),
-                .init(color: .green, value: 0.3),
-                .init(color: .green, value: 0.3),
-            ]).padding()
-        }.padding()
+        
+        ContentX()
+        
+       .padding()
         
         .preferredColorScheme(.dark)
     }

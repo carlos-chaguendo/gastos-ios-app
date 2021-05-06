@@ -13,6 +13,10 @@ import CoreServices
 class BackupService {
 
     public var cancellables = Set<AnyCancellable>()
+    
+    deinit {
+        Logger.info("De init", self)
+    }
 
     private func downloadFile(fileURL: URL, for query: NSMetadataQuery, subject: PassthroughSubject<Double, NSError>) {
 
@@ -125,7 +129,7 @@ class BackupService {
     /// Guarda un archivo en icloud
     /// - Parameter fileURL: URl del archivo local
     /// - Returns: Publisher con el porcentaje de avance
-    func startBackup(fileURL: URL) -> AnyPublisher<Double, NSError> {
+    func startBackup(fileURL: URL, notifyProgress: Bool = true, operation: OperationQueue = .main) -> AnyPublisher<Double, NSError> {
 
         guard let containerURL = FileManager.default.url(forUbiquityContainerIdentifier: nil) else {
             let error = NSError(domain: "upload", code: 1, userInfo: [NSLocalizedDescriptionKey: " The App Not Have Access to iCloud"])
@@ -137,9 +141,10 @@ class BackupService {
 
         Logger.info("Save:", fileName)
         Logger.info("Into:", backupFileURL)
+        Logger.info("operation", operation)
 
         let query = NSMetadataQuery.init()
-        query.operationQueue = .main
+        query.operationQueue = operation
         query.searchScopes = [NSMetadataQueryUbiquitousDataScope]
         query.predicate = NSPredicate(format: "%K LIKE %@", NSMetadataItemFSNameKey, fileName)
 
@@ -160,7 +165,7 @@ class BackupService {
         } catch {
             return Fail(error: error as NSError).eraseToAnyPublisher()
         }
-
+        
         query.operationQueue?.addOperation({ [weak query] in
             query?.start()
             query?.enableUpdates()
@@ -168,6 +173,7 @@ class BackupService {
 
         let subject = PassthroughSubject<Double, NSError>()
         Publishers.icloudFileUploadUpdate(for: query)
+            .receive(on: query.operationQueue!)
             .sink { _ in
                 guard
                     let fileItem = query.resultsFor(fileName: fileName),
@@ -190,7 +196,10 @@ class BackupService {
                         query.stop()
                     }
                     
-                    Service.registreNewBackup()
+                    DispatchQueue.main.async {
+                        Service.registreNewBackup()
+                    }
+                   
                     self.cancellables.removeAll()
 
                 } else if let error = fileValues?.ubiquitousItemUploadingError {

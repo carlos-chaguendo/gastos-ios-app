@@ -15,7 +15,7 @@ func Promise<Output>( block: @escaping () -> Output) -> AnyPublisher<Output, Nev
     #else
     return Deferred {
         Future<Output, Never> { seal in
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
                 seal(Result.success(block()))
             }
         }

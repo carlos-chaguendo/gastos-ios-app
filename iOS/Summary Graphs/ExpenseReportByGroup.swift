@@ -18,21 +18,20 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
     init(title: LocalizedStringKey, group: KeyPath<ExpenseItem, Group>) {
         self.title = title
         self.datasource = SpendByGroupChartView<Group>.DataSource.init(group: group)
-    }
 
+    }
+    
     var body: some View {
         GeometryReader { _ in
 
             ScrollView {
+ 
+                SegmentedView(["D", "W", "M", "Y"], selected: $datasource.mode) { mode in
+                    Text(mode)
+                }
 
                 VStack(alignment: .leading) {
-
-                    Picker("", selection: $datasource.mode) {
-                        ForEach(["D", "W", "M", "Y"], id: \.self) { mode in
-                            Text(mode)
-                        }
-                    }.pickerStyle(SegmentedPickerStyle())
-
+                    
                     HStack {
                         Button(action: datasource.previousPage) {
                             Image(systemName: "chevron.left.circle.fill")
@@ -74,6 +73,7 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                         total: datasource.total,
                         categories: datasource.categories
                     )
+
 
                     ForEach(datasource.categories, id: \.self) { category in
 

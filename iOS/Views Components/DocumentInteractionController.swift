@@ -11,38 +11,47 @@ import CoreServices
 import QuickLook
 
 struct DocumentInteractionController: UIViewControllerRepresentable {
+    
+    typealias UIViewControllerType = QLPreviewController
 
     var url: URL
-//    var callback: (URL) -> Void
-
-//    func makeCoordinator() -> Coordinator {
-//        return Coordinator(documentController: self)
-//    }
-
-    func updateUIViewController(
-        _ uiViewController: UIDocumentInteractionController,
-        context: UIViewControllerRepresentableContext<DocumentPickerViewController>) {
+    
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(url: self.url)
+    }
+    
+    
+    func makeUIViewController(context: Self.Context) -> Self.UIViewControllerType {
+        let ql = QLPreviewController()
+        ql.dataSource = context.coordinator
+        ql.delegate = context.coordinator
+        return ql
     }
 
-    func makeUIViewController(context: Context) -> UIDocumentInteractionController {
-        let controller = UIDocumentInteractionController(url: url)
-       // context.coordinator.
-//        controller.delegate = context.coordinator
-        return controller
-    }
 
-    class Coordinator: NSObject, UIDocumentInteractionControllerDelegate {
-        var documentController: DocumentPickerViewController
+    func updateUIViewController(_ uiViewController: Self.UIViewControllerType, context: Self.Context) {
         
+    }
 
-        init(documentController: DocumentPickerViewController) {
-            self.documentController = documentController
+    class Coordinator: NSObject, QLPreviewControllerDataSource, QLPreviewControllerDelegate {
+        
+        var url: URL
+        
+        init(url: URL) {
+            self.url = url
         }
         
-//        public func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
-//            return documentController
-//        }
-
+        func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+           1
+        }
+        
+        func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+            self.url as QLPreviewItem
+        }
+        
+        func previewController(_ controller: QLPreviewController, editingModeFor previewItem: QLPreviewItem) -> QLPreviewItemEditingMode {
+            .updateContents
+        }
 
     }
 

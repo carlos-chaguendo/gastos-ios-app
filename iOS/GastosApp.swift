@@ -19,17 +19,17 @@ import BackgroundTasks
 
 @main
 struct GastosApp: App {
-
+    
     @State var selected: Int = 0
     @State private var showingDetail = false
-
+    
     private let addButtonSize: CGFloat = 60
     private let addButtonBorderSize: CGFloat = 34
-
+    
     @AppStorage("isFirstAppInstallation") private var isFirstAppInstallation = true
-
+    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
+    
     @ViewBuilder var plusButton: some View {
         //        PresentLinkView(destination:  ExpenseItemFormView()) {
         ZStack {
@@ -48,31 +48,29 @@ struct GastosApp: App {
         }
         .sheet(isPresented: $showingDetail) {
             ExpenseItemFormView()
-
+            
         }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { not in
             appDelegate.scheduleAppAutoBackup()
-        }.onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { not in
-            Logger.info("Enter fore ground")
         }
     }
-
+    
     var body: some Scene {
         WindowGroup {
             if isFirstAppInstallation {
                 iCloudRestoreView(restorationTerminated: $isFirstAppInstallation)
             } else {
-
+                
                 TabBar {
-
+                    
                     SummaryGraphicsView().tabBarItem {
-                            TabBar.Page.Item(systemIconName: "rectangle.3.offgrid", tabName: "Dashboard")
-                        }
-
+                        TabBar.Page.Item(systemIconName: "rectangle.3.offgrid", tabName: "Dashboard")
+                    }
+                    
                     TransactionsView()
                         .tabBarItem {
                             TabBar.Page.Item(systemIconName: "homekit", tabName: "Home")
                         }
-
+                    
                     NavigationView {
                         Text("Hola")
                             .navigationBarTitle("", displayMode: .inline)
@@ -82,17 +80,17 @@ struct GastosApp: App {
                         plusButton
                             .offset(y: -20)
                     }
-
+                    
                     CapijaView()
                         .tabBarItem {
                             TabBar.Page.Item(systemIconName: "homepod.fill", tabName: "Categories")
                         }
-
+                    
                     SettingsView()
                         .tabBarItem {
                             TabBar.Page.Item(systemIconName: "gearshape", tabName: "Settings")
                         }
-
+                    
                 }
                 .selectedIndex($selected)
                 .set(\.background, Color(Colors.background))
@@ -105,7 +103,7 @@ struct GastosApp: App {
                         Logger.info("UNUserNotificationCenter granted", granted)
                         Logger.info("respuesta notifica error:", error)
                     }
-
+                    
                 }.onReceive(Publishers.didAddNewTransaction) { _ in
                     WidgetCenter.shared.reloadAllTimelines()
                 }.onReceive(Publishers.didEditTransaction) { _ in
@@ -114,15 +112,15 @@ struct GastosApp: App {
             }
         }
     }
-
+    
 }
 
 struct CapijaView: View {
-
+    
     let  number = Int.random(in: 0..<100)
-
+    
     @State var updateView = 0
-
+    
     @State private var bgColor = Color.red
     
     @State private var notifications:[UNNotificationRequest] = []
@@ -132,35 +130,53 @@ struct CapijaView: View {
     private let df = DateFormatter()
         .set(\.dateStyle, .full)
         .set(\.timeStyle, .full)
-
+    
+    @State var selected = 1
+    
+    
+    @State var isDocumentPreviewPresented: Bool = false
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 10) {
-
+                //
+                //
+                
+                //
+                //
+                
                 Text("has \(number)")
                 Text("u \(Int.random(in: 0..<100))")
                 Text("updateView \(updateView)")
                     .onAppear {
                         self.updateView += 1
-                }
-
+                    }
+                
                 FileImportButton()
                     .padding()
-
-                Button("Open log") {
+                
+                
+                Button("clears Log") {
                     let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log.txt")
                     
+                    try? FileManager.default.removeItem(at: url)
                     
-                    let contenido = try! String(contentsOf: url)
                     
-                    print("contenido", contenido)
-                    
+                }.foregroundColor(.systemRed)
+                
+                
+                Button("Open Log") {
+                    self.isDocumentPreviewPresented.toggle()
+                }.sheet(isPresented: $isDocumentPreviewPresented) {
+                    let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log.txt")
+                    NavigationView {
+                        DocumentInteractionController(url: url)
+                            .navigationTitle("log.txt")
+                    }
                 }
-
-                ForEach([-1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.8, 1.0], id: \.self) { i in
-                    Text("\(i)")
-                        .background(Colors.background.shadeColor(factor: CGFloat(i)))
-                }
+                
+        
+           
                 
                 ForEach(notifications, id: \.identifier) { request in
                     
@@ -174,18 +190,15 @@ struct CapijaView: View {
                     
                 }
                 
-                Divider()
-                ForEach(tasks, id: \.identifier) { request in
-                    VStack {
-                        Text(request.identifier)
-                        if let date = request.earliestBeginDate {
-                        Text(df.string(from: date))
-                        }
-                    }
-                }
 
-                Divider()
+//
+                SegmentedView([1,2,3,4,5,6], selected: $selected) { e in
+                    Text("\(e)")
 
+                }.padding(.vertical)
+                
+
+                
             }
         }.background(Colors.background)
         .onAppear {
@@ -195,12 +208,12 @@ struct CapijaView: View {
                 notifications = requests
             }
             
-
+            
             BGTaskScheduler.shared.getPendingTaskRequests { reuqest in
                 Logger.info("tasks ", reuqest.count)
                 tasks = reuqest
             }
         }
-
+        
     }
 }

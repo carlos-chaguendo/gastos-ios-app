@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class ButtonStyleFormLarge: ButtonStyle {
+struct ButtonStyleFormLarge: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration
             .label

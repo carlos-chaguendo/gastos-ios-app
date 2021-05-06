@@ -6,11 +6,18 @@
 //
 
 import UIKit
+import RealmSwift
 import BackgroundTasks
+import Combine
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+    public var cancellables = Set<AnyCancellable>()
     
+    private let df = DateFormatter()
+        .set(\.dateStyle, .short)
+        .set(\.timeStyle, .medium)
     
+
     private static let file: FileHandlerOutputStream? = {
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log.txt")
 
@@ -75,27 +82,32 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         pprint("Enter fore ground")
     }
     
+    var now: String {
+        df.string(from: Date() )
+    }
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
-        self.pprint("applicationDidEnterBackground \(Date())")
+        self.pprint("Did EnterBackground )")
         scheduleAppAutoBackup()
     }
     
     func scheduleAppAutoBackup() {
-        pprint("scheduleAppAutoBackup \(Date())")
+        pprint("scheduleAppAutoBackup ")
         let request = BGProcessingTaskRequest(identifier: "com.mayorgafirm.Gastos.backup")
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 5 * 60)
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 1 * 60)
+        pprint(" earliestBeginDate \(df.string(from:  request.earliestBeginDate!))")
 //        request.requiresNetworkConnectivity = true
         
         do {
             try BGTaskScheduler.shared.submit(request)
             
             BGTaskScheduler.shared.getPendingTaskRequests { reuqest in
-                Logger.info("tasks ", reuqest.count)
+                self.pprint("tasks \(reuqest.count)")
                 
             }
         
         } catch {
-            print("Could not schedule app refresh: \(error)")
+            self.pprint("Could not schedule app refresh: \(error)")
         }
         
         
@@ -107,34 +119,51 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
         
+        let backup = BackupService()
         
-        let file = AppDelegate.file
+        pprint("Iniciando backup automatico")
+        backup.startBackup(fileURL: Service.fileURL, notifyProgress: true, operation: queue)
+            .sink { completion in
+                Logger.info("completion", completion)
+                switch completion {
+                case .finished:
+                            self.pprint("Termino la operacion")
+                            task.setTaskCompleted(success: true)
+                    
+                case .failure(let error):
+                            self.pprint("Termino la operacion")
+                            task.setTaskCompleted(success: false)
+                    
+                }
+            } receiveValue: { progress in
+                self.pprint("progreso \( progress)")
+             
+            }.store(in: &self.cancellables)
+
         
-        let backupOperation = BlockOperation {
-            self.pprint("Termino la operacion")
-       
-        }
+//        let backupOperation = FileUploadOperation(log: pprint)
         
+        // After all operations are cancelled, the completion block below is called to set the task to complete.
         task.expirationHandler = {
-            // After all operations are cancelled, the completion block below is called to set the task to complete.
+            self.pprint("Expiration")
+            self.cancellables.forEach { $0.cancel() }
             queue.cancelAllOperations()
         }
         
-        backupOperation.completionBlock = {
-            task.setTaskCompleted(success: true)
-        }
+//        backupOperation.completionBlock = {
+//            self.pprint("Termino la operacion")
+//            task.setTaskCompleted(success: true)
+//        }
         
-        queue.addOperation(backupOperation)
-        
-   
+//        queue.addOperation(backupOperation)
     }
     
     func pprint(_ message: String) {
         if var output = AppDelegate.file {
-            Swift.print(message, separator: "\t\t\t", terminator: "\n", to: &output)
+            Swift.print("\(now) \(message)", separator: "\t\t\t", terminator: "\n", to: &output)
         }
         
-        Swift.print(message, separator: "\t\t\t", terminator: "\n")
+        Swift.print("\(now) \(message)", separator: "\t\t\t", terminator: "\n")
     }
     
 }

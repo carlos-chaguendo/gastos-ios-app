@@ -87,7 +87,7 @@ struct iCloudBackupView: View {
                     self.status = .uploading
                     self.progress = 0
                     
-                    backup.startBackup(fileURL: Realm.Configuration.defaultConfiguration.fileURL!)
+                    backup.startBackup(fileURL: Service.fileURL)
                         .sink { completion in
                             Logger.info("completion", completion)
                             switch completion {

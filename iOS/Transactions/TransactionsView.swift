@@ -36,12 +36,13 @@ struct TransactionsView: View {
     }
 
     private var currentMonthView: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text(DateFormatter.month.string(from: weekendViewModel.selected))
-                .textCase(.uppercase)
+        HStack(alignment: .firstTextBaseline, spacing: 2) {
+            Text(DateFormatter.longMonth.string(from: weekendViewModel.selected).capitalized)
+                .font(.body)
+                .fontWeight(.semibold)
 
             Text(DateFormatter.year.string(from: weekendViewModel.selected))
-                .font(.caption)
+                .font(.body)
                 .fontWeight(.semibold)
         }
     }
@@ -94,7 +95,7 @@ struct TransactionsView: View {
 
                         // .opacity(dayOffset == 0 ? 1 : 0)
                         // .offset(x: dayOffset, y: 0)
-                        .padding(.top)
+                        //.padding(.top)
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .background(backcolor)
 
