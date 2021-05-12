@@ -18,7 +18,6 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
     init(title: LocalizedStringKey, group: KeyPath<ExpenseItem, Group>) {
         self.title = title
         self.datasource = SpendByGroupChartView<Group>.DataSource.init(group: group)
-
     }
     
     var body: some View {

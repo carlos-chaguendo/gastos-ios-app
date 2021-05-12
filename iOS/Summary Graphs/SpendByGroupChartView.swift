@@ -82,12 +82,11 @@ struct SpendByGroupChartView<Group: Entity & ExpensePropertyWithValue>: View {
             }
 
         }
-
-        // .cardView()
-        // .animation(.none)
         .onReceive(Publishers.didAddNewTransaction) { _ in
             self.fectDataSource(refresh: true)
         }.onReceive(Publishers.didEditTransaction) { _ in
+            self.fectDataSource(refresh: true)
+        }.onReceive(Publishers.didEditCategories) { _ in
             self.fectDataSource(refresh: true)
         }.onAppear {
             self.fectDataSource()
@@ -96,14 +95,15 @@ struct SpendByGroupChartView<Group: Entity & ExpensePropertyWithValue>: View {
 
     func fectDataSource(refresh: Bool = false, file: String = #file, line: Int = #line) {
         if refresh {
+            datasource.cancellables.removeAll()
             datasource.categories.removeAll()
         }
 
-        guard datasource.categories.isEmpty else {
+        guard datasource.cancellables.isEmpty, datasource.categories.isEmpty else {
             return
         }
 
-        Logger.info("Fetch Datasource ", file: file, line: line)
+        Logger.info("Fetch Datasource", file: file, line: line)
         datasource.getValuesGrouped()
     }
 
@@ -121,6 +121,8 @@ extension SpendByGroupChartView {
         @Published var total: Double = 0.0
         @Published var categories: [Group] = []
         @Published var cancellables = Set<AnyCancellable>()
+        
+        let id =  Int.random(in: 0...100)
 
         init(group: KeyPath<ExpenseItem, Group>, categories: [Group] = []) {
             self.groupBy = group
@@ -137,18 +139,19 @@ extension SpendByGroupChartView {
             return DateInterval(start: start, end: end)
         }
 
-        func getValuesGrouped() {
+        func getValuesGrouped(code: Int = 0) {
             Promise {
                 Service.expenses(by: self.groupBy, in: self.calendarComponent, of: self.date)
             }
             .receive(on: DispatchQueue.main)
             .sink { values in
 
-                Logger.info("Obteneiendo resultados \(self.mode)", self.groupBy)
+                Logger.info("Obteneiendo resultados[\(self.id)] \(self.mode) \(self.date)", self.groupBy)
 
                 self.interval = self.getInterval(mode: self.mode, date: self.date)
                 self.categories = values
                 self.total = values.map { $0.value }.reduce(0, +)
+                self.cancellables.removeAll()
 
             }.store(in: &cancellables)
         }

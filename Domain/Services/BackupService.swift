@@ -12,13 +12,10 @@ import CoreServices
 
 class BackupService {
 
-    public var cancellables = Set<AnyCancellable>()
     
-    deinit {
-        Logger.info("De init", self)
-    }
+    private init() { }
 
-    private func downloadFile(fileURL: URL, for query: NSMetadataQuery, subject: PassthroughSubject<Double, NSError>) {
+    private static func downloadFile(fileURL: URL, for query: NSMetadataQuery, subject: PassthroughSubject<Double, NSError>) {
 
         let fileName = fileURL.lastPathComponent
 
@@ -39,7 +36,6 @@ class BackupService {
 
                 query.disableUpdates()
                 query.operationQueue?.addOperation { query.stop() }
-                self.cancellables.removeAll()
                 print("Download complete")
 
                 if FileManager.default.fileExists(atPath: fileURL.path) {
@@ -67,7 +63,7 @@ class BackupService {
     ///   - fileName: fileName description
     ///   - fileURL: fileURL description
     /// - Returns: description
-    func restoreBackup(named fileName: String, fileURL: URL) -> AnyPublisher<Double, NSError> {
+    static func restoreBackup(named fileName: String, fileURL: URL) -> AnyPublisher<Double, NSError> {
 
         // let fileName = fileURL.lastPathComponent
         let query = NSMetadataQuery.init()
@@ -98,7 +94,7 @@ class BackupService {
     /// Busca un backup
     /// - Parameter fileName: Nombre del archivo
     /// - Returns:
-    func searchBackup(fileName: String) -> AnyPublisher<NSMetadataItem, NSError> {
+    static func searchBackup(fileName: String) -> AnyPublisher<NSMetadataItem, NSError> {
         return Deferred {
             Future<NSMetadataItem, NSError> { seal in
                 Logger.info("Buscando...", fileName)
@@ -111,7 +107,6 @@ class BackupService {
                     defer {
                         query.disableUpdates()
                         query.operationQueue?.addOperation { query.stop() }
-                        self.cancellables.removeAll()
                     }
 
                     guard let fileItem = query.resultsFor(fileName: fileName) else {
@@ -134,7 +129,7 @@ class BackupService {
     /// Guarda un archivo en icloud
     /// - Parameter fileURL: URl del archivo local
     /// - Returns: Publisher con el porcentaje de avance
-    func startBackup(fileURL: URL, notifyProgress: Bool = true, operation: OperationQueue = .main) -> AnyPublisher<Double, NSError> {
+    static func startBackup(fileURL: URL, notifyProgress: Bool = true, operation: OperationQueue = .main) -> AnyPublisher<Double, NSError> {
 
         guard let containerURL = FileManager.default.url(forUbiquityContainerIdentifier: nil) else {
             let error = NSError(domain: "upload", code: 1, userInfo: [NSLocalizedDescriptionKey: " The App Not Have Access to iCloud"])
@@ -179,7 +174,7 @@ class BackupService {
         let subject = PassthroughSubject<Double, NSError>()
         Publishers.icloudFileUploadUpdate(for: query)
             .receive(on: query.operationQueue!)
-            .sink { completion in
+            .receive(subscriber: Subscribers.Sink.init { completion in
                 /// Nunca se ejecuta, notification center nunca envia el evento completado
                 Logger.info("Completion", completion)
             } receiveValue: { _ in
@@ -208,8 +203,6 @@ class BackupService {
                         Service.registreNewBackup()
                     }
 
-                    self.cancellables.removeAll()
-
                 } else if let error = fileValues?.ubiquitousItemUploadingError {
                     print("upload error---", error.localizedDescription)
                     subject.send(completion: .failure(error))
@@ -227,7 +220,7 @@ class BackupService {
                         subject.send(fileProgress)
                     }
                 }
-            }.store(in: &cancellables)
+            })
 
         return subject.eraseToAnyPublisher()
 

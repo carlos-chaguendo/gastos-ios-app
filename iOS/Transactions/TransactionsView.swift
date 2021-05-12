@@ -26,12 +26,9 @@ struct TransactionsView: View {
     }()
 
     init() {
-
-        var date = Date()
-        if let current = UserDefaults.standard.value(forKey: "currentDate") as? Date {
-            date = current
-        }
-
+        /// Siempres e debe caragr el calendario en el dia de hoy
+        let date = Date()
+        UserDefaults.standard.setValue(date, forKey: "currentDate")
         weekendViewModel = WeekendViewModel(date: date, mode: .weekend)
     }
 

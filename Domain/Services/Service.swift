@@ -23,7 +23,7 @@ public class Service {
         
         let config = Realm.Configuration(
             fileURL: fileURL,
-            schemaVersion: 4,
+            schemaVersion: 5,
             migrationBlock: { _, oldSchemaVersion in
                 
                 if oldSchemaVersion < 1 {
@@ -42,7 +42,7 @@ public class Service {
     
     private init() {}
     
-    static func addItem(_ item: ExpenseItem) {
+    static func addItem(_ item: ExpenseItem, notify: Bool = true) {
         realm.rwrite {
             
             let local: ExpenseItem = realm.findBy(id: item.id) ?? item
@@ -62,10 +62,12 @@ public class Service {
             realm.add(local)
         }
         
-        if item.hasId() {
-            NotificationCenter.default.post(name: .didEditTransaction, object: item.detached())
-        } else {
-            NotificationCenter.default.post(name: .didAddNewTransaction, object: item.detached())
+        if notify {
+            if item.hasId() {
+                NotificationCenter.default.post(name: .didEditTransaction, object: item.detached())
+            } else {
+                NotificationCenter.default.post(name: .didAddNewTransaction, object: item.detached())
+            }
         }
     }
     
@@ -88,12 +90,22 @@ public class Service {
     
     @discardableResult
     static func addCategory(_ item: Catagory) -> Catagory {
+        let local: Catagory = realm.findBy(id: item.id) ?? item
         realm.rwrite {
-            item.id = UUID().description
-            realm.add(item)
+            local.name = item.name
+            local.color = item.color
+            local.sign = item.sign
+            
+            if local.realm == nil {
+                local.id = UUID().description
+            }
+            
+            realm.add(local)
         }
         
-        return item.detached()
+        let sender = local.detached()
+        NotificationCenter.default.post(name: .didEditCategories, object: sender)
+        return sender
     }
     
     static func addTag(_ item: Tag) {

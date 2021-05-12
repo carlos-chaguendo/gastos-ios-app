@@ -17,8 +17,6 @@ struct iCloudBackupView: View {
         case none
     }
     
-    let backup = BackupService()
-    
     @State public var cancellables = Set<AnyCancellable>()
     @State private var status = Status.none
     @State private var progress = 0.0
@@ -32,7 +30,7 @@ struct iCloudBackupView: View {
     
     init() {
         
-        let file = Realm.Configuration.defaultConfiguration.fileURL!
+        let file = Service.fileURL
         let calculateSize = try? FileManager.default.attributesOfItem(atPath: file.path)[FileAttributeKey.size] as? Double
         self.fileSize = calculateSize ?? 0.0
     }
@@ -87,7 +85,7 @@ struct iCloudBackupView: View {
                     self.status = .uploading
                     self.progress = 0
                     
-                    backup.startBackup(fileURL: Service.fileURL)
+                    BackupService.startBackup(fileURL: Service.fileURL)
                         .sink { completion in
                             Logger.info("completion", completion)
                             switch completion {

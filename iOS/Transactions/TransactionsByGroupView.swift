@@ -113,11 +113,6 @@ struct TransactionsByGroupView<Group: Entity & ExpensePropertyWithValue>: View {
         .padding(.vertical)
         .background(Colors.background)
         .navigationTitle(group.name)
-        .navigationBarItems(trailing:
-                                PresentLinkView(destination: GroupFormView<Group>(group: groupBy, for: group)) {
-                Text("Edit")
-            }
-        )
     }
 }
 

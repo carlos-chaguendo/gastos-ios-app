@@ -17,15 +17,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         .set(\.dateStyle, .short)
         .set(\.timeStyle, .short)
     
-
+    
     private static let file: FileHandlerOutputStream? = {
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log.txt")
-
-
+        
+        
         if !FileManager.default.fileExists(atPath: url.path) {
             FileManager.default.createFile(atPath: url.path, contents: nil, attributes: [:])
         }
-
+        
         let fileHandle = try! FileHandle(forUpdating: url)
         return FileHandlerOutputStream(fileHandle)
     }()
@@ -60,7 +60,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         #endif
         
         UNUserNotificationCenter.current().delegate = self
-
+        
         // Fetch data once an hour.
         // MARK: Registering Launch Handlers for Tasks
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.mayorgafirm.Gastos.backup", using: nil) { task in
@@ -70,7 +70,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         self.pprint("app start \(Date())")
         
         
-   
+        
         return true
     }
     
@@ -91,52 +91,61 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         scheduleAppAutoBackup()
     }
     
+    /// https://developer.apple.com/documentation/backgroundtasks/starting_and_terminating_tasks_during_development
     func scheduleAppAutoBackup() {
         pprint("scheduleAppAutoBackup ")
-        let request = BGProcessingTaskRequest(identifier: "com.mayorgafirm.Gastos.backup")
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 1 * 60)
-        pprint(" earliestBeginDate \(df.string(from:  request.earliestBeginDate!))")
-//        request.requiresNetworkConnectivity = true
-        
-        do {
-            try BGTaskScheduler.shared.submit(request)
-            
-            BGTaskScheduler.shared.getPendingTaskRequests { reuqest in
-                self.pprint("tasks \(reuqest.count)")
+    
+        BGTaskScheduler.shared.getPendingTaskRequests { requests in
+            guard requests.contains(where: { $0.identifier == "com.mayorgafirm.Gastos.backup"}) == false else {
+                self.pprint("Ya esta registrado")
                 
+                requests.forEach {
+                    self.pprint("Netx \(self.df.string(from: $0.earliestBeginDate!))")
+                }
+                
+                return
             }
-        
-        } catch {
-            self.pprint("Could not schedule app refresh: \(error)")
+            
+            do {
+                let request = BGProcessingTaskRequest(identifier: "com.mayorgafirm.Gastos.backup")
+                request.earliestBeginDate = Date().withEnd(of: .day)
+                try BGTaskScheduler.shared.submit(request)
+                self.pprint("earliest \(self.df.string(from: request.earliestBeginDate!))")
+            } catch {
+                self.pprint("Could not schedule app refresh: \(error)")
+            }
         }
     }
     
     func handleAppBackUp(task: BGProcessingTask) {
+        pprint(" Iniciando backup automatico")
         scheduleAppAutoBackup()
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
         
-        pprint("Iniciando backup automatico")
-        BackupService().startBackup(fileURL: Service.fileURL, notifyProgress: true, operation: queue)
+        BackupService.startBackup(fileURL: Service.fileURL, notifyProgress: true, operation: queue)
             .sink { completion in
-                self.pprint("completion \(completion)")
+                self.pprint(" completion \(completion)")
                 switch completion {
                 case .finished:
-                            self.pprint("Termino la operacion")
-                            task.setTaskCompleted(success: true)
+                    self.pprint(" Termino la operacion")
+                    task.setTaskCompleted(success: true)
                     
                 case .failure(let error):
-                    self.pprint("Termino la operacion \(error.description)")
-                            task.setTaskCompleted(success: false)
+                    self.pprint(" Termino la operacion \(error.description)")
+                    task.setTaskCompleted(success: false)
                     
                 }
             } receiveValue: { progress in
-                self.pprint("progreso \( progress)")
+                self.pprint(" progreso \( progress)")
+                if progress >= 100 {
+                    task.setTaskCompleted(success: true)
+                }
             }.store(in: &self.cancellables)
-
+        
         // After all operations are cancelled, the completion block below is called to set the task to complete.
         task.expirationHandler = {
-            self.pprint("Expiration")
+            self.pprint(" Expiration")
             self.cancellables.forEach { $0.cancel() }
             queue.cancelAllOperations()
         }
@@ -181,18 +190,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 private struct FileHandlerOutputStream: TextOutputStream {
     private let fileHandle: FileHandle
     let encoding: String.Encoding
-
+    
     init(_ fileHandle: FileHandle, encoding: String.Encoding = .utf8) {
         self.fileHandle = fileHandle
         self.encoding = encoding
     }
-
+    
     mutating func write(_ string: String) {
         if let data = string.data(using: encoding) {
             fileHandle.seekToEndOfFile()
             fileHandle.write(data)
         }
     }
-
+    
 }
 

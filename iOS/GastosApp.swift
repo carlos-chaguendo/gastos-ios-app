@@ -153,7 +153,7 @@ struct CapijaView: View {
                     }
                 
                 FileImportButton()
-                    .padding()
+                    .cardView()
                 
                 
                 Button("clears Log") {

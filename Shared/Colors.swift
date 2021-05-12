@@ -42,7 +42,7 @@ extension ColorSpace {
 
         getRed(&r, green: &g, blue: &b, alpha: &a)
 
-        let rgb: Int = (Int)(r * 256) << 16 | (Int)(g * 256) << 8 | (Int)(b * 256) << 0
+        let rgb: Int = (Int)(r * 255) << 16 | (Int)(g * 255) << 8 | (Int)(b * 255) << 0
 
         return rgb// NSString(format: "#%06x", rgb) as String
     }

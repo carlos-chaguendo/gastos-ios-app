@@ -29,7 +29,6 @@ struct SummaryGraphicsView: View {
 
                     VStack(spacing: 18 ) {
                         SpendByGroupChartView(groupBy: \.category, title: "Category")
-
                         SpendByGroupChartView(groupBy: \.wallet, title: "Wallet", showTotal: false)
                     }.cardView()
 

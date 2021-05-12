@@ -37,11 +37,11 @@ struct SpendChartView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(0)
-
-                Spacer()
-                Image(systemName: "chevron.right.circle.fill")
-                    .imageScale(.large)
-                    .foregroundColor(.quaternaryLabel)
+//
+//                Spacer()
+//                Image(systemName: "chevron.right.circle.fill")
+//                    .imageScale(.large)
+//                    .foregroundColor(.quaternaryLabel)
             }
             .lineLimit(1)
             .padding(.top, -6)

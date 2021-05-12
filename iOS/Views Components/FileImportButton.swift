@@ -7,78 +7,165 @@
 
 import SwiftUI
 import CoreServices
+import Combine
 
 struct FileImportButton: View {
-
-    @State var isDocumentPickerPresented: Bool = false
-
+    
+    
+    enum State {
+        case forImport
+        case withFileURL
+        case failure(Error)
+    }
+    
+    @ObservedObject var  viewModel = ViewModel()
+    
     var body: some View {
-        Button("Arkit") {
-            self.isDocumentPickerPresented.toggle()
-        }
-        .sheet(isPresented: $isDocumentPickerPresented) {
-            DocumentPickerViewController(type: kUTTypeCommaSeparatedText) { url in
-
-                Logger.info("File:", url)
-
-                let items = getCSVData(file: url)
-                var i = 0
-                items.forEach {
-                    Service.addItem($0)
-                    Logger.info("Asss \(i) of \(items.count)" )
-                    i+=1
+        VStack {
+            switch viewModel.state {
+            case .forImport:
+                PresentLinkView(destination: DocumentPickerViewController(type: kUTTypeCommaSeparatedText) { url in
+                    do {
+                        try viewModel.readCSV(from: url)
+                        
+                    } catch {
+                        viewModel.state = .failure(error)
+                    }
+                }) {
+                    Text("Import CSV")
                 }
+                
+            case .withFileURL:
+        
+                ProgressView("\(viewModel.progress.cleanValue) of \(viewModel.numberOfLines.cleanValue)", value: viewModel.progress, total: viewModel.numberOfLines)
+                    .foregroundColor(Colors.primary)
+                
+                
+            case .failure(let error):
+                
+                Text((error as NSError).description)
+                
             }
+            
+            
+            
         }.navigationBarTitle("", displayMode: .inline)
     }
+    
+    
+}
 
-    func getCSVData(file: URL) -> [ExpenseItem] {
-        do {
-            let df = DateFormatter()
-            df.dateFormat = "\"dd/MM/yyyy HH:mm:ss\""
-
-            let url = file// Service.realm.configuration.fileURL?.deletingLastPathComponent().appendingPathComponent("DayCost.csv")
+extension FileImportButton {
+    
+    
+    class ViewModel: ObservableObject {
+        
+        let df = DateFormatter()
+            .set(\.dateFormat,  "\"dd/MM/yyyy HH:mm:ss\"")
+        
+        var categoriesByName: [String: Catagory] = [:]
+        var walletsByName: [String: Wallet] = [:]
+        
+        var lines: [String] = []
+        
+        
+        @Published var numberOfLines = 0.0
+        @Published var progress = 0.0
+        @Published var state = State.forImport
+        
+        private var cancellable: Cancellable?
+        
+        func readCSV(from url: URL) throws {
             let content = try String(contentsOfFile: url.path)
             let parsedCSV = content.components(
                 separatedBy: "\n"
-            ).dropFirst().map { line -> ExpenseItem in
-               let item = line.components(separatedBy: ",")
-                let fehca = item[0]
-                let categoria = item[1].replacingOccurrences(of: "\"", with: "").capitalized
-                let cuenta = item[2].replacingOccurrences(of: "\"", with: "").capitalized
-                let nota = item[9].replacingOccurrences(of: "\"", with: "").capitalized
-                let valor = item[7].replacingOccurrences(of: "\"$ ", with: "").replacingOccurrences(of: "\"", with: "")
-
-                return ExpenseItem {
-                    $0.title = nota
-                    $0.value = Double(valor) ?? 0.0
-                    $0.date = df.date(from: fehca)!
-                    $0.id =  $0.date.description
-
-                    $0.category = Service.realm.objects(Catagory.self)
-                        .first(where: {$0.name.uppercased() == categoria.uppercased()}) ?? addCategory(named: categoria)
-
-                    $0.wallet = Service.realm.objects(Wallet.self)
-                        .first(where: {$0.name.uppercased() == cuenta.uppercased()}) ?? addWallt(named: cuenta)
-
-                }
-            }
-            return parsedCSV
-        } catch {
-            return []
+            )
+            
+            self.lines = parsedCSV
+            self.lines.removeFirst()
+            self.numberOfLines = Double(lines.count)
+            self.progress = 0.0
+            self.state = .withFileURL
+            
+            loadCategoriesByname()
+            loadWallerByname()
+            
+            
+            cancellable = lines.publisher
+                .flatMap(maxPublishers: .max(1)) { e in
+                    Just(e).delay(for: 0.001, scheduler: RunLoop.main)
+                }.sink(receiveCompletion: { _ in
+                    self.state = .forImport
+                }, receiveValue:  { line in
+                    
+                    let item = line.components(separatedBy: ",")
+                    let fehca = item[0]
+                    let categoria = item[1].replacingOccurrences(of: "\"", with: "").capitalized
+                    let cuenta = item[2].replacingOccurrences(of: "\"", with: "").capitalized
+                    let nota = item[9].replacingOccurrences(of: "\"", with: "").capitalized
+                    let valor = item[7].replacingOccurrences(of: "\"$ ", with: "").replacingOccurrences(of: "\"", with: "")
+                    
+                    let expense = ExpenseItem {
+                        $0.title = nota
+                        $0.value = Double(valor) ?? 0.0
+                        $0.date = self.df.date(from: fehca)!
+                        $0.id =  $0.date.description
+                        $0.category = self.addCategory(named: categoria)
+                        $0.wallet = self.addWallt(named: cuenta)
+                    }
+                    
+                    Service.addItem(expense, notify: false)
+                    self.progress += 1.0
+                    print("progres \(self.progress)")
+                })
         }
+        
+        func loadCategoriesByname() {
+            self.categoriesByName = Service.getAll(Catagory.self)
+                .groupBy { $0.name.uppercased() }
+                .compactMapValues { $0.first }
+        }
+        
+        func loadWallerByname() {
+            self.walletsByName = Service.getAll(Wallet.self)
+                .groupBy { $0.name.uppercased() }
+                .compactMapValues { $0.first }
+        }
+        
+        /// Description
+        /// - Parameter named: named description
+        /// - Returns: description
+        func addCategory(named: String) -> Catagory {
+            
+            if let local = categoriesByName[named.uppercased()] {
+                return local
+            }
+            
+            let new = Service.addCategory(Catagory {
+                $0.name = named
+            })
+            
+            categoriesByName[new.name.uppercased()] = new
+            return new
+        }
+        
+        /// Description
+        /// - Parameter named: named description
+        /// - Returns: description
+        func addWallt(named: String) -> Wallet {
+            if let local = walletsByName[named.uppercased()] {
+                return local
+            }
+            
+            let new = Service.addWallet(Wallet {
+                $0.name = named
+            })
+            
+            walletsByName[new.name.uppercased()] = new
+            return new
+        }
+        
+        
     }
-
-    func addCategory(named: String) -> Catagory {
-        Service.addCategory(Catagory {
-             $0.name = named
-        })
-    }
-
-    func addWallt(named: String) -> Wallet {
-        Service.addWallet(Wallet {
-             $0.name = named
-        })
-    }
-
+    
 }
