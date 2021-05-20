@@ -42,7 +42,7 @@ struct ExpenseItemView: View {
                             RoundedRectangle(cornerRadius: 2)
                                 .fill(Color(.secondarySystemBackground))
                         ).padding(.vertical, 3)
-                }// .background(.blue)
+                }
 
                 Spacer().frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 0, maxHeight: 0)
             }

@@ -37,11 +37,6 @@ struct SpendChartView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(0)
-//
-//                Spacer()
-//                Image(systemName: "chevron.right.circle.fill")
-//                    .imageScale(.large)
-//                    .foregroundColor(.quaternaryLabel)
             }
             .lineLimit(1)
             .padding(.top, -6)
@@ -62,7 +57,6 @@ struct SpendChartView: View {
             withAnimation {
                 self.needRefreshPageCache.toggle()
             }
-            // datasource.setInterval(mode: value, date: datasource.date)
         }
         .onReceive(datasource.$date) { nex in
             /// Cuando se cambia la fecha desde la paginacion

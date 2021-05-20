@@ -11,7 +11,6 @@ import WidgetKit
 import RealmSwift
 import CoreServices
 import UserNotifications
-
 import BackgroundTasks
 
 // https://www.hackingwithswift.com/quick-start/swiftui
@@ -27,11 +26,9 @@ struct GastosApp: App {
     private let addButtonBorderSize: CGFloat = 34
     
     @AppStorage("isFirstAppInstallation") private var isFirstAppInstallation = true
-    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     @ViewBuilder var plusButton: some View {
-        //        PresentLinkView(destination:  ExpenseItemFormView()) {
         ZStack {
             Circle()
                 .foregroundColor(.white)
@@ -62,26 +59,22 @@ struct GastosApp: App {
                 
                 TabBar {
                     
-                    SummaryGraphicsView().tabBarItem {
-                        TabBar.Page.Item(systemIconName: "rectangle.3.offgrid", tabName: "Dashboard")
-                    }
+                    SummaryGraphicsView()
+                        .tabBarItem {
+                            TabBar.Page.Item(systemIconName: "rectangle.3.offgrid", tabName: "Dashboard")
+                        }
                     
                     TransactionsView()
                         .tabBarItem {
                             TabBar.Page.Item(systemIconName: "homekit", tabName: "Home")
                         }
                     
-                    NavigationView {
-                        Text("Hola")
-                            .navigationBarTitle("", displayMode: .inline)
-                    }.onAppear {
-                        Logger.info("ssss", self.selected)
-                    }.tabBarItem {
-                        plusButton
-                            .offset(y: -20)
-                    }
+                    EmptyView()
+                        .tabBarItem {
+                            plusButton.offset(y: -20)
+                        }
                     
-                    CapijaView()
+                    DebugView()
                         .tabBarItem {
                             TabBar.Page.Item(systemIconName: "homepod.fill", tabName: "Categories")
                         }
@@ -113,96 +106,4 @@ struct GastosApp: App {
         }
     }
     
-}
-
-struct CapijaView: View {
-    
-    let  number = Int.random(in: 0..<100)
-    
-    @State var updateView = 0
-    
-    @State private var bgColor = Color.red
-    
-    @State private var notifications: [UNNotificationRequest] = []
-    
-    @State private var tasks: [BGTaskRequest] = []
-    
-    private let df = DateFormatter()
-        .set(\.dateStyle, .full)
-        .set(\.timeStyle, .full)
-    
-    @State var selected = 1
-    
-    @State var isDocumentPreviewPresented: Bool = false
-    
-    var body: some View {
-        ScrollView {
-            VStack(spacing: 10) {
-                //
-                //
-                
-                //
-                //
-                
-                Text("has \(number)")
-                Text("u \(Int.random(in: 0..<100))")
-                Text("updateView \(updateView)")
-                    .onAppear {
-                        self.updateView += 1
-                    }
-                
-                FileImportButton()
-                    .cardView()
-                
-                Button("clears Log") {
-                    let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log.txt")
-                    
-                    try? FileManager.default.removeItem(at: url)
-                    
-                }.foregroundColor(.systemRed)
-                
-                Button("Open Log") {
-                    self.isDocumentPreviewPresented.toggle()
-                }.sheet(isPresented: $isDocumentPreviewPresented) {
-                    let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log.txt")
-                    NavigationView {
-                        DocumentInteractionController(url: url)
-                            .navigationTitle("log.txt")
-                    }
-                }
-                
-                ForEach(notifications, id: \.identifier) { request in
-                    
-                    VStack {
-                        Text(request.content.body)
-                        
-                        if let calendar =  request.trigger as? UNCalendarNotificationTrigger, let date = calendar.nextTriggerDate() {
-                            Text(df.string(from: date))
-                        }
-                    }
-                    
-                }
-
-//
-                SegmentedView([1, 2, 3, 4, 5, 6], selected: $selected) { e in
-                    Text("\(e)")
-
-                }.padding(.vertical)
-                
-            }
-        }.background(Colors.background)
-        .onAppear {
-            UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
-                Logger.info("requests ", requests.count)
-                
-                notifications = requests
-            }
-            
-            BGTaskScheduler.shared.getPendingTaskRequests { reuqest in
-                Logger.info("tasks ", reuqest.count)
-                tasks = reuqest
-            }
-        }
-        
-    }
 }

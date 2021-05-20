@@ -90,7 +90,6 @@ struct TransactionsByGroupView<Group: Entity & ExpensePropertyWithValue>: View {
                     }
 
                 }
-                // .background(Color.black.opacity(0.2))
   
             }
             .onAppear {

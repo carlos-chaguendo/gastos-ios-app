@@ -125,11 +125,13 @@ struct iCloudRestoreView: View {
                     self.restorationTerminated = false
                 }
                 .padding(.bottom, 30)
+                .foregroundColor(Colors.primary)
                 
             }
             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
             .animation(cancellables.isEmpty ? .none : .easeInOut)
+            .background(Colors.background)
             .onAppear {
                 fistly {
                     BackupService.searchBackup(fileName: "default.realm")
@@ -161,5 +163,6 @@ struct iCloudRestoreView: View {
 struct ICloudRestoreView_Previews: PreviewProvider {
     static var previews: some View {
         iCloudRestoreView(restorationTerminated: .constant(true))
+            .preferredColorScheme(.dark)
     }
 }
