@@ -75,7 +75,7 @@ enum Colors {
 
     struct Card {
         public static let background: ColorSpace =  .color(light: .white, dark: #colorLiteral(red: 0, green: 0.1479207078, blue: 0.1882454439, alpha: 1).shadeColor(factor: -0.1))
-        public static let shadown: ColorSpace = .color(light:  ColorSpace.gray.withAlphaComponent(0.3), dark: ColorSpace.gray.withAlphaComponent(0.1))
+        public static let shadown: ColorSpace = .color(light: ColorSpace.gray.withAlphaComponent(0.3), dark: ColorSpace.gray.withAlphaComponent(0.1))
     }
 
     public static let shadown: ColorSpace = ColorSpace.color(light: #colorLiteral(red: 0.7540688515, green: 0.7540867925, blue: 0.7540771365, alpha: 1), dark: #colorLiteral(red: 0.370555222, green: 0.3705646992, blue: 0.3705595732, alpha: 1)).withAlphaComponent(0.2)

@@ -50,19 +50,18 @@ struct CircularChart: View {
                 .foregroundColor(lineBackGround.opacity(0.4))
             
             ForEach(0..<percents.count, id: \.self) { i in
-            
                 
                 let entry = percents[i]
-                //let previous = CGFloat(percents[safe: i - 1 ]?.value ?? 0)
+                // let previous = CGFloat(percents[safe: i - 1 ]?.value ?? 0)
 
                 let includeAnimation = animatable ? setPercents : true
                 
                 Circle()
-                    .trim(from: includeAnimation ? entry.previous : 0, to:  includeAnimation ? entry.value + entry.previous - lineSpacing : 0)
-                    //.fill()
+                    .trim(from: includeAnimation ? entry.previous : 0, to: includeAnimation ? entry.value + entry.previous - lineSpacing : 0)
+                    // .fill()
                     .stroke(style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
                     .foregroundColor(entry.color.opacity(0.6))
-                    .onAppear() {
+                    .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                             withAnimation(Animation.easeInOut(duration: 1)) {
                                 self.setPercents = true
@@ -75,7 +74,7 @@ struct CircularChart: View {
                             }
                             
                         }
-                    }//.rotationEffect(Angle.degrees(-90))
+                    }// .rotationEffect(Angle.degrees(-90))
  
             }
             
@@ -90,7 +89,6 @@ struct ContentX: View {
     
     @State  var selected = "2"
     @State   var values = ["1", "2", "3"]
-
     
     var body: some View {
         VStack {
@@ -106,15 +104,12 @@ struct ContentX: View {
                  CircularChart([
                      .init(color: .red, value: 0.333),
                      .init(color: .red, value: 0.333),
-                     .init(color: .red, value: 0.333),
+                     .init(color: .red, value: 0.333)
                  ])
                  
                  CircularChart([
-                    .init(color: .green, value: CGFloat(value)),
+                    .init(color: .green, value: CGFloat(value))
                  ]).padding()
-                
-
-             
             
             }
      
@@ -126,19 +121,16 @@ struct ContentX: View {
                     .blendMode(.overlay)
                 
                 ProgressView("s", value: 0.5)
-                    
                 
                 Slider(value: $value, in: 0...1)
           
             }.padding().background(LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing))
-            
            
             Text("Clipped text in a circle")
                 .frame(width: 175, height: 100)
                 .foregroundColor(Color.white)
                 .background(Color.blue)
                 .clipShape(RoundedRectangle(cornerRadius: 30, style: .circular))
-        
             
             SegmentedView(values, selected: $selected) { e in
                 Text(e)
@@ -149,8 +141,6 @@ struct ContentX: View {
 }
 
 struct CircularChart_Previews: PreviewProvider {
-    
-
     
     static var previews: some View {
         

@@ -103,7 +103,6 @@ struct iCloudBackupView: View {
                     (Text("Create a backup copy") + Text(" \(bf.string(for: fileSize) ?? "")"))
                 }.foregroundColor(Colors.primary)
                 
-                
             }
             Spacer()
             Divider()

@@ -39,7 +39,7 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                         }
 
                         Spacer()
-                        switch(datasource.mode) {
+                        switch datasource.mode {
                         case "M":
                             Text(DateFormatter.longMonth.string(from: datasource.date))
                                 .foregroundColor(Color.primary)
@@ -66,13 +66,11 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundColor(Colors.title)
-                        
 
                     StackChart<Group>(
                         total: datasource.total,
                         categories: datasource.categories
                     )
-
 
                     ForEach(datasource.categories, id: \.self) { category in
 

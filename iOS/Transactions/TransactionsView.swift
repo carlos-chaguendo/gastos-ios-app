@@ -92,7 +92,7 @@ struct TransactionsView: View {
 
                         // .opacity(dayOffset == 0 ? 1 : 0)
                         // .offset(x: dayOffset, y: 0)
-                        //.padding(.top)
+                        // .padding(.top)
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .background(backcolor)
 

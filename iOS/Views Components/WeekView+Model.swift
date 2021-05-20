@@ -113,7 +113,6 @@ public class WeekendViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
 
-
 }
 
 extension WeekendViewModel {

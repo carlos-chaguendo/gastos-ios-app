@@ -11,7 +11,6 @@ import Combine
 import CoreServices
 
 class BackupService {
-
     
     private init() { }
 
@@ -234,8 +233,6 @@ extension Publishers {
         let start = center.publisher(for: .NSMetadataQueryDidStartGathering, object: query)
         let progress = center.publisher(for: .NSMetadataQueryGatheringProgress, object: query)
         let update = center.publisher(for: .NSMetadataQueryDidUpdate, object: query)
-        
-  
         
         return MergeMany(
             start.compactMap { $0.userInfo},

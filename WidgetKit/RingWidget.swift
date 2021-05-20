@@ -9,7 +9,6 @@ import WidgetKit
 import SwiftUI
 import Combine
 
-
 // MARK: - Widget
 struct RingWidget: Widget {
     
@@ -41,11 +40,11 @@ struct RingWidget: Widget {
             VStack(alignment: .leading, spacing: 1) {
                 ZStack {
                     CircularChart(animatable: false, lineSpacing: 0.07, lineBackGround: .yellow, [
-                        .init(color: .yellow, value: 0.75),
+                        .init(color: .yellow, value: 0.75)
                     ])
                     
                     CircularChart(animatable: false, lineSpacing: 0.09, lineBackGround: .green, [
-                        .init(color: .green, value: 0.45),
+                        .init(color: .green, value: 0.45)
                     ]).frame(width: 50 - 18)
                     
                     CircularChart(animatable: false, lineSpacing: 0.07, lineBackGround: .blue, [
@@ -70,14 +69,12 @@ struct RingWidget: Widget {
                     .font(.headline)
                     .foregroundColor(Colors.title)
                 
-                
             }
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             .padding()
             
         }
     }
-    
     
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: "kind-gs-rg", provider: Provider()) { entry in
@@ -89,9 +86,7 @@ struct RingWidget: Widget {
     }
 }
 
-
-struct RingWidget_PreviewProvider: PreviewProvider{
-    
+struct RingWidget_PreviewProvider: PreviewProvider {
     
     static var previews: some View {
         RingWidget.ContentView(entry: .init(date: Date()))

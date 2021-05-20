@@ -216,13 +216,13 @@ public struct CurrencyTextField: UIViewRepresentable {
     public class Coordinator: NSObject, UITextFieldDelegate {
         @Binding var value: Double?
         private var isResponder: Binding<Bool>?
-        private var onReturn: ()->Void
+        private var onReturn: () -> Void
         private var alwaysShowFractions: Bool
         private var numberOfDecimalPlaces: Int
         private var currencySymbol: String?
 
         var internalValue: Double?
-        var onEditingChanged: (Bool)->Void
+        var onEditingChanged: (Bool) -> Void
         var didBecomeFirstResponder = false
 
         init(value: Binding<Double?>,

@@ -63,7 +63,6 @@ struct iCloudRestoreView: View {
                         ProgressView()
                     }.buttonStyle(ButtonStyleFormLarge())
                     .padding(.vertical)
-              
                     
                 case .found:
                     
@@ -121,7 +120,6 @@ struct iCloudRestoreView: View {
                         .font(.body)
                         .foregroundColor(.red)
                 }
-                
                 
                 Button("Skip") {
                     self.restorationTerminated = false

@@ -59,9 +59,6 @@ struct TransactionsByGroupView<Group: Entity & ExpensePropertyWithValue>: View {
                 }
                 .cardView()
                 .padding()
-
-              
-
                 
                 VStack(spacing: 0) {
                     ForEach(dates, id: \.self) { date in
@@ -93,7 +90,7 @@ struct TransactionsByGroupView<Group: Entity & ExpensePropertyWithValue>: View {
                     }
 
                 }
-                //.background(Color.black.opacity(0.2))
+                // .background(Color.black.opacity(0.2))
   
             }
             .onAppear {
@@ -138,7 +135,6 @@ struct TransactionsByGroupView<Group: Entity & ExpensePropertyWithValue>: View {
                             .frame(width: 60 + 20)
                     }
                     
-                    
                 }.background(Color.red)
         )
         .navigationTitle(group.name)
@@ -148,7 +144,7 @@ struct TransactionsByGroupView<Group: Entity & ExpensePropertyWithValue>: View {
 struct TransactionsByCategoryView_Previews: PreviewProvider {
     static var previews: some View {
         TransactionsByGroupView(by: \.category, for: Catagory {$0.name = "1"}, in: .month, of: Date())
-            //.preferredColorScheme(.dark)
+            // .preferredColorScheme(.dark)
         
     }
 }

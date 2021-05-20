@@ -9,13 +9,12 @@ import SwiftUI
 
 struct SegmentedView<SelectionValue: Hashable, Content: View>: View {
 
-
     @Binding var selected: SelectionValue
     var values: [SelectionValue]
 
     var generator: (SelectionValue) -> Content
 
-    init(_ values: [SelectionValue], selected : Binding<SelectionValue>, make: @escaping (SelectionValue) -> Content) {
+    init(_ values: [SelectionValue], selected: Binding<SelectionValue>, make: @escaping (SelectionValue) -> Content) {
         self._selected = selected
         self.values = values
         self.generator = make
@@ -30,8 +29,6 @@ struct SegmentedView<SelectionValue: Hashable, Content: View>: View {
                     Button {
                         
                             self.selected = values[i]
-                        
-
 
                     } label: {
                         VStack {
@@ -43,8 +40,6 @@ struct SegmentedView<SelectionValue: Hashable, Content: View>: View {
                                 .if(selected != values[i]) { text in
                                     text.foregroundColor(Color.secondary)
                                 }
-
-                              
 
                             if selected == values[i] {
                                 Color(Colors.primary)
@@ -67,19 +62,14 @@ struct SegmentedView<SelectionValue: Hashable, Content: View>: View {
 //
 struct SegmentedView_Previews: PreviewProvider {
 
-
     @State static var selected = "2"
     @State  static var values = ["1", "2", "3"]
 
     @State static var selected2 = 0.0
-    
-    
-
 
     static var previews: some View {
 
         VStack {
-
 
             SegmentedView(values, selected: $selected) { e in
                 Text(e)
@@ -88,8 +78,6 @@ struct SegmentedView_Previews: PreviewProvider {
             }
 
             Slider(value: $selected2, in: 0...1)
-
-
 
         }.padding()
     }

@@ -49,7 +49,7 @@ struct GastosApp: App {
         .sheet(isPresented: $showingDetail) {
             ExpenseItemFormView()
             
-        }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { not in
+        }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
             appDelegate.scheduleAppAutoBackup()
         }
     }
@@ -123,7 +123,7 @@ struct CapijaView: View {
     
     @State private var bgColor = Color.red
     
-    @State private var notifications:[UNNotificationRequest] = []
+    @State private var notifications: [UNNotificationRequest] = []
     
     @State private var tasks: [BGTaskRequest] = []
     
@@ -132,7 +132,6 @@ struct CapijaView: View {
         .set(\.timeStyle, .full)
     
     @State var selected = 1
-    
     
     @State var isDocumentPreviewPresented: Bool = false
     
@@ -155,15 +154,12 @@ struct CapijaView: View {
                 FileImportButton()
                     .cardView()
                 
-                
                 Button("clears Log") {
                     let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log.txt")
                     
                     try? FileManager.default.removeItem(at: url)
                     
-                    
                 }.foregroundColor(.systemRed)
-                
                 
                 Button("Open Log") {
                     self.isDocumentPreviewPresented.toggle()
@@ -174,9 +170,6 @@ struct CapijaView: View {
                             .navigationTitle("log.txt")
                     }
                 }
-                
-        
-           
                 
                 ForEach(notifications, id: \.identifier) { request in
                     
@@ -189,15 +182,12 @@ struct CapijaView: View {
                     }
                     
                 }
-                
 
 //
-                SegmentedView([1,2,3,4,5,6], selected: $selected) { e in
+                SegmentedView([1, 2, 3, 4, 5, 6], selected: $selected) { e in
                     Text("\(e)")
 
                 }.padding(.vertical)
-                
-
                 
             }
         }.background(Colors.background)
@@ -207,7 +197,6 @@ struct CapijaView: View {
                 
                 notifications = requests
             }
-            
             
             BGTaskScheduler.shared.getPendingTaskRequests { reuqest in
                 Logger.info("tasks ", reuqest.count)

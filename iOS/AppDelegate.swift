@@ -17,10 +17,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         .set(\.dateStyle, .short)
         .set(\.timeStyle, .short)
     
-    
     private static let file: FileHandlerOutputStream? = {
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log.txt")
-        
         
         if !FileManager.default.fileExists(atPath: url.path) {
             FileManager.default.createFile(atPath: url.path, contents: nil, attributes: [:])
@@ -68,8 +66,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             self.handleAppBackUp(task: task as! BGProcessingTask)
         }
         self.pprint("app start \(Date())")
-        
-        
         
         return true
     }
@@ -186,7 +182,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 }
 
-
 private struct FileHandlerOutputStream: TextOutputStream {
     private let fileHandle: FileHandle
     let encoding: String.Encoding
@@ -204,4 +199,3 @@ private struct FileHandlerOutputStream: TextOutputStream {
     }
     
 }
-

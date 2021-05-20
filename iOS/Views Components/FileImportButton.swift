@@ -11,7 +11,6 @@ import Combine
 
 struct FileImportButton: View {
     
-    
     enum State {
         case forImport
         case withFileURL
@@ -40,34 +39,28 @@ struct FileImportButton: View {
                 ProgressView("\(viewModel.progress.cleanValue) of \(viewModel.numberOfLines.cleanValue)", value: viewModel.progress, total: viewModel.numberOfLines)
                     .foregroundColor(Colors.primary)
                 
-                
             case .failure(let error):
                 
                 Text((error as NSError).description)
                 
             }
             
-            
-            
         }.navigationBarTitle("", displayMode: .inline)
     }
-    
     
 }
 
 extension FileImportButton {
     
-    
     class ViewModel: ObservableObject {
         
         let df = DateFormatter()
-            .set(\.dateFormat,  "\"dd/MM/yyyy HH:mm:ss\"")
+            .set(\.dateFormat, "\"dd/MM/yyyy HH:mm:ss\"")
         
         var categoriesByName: [String: Catagory] = [:]
         var walletsByName: [String: Wallet] = [:]
         
         var lines: [String] = []
-        
         
         @Published var numberOfLines = 0.0
         @Published var progress = 0.0
@@ -90,13 +83,12 @@ extension FileImportButton {
             loadCategoriesByname()
             loadWallerByname()
             
-            
             cancellable = lines.publisher
                 .flatMap(maxPublishers: .max(1)) { e in
                     Just(e).delay(for: 0.001, scheduler: RunLoop.main)
                 }.sink(receiveCompletion: { _ in
                     self.state = .forImport
-                }, receiveValue:  { line in
+                }, receiveValue: { line in
                     
                     let item = line.components(separatedBy: ",")
                     let fehca = item[0]
@@ -164,7 +156,6 @@ extension FileImportButton {
             walletsByName[new.name.uppercased()] = new
             return new
         }
-        
         
     }
     

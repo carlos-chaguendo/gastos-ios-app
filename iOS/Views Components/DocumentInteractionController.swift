@@ -20,14 +20,12 @@ struct DocumentInteractionController: UIViewControllerRepresentable {
         return Coordinator(url: self.url)
     }
     
-    
     func makeUIViewController(context: Self.Context) -> Self.UIViewControllerType {
         let ql = QLPreviewController()
         ql.dataSource = context.coordinator
         ql.delegate = context.coordinator
         return ql
     }
-
 
     func updateUIViewController(_ uiViewController: Self.UIViewControllerType, context: Self.Context) {
         
@@ -54,7 +52,5 @@ struct DocumentInteractionController: UIViewControllerRepresentable {
         }
 
     }
-
-
 
 }
