@@ -7,7 +7,7 @@ Una aplicacion iOS que permite llevar el control de gastos diarios, escrita con 
 - Reportes
 
 
-![alt text](https://raw.githubusercontent.com/carlos-chaguendo/gastos-ios-app/imp.jpg)
+![alt text](https://raw.githubusercontent.com/carlos-chaguendo/gastos-ios-app/main/imp.jpg)
 
 
 # Requirements
