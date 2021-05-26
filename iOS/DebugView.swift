@@ -5,6 +5,7 @@
 //  Created by Carlos Andres Chaguendo Sanchez on 20/05/21.
 //
 import SwiftUI
+import CloudKit
 import BackgroundTasks
 
 struct DebugView: View {
@@ -40,6 +41,24 @@ struct DebugView: View {
                 
                 FileImportButton()
                     .cardView()
+                
+                Button("Save record") {
+                    let record = CKRecord(recordType: "ToDoItem")
+                    record.setValuesForKeys([
+                        "title": "Get apples \(Int.random(in: 0...100))",
+                        "dueDate": DateComponents(
+                            calendar: Calendar.current,
+                            year: 2019,
+                            month: 10,
+                            day: 28).date!,
+                        "isCompleted": false // Stored as Int(64)
+                    ])
+                    
+                    CKContainer.default().privateCloudDatabase.save(record) { record, error in
+                        Logger.info("Record ", record)
+                        Logger.info("Error", error)
+                    }
+                }
                 
                 Button("clears Log") {
                     let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("log.txt")

@@ -14,7 +14,7 @@ struct CategoriesView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
+            LazyVStack {
                 ForEach(values, id: \.self) { category in
                     
                     PresentLinkView(destination: CategoryFormView(for: category)) {

@@ -9,6 +9,7 @@ import UIKit
 import RealmSwift
 import BackgroundTasks
 import Combine
+import CloudKit
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     public var cancellables = Set<AnyCancellable>()
@@ -30,6 +31,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         print("Your code here")
+  
         
         #if !os(macOS)
         
@@ -67,6 +69,54 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
         self.pprint("app start \(Date())")
         
+        
+        CKContainer.default().fetchUserRecordID { (userRecordID, error) in
+            if let userID = userRecordID {
+                print("We've got a user ID: \(userID.recordName)")
+            } else {
+                print("Mistakes were made: \(String(describing: error))")
+            }
+        }
+        
+        CKContainer.default().discoverAllIdentities { identy, error in
+            print("identy: \(identy)", error)
+        }
+        
+        
+
+        
+        
+
+        
+//        CKContainer.default().privateCloudDatabase.fetchAllSubscriptions { suscriptions, error in
+//            Logger.info("suscriptions ", suscriptions)
+//            Logger.info("Error", error)
+//
+//            for s in suscriptions ?? [] {
+//                CKContainer.default().privateCloudDatabase.delete(withSubscriptionID: s.subscriptionID) { sus, error in
+//                    Logger.info("Eliminando s", sus)
+//                }
+//            }
+//
+//            let sub = CKQuerySubscription(recordType: "ToDoItem", predicate: NSPredicate(value: true), options: [.firesOnRecordCreation, .firesOnRecordDeletion])
+//
+//
+////            let sub = CKDatabaseSubscription()
+////            sub.recordType = "ToDoItem"
+//            let notification = CKSubscription.NotificationInfo()
+//            notification.shouldSendContentAvailable = true
+//            sub.notificationInfo = notification
+//
+//
+//            CKContainer.default().privateCloudDatabase.save(sub) { suscriptions, error in
+//                Logger.info("Nueva suscripcion ", suscriptions)
+//                Logger.info("Error", error)
+//            }
+//
+//        }
+        
+ 
+
         return true
     }
     
@@ -159,9 +209,61 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        Logger.info("Errror ", error)
+    }
+    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Logger.info("didRegisterForRemoteNotificationsWithDeviceToken")
     }
+    
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        if let notification = CKNotification(fromRemoteNotificationDictionary: userInfo) {
+            
+            
+            Logger.info("notification", notification)
+            
+            
+            let center = UNUserNotificationCenter.current()
+
+            let request = UNNotificationRequest(
+                identifier: "daily-remember",
+                content: UNMutableNotificationContent()
+                    .set(\.sound,  UNNotificationSound.default )
+                    .set(\.categoryIdentifier, NotificationsCategory.dailyReminder.rawValue)
+                    .set(\.body, "Nuevo record")
+                    .set(\.userInfo, [
+                        "aps": [
+                            /// Si 'contentAvailable == true' significa que la notificacion necesita ejecutarse en segundo plano
+                            /// para descargar o actualizar informacion de la aplicacion
+                            "content-available": true
+                        ]
+                    ]),
+                trigger: UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+            )
+
+            center.removePendingNotificationRequests(withIdentifiers: ["daily-remember"])
+            center.add(request) { error in
+                if let error = error {
+                    Logger.info("Errpr", error)
+                } else {
+                    Logger.info("Recordtoria agregado")
+                }
+            }
+      
+            
+            print("CloudKit database changed")
+            completionHandler(.newData)
+            return
+        }
+        
+        
+        pprint("Remote notification")
+        completionHandler(.noData)
+    }
+    
     
     func userNotificationCenter( _ center: UNUserNotificationCenter,
                                  didReceive response: UNNotificationResponse,
