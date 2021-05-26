@@ -15,7 +15,7 @@ import BackgroundTasks
 
 // https://www.hackingwithswift.com/quick-start/swiftui
 // https://github.com/SwiftUIX/SwiftUIX/
-
+// https://medium.com/@artrmz/creating-your-own-custom-file-header-in-xcode-5009e32bf195
 @main
 struct GastosApp: App {
     
@@ -74,7 +74,7 @@ struct GastosApp: App {
                             plusButton.offset(y: -20)
                         }
                     
-                    DebugView()
+                    BudgetView()
                         .tabBarItem {
                             TabBar.Page.Item(systemIconName: "homepod.fill", tabName: "Categories")
                         }
@@ -96,6 +96,9 @@ struct GastosApp: App {
                         Logger.info("UNUserNotificationCenter granted", granted)
                         Logger.info("respuesta notifica error:", error)
                     }
+                    
+                    
+                    UIApplication.shared.registerForRemoteNotifications()
                     
                 }.onReceive(Publishers.didAddNewTransaction) { _ in
                     WidgetCenter.shared.reloadAllTimelines()

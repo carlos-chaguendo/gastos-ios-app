@@ -23,7 +23,7 @@ public class Service {
         
         let config = Realm.Configuration(
             fileURL: fileURL,
-            schemaVersion: 5,
+            schemaVersion: 6,
             migrationBlock: { _, oldSchemaVersion in
                 
                 if oldSchemaVersion < 1 {
@@ -108,6 +108,22 @@ public class Service {
         return sender
     }
     
+    @discardableResult
+    static func addBudget(_ item: Catagory) -> Catagory {
+        guard  let local: Catagory = realm.findBy(id: item.id) else {
+            preconditionFailure()
+        }
+        
+        realm.rwrite {
+            local.budget = item.budget
+            realm.add(local)
+        }
+        
+        let sender = local.detached()
+        NotificationCenter.default.post(name: .didEditBudget, object: sender)
+        return sender
+    }
+    
     static func addTag(_ item: Tag) {
         realm.rwrite {
             item.id = UUID().description
@@ -145,7 +161,6 @@ public class Service {
             .filter { Calendar.current.isDate($0.date, equalTo: date, toGranularity: .month)  }
             .map {  Calendar.current.dateInterval(of: .day, for: $0.date)!.start  }
             .uniq
-        
     }
     
     /// Cuenta el numero detos por dia
@@ -199,7 +214,6 @@ public class Service {
             .filter { Calendar.current.isDate($0.date, equalTo: date, toGranularity: .day) }
             .detached
             .sorted(by: {$0.id > $1.id })
-        
     }
     
     /// Consulta las transacciones por grupo
@@ -230,11 +244,13 @@ public class Service {
                                                                    of date: Date) -> [Group] {
         
         setColorsIfNeeded(to: Group.self)
-        
-        let expensesByCategoryId = realm.objects(ExpenseItem.self)
+        let expenses = realm.objects(ExpenseItem.self)
             .filter { $0.date.isSame(componet, to: date) }
+            .detached
             .groupBy { $0[keyPath: group].id }
-            .mapValues { $0.map { $0.value}.reduce(0, +) }
+        
+        let expensesByCategoryId = expenses
+            .mapValues { $0.map { $0.value }.reduce(0, +) }
         
         let categoriesById = realm.objects(Group.self)
             .groupBy { $0.id }
@@ -243,10 +259,28 @@ public class Service {
         return expensesByCategoryId.compactMap { categoriId, value -> Group? in
             let category = categoriesById[categoriId]?.detached()
             category?.value = value
+            category?.count = expenses[categoriId]?.count ?? 0
             return category
         }
         .sorted(by: { $0.value > $1.value })
         
+    }
+    
+    static func getBudget( in componet: Calendar.Component = .month,
+                           of date: Date = Date()) -> [Catagory] {
+        
+        let expensesByCategoryId = realm.objects(ExpenseItem.self)
+            .filter { $0.date.isSame(componet, to: date) && $0.category.budget > 0 }
+            .groupBy { $0.category.id }
+            .mapValues { $0.map { $0.value }.reduce(0, +) }
+        
+        return realm.objects(Catagory.self)
+            .filter { $0.budget > 0.0 }
+            .detached
+            .map {
+                $0.value = expensesByCategoryId[$0.id] ?? 0.0
+                return $0
+            }.sorted { $0.name > $1.name }
     }
     
     /// Obtiene todos los elemntos de una entidad
@@ -260,7 +294,6 @@ public class Service {
     private static func setColorsIfNeeded<Group: Entity & ExpensePropertyWithValue>(to group: Group.Type) {
         let groups = realm.objects(group.self)
             .filter { $0.color == 0x000 }
-        
         realm.rwrite {
             groups.forEach {
                 $0.color = Int32(ColorSpace.random.toHexInt())
@@ -271,7 +304,6 @@ public class Service {
     /// Registra la ultima creacion de un a copia de seguridad
     public static func registreNewBackup() {
         let local = realm.object(ofType: ApplicationData.self, forPrimaryKey: "-1") ?? ApplicationData()
-        
         realm.rwrite {
             local.lastBackup = Date()
             realm.add(local, update: .all)
@@ -282,7 +314,6 @@ public class Service {
         guard let local = realm.object(ofType: ApplicationData.self, forPrimaryKey: "-1") else {
             return ApplicationData()
         }
-        
         return local.detached()
     }
     

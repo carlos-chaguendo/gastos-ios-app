@@ -16,6 +16,11 @@ extension Notification.Name {
     static var didEditTransaction = Notification.Name(rawValue: "didEditTransaction")
     
     static var didEditCategories = Notification.Name(rawValue: "didEditCategories")
+    
+    
+    static var didEditBudget = Notification.Name(rawValue: "didEditBudget")
+    
+    
 
 }
 
@@ -35,6 +40,13 @@ extension Publishers {
     
     static var didEditCategories: AnyPublisher<Catagory, Never> {
         NotificationCenter.default.publisher(for: Notification.Name.didEditCategories)
+            .compactMap { $0.object as? Catagory }
+            .eraseToAnyPublisher()
+    }
+    
+    
+    static var didEditBudget: AnyPublisher<Catagory, Never> {
+        NotificationCenter.default.publisher(for: Notification.Name.didEditBudget)
             .compactMap { $0.object as? Catagory }
             .eraseToAnyPublisher()
     }

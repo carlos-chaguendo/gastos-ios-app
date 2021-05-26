@@ -31,6 +31,7 @@ struct DailyReminderView: View {
                 title: "Remember me at",
                 content: DatePicker("", selection: $date, displayedComponents: .hourAndMinute)
                     .datePickerStyle(GraphicalDatePickerStyle())
+                    .accentColor(Colors.primary)
             )
 
             VStack(spacing: 20) {

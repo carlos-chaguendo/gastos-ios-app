@@ -14,6 +14,7 @@ protocol EntityWithName: AnyObject {
 protocol ExpensePropertyWithValue: EntityWithName {
     var value: Double { get set }
     var color: Int32 { get set }
+    var count: Int { get set }
 }
 
 class Catagory: Entity, EntityWithName, ExpensePropertyWithValue {
@@ -24,6 +25,10 @@ class Catagory: Entity, EntityWithName, ExpensePropertyWithValue {
     @objc public dynamic var sign: Int = -1
     
     public var value: Double = 0.0
+    public var count: Int = 0
+    
+    
+    @objc public dynamic var budget: Double = 0.0
 
     override class func ignoredProperties() -> [String] {
         ["value"]

@@ -25,8 +25,8 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
 
             ScrollView {
  
-                SegmentedView(["D", "W", "M", "Y"], selected: $datasource.mode) { mode in
-                    Text(mode)
+                SegmentedView(["Day", "Week", "Month", "Year"], selected: $datasource.mode) { mode in
+                    Text(LocalizedStringKey(mode))
                 }
 
                 VStack(alignment: .leading) {
@@ -40,11 +40,11 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
 
                         Spacer()
                         switch datasource.mode {
-                        case "M":
+                        case "Month":
                             Text(DateFormatter.longMonth.string(from: datasource.date))
                                 .foregroundColor(Color.primary)
                             
-                        case "Y":
+                        case "Year":
                             Text(DateFormatter.year.string(from: datasource.date))
                                 .foregroundColor(Color.primary)
                         default:
@@ -87,21 +87,28 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                                     .frame(width: 8, height: 8)
                                     .cornerRadius(4)
 
-                                Text(category.name)
-                                    .font(.system(size: 15))
-                                    // .fontWeight(.medium)
-                                    .foregroundColor(Colors.title)
-
-                                Text("\(percent.rounded(toPlaces: 2).cleanValue)%")
-                                    .font(.caption2)
-                                    // .fontWeight(.semibold)
-                                    .foregroundColor(Colors.subtitle)
+                                VStack(alignment: .leading) {
+                                    Text(category.name)
+                                        .font(.system(size: 15))
+                                        .foregroundColor(Colors.title)
+                                    
+                                    (Text("\(category.count) ") + Text("Transactions"))
+                                        .font(.caption2)
+                                        .foregroundColor(Colors.subtitle)
+                                }
+              
 
                                 Spacer()
-                                Text("\(NumberFormatter.currency.string(from: NSNumber(value: category.value)) ?? "")")
-                                    .font(.system(size: 15))
-                                    .foregroundColor(Colors.title)
-
+                                
+                                VStack(alignment: .trailing) {
+                                    Text("\(NumberFormatter.currency.string(from: NSNumber(value: category.value)) ?? "")")
+                                        .font(.system(size: 15))
+                                        .foregroundColor(Colors.title)
+                                    Text("\(percent.rounded(toPlaces: 2).cleanValue)%")
+                                        .font(.caption2)
+                                        .foregroundColor(Colors.subtitle)
+                                }
+                                
                                 Image(systemName: "chevron.right")
                                     .imageScale(.medium)
                                     .foregroundColor(.quaternaryLabel)

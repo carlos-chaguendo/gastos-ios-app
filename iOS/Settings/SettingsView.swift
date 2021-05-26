@@ -15,6 +15,12 @@ struct SettingsView: View, WithRows {
                 Row(title: "Daily reminder", destination: DailyReminderView())
                 Row(title: "Categories", destination: CategoriesView())
                 Row(title: "Methods of payment", destination: Text("Métodos de pago"))
+                Row(title: "Export CSV", destination: ExportCSVView())
+                
+                
+                Row(title: "Debug", destination: DebugView())
+                    .padding(.vertical, 60)
+                
                 Spacer()
             }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)

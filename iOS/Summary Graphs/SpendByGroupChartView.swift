@@ -115,7 +115,7 @@ extension SpendByGroupChartView {
 
         public let groupBy: KeyPath<ExpenseItem, Group>
 
-        @Published var mode = "M"
+        @Published var mode = "Month"
         @Published var date = Date()
         @Published var interval = DateInterval()
         @Published var total: Double = 0.0
@@ -130,7 +130,7 @@ extension SpendByGroupChartView {
             self.total = categories.map { $0.value }.reduce(0, +)
         }
 
-        var calendarComponent: Calendar.Component { mode == "D" ? .day: mode == "M" ? .month:   mode == "Y" ? .year : .weekOfMonth }
+        var calendarComponent: Calendar.Component { mode == "Day" ? .day: mode == "Month" ? .month:   mode == "Year" ? .year : .weekOfMonth }
 
         private func getInterval(mode: String, date: Date = Date()) -> DateInterval {
             let componet = calendarComponent
