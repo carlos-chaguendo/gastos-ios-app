@@ -110,7 +110,8 @@ struct ContentX: View {
                  CircularChart([
                     .init(color: .green, value: CGFloat(value))
                  ]).padding()
-            
+                ProgressView(value: 0.6) /// here!
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color.red))
             }
      
             VStack {

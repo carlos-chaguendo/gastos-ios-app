@@ -32,6 +32,10 @@ open class Entity: Object, Identifiable {
     open override class func primaryKey() -> String? {
         "id"
     }
+    
+    deinit {
+        Logger.info("Eliminando", type(of: self))
+    }
 
 }
 

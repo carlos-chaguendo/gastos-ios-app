@@ -50,7 +50,9 @@ struct RingWidget: Widget {
                     CircularChart(animatable: false, lineSpacing: 0.07, lineBackGround: .blue, [
                         .init(color: .blue, value: 0.25)
                     ]).frame(width: 50 - 18 - 18)
-                }.rotationEffect(Angle.degrees(-90))
+                }
+                
+                .rotationEffect(Angle.degrees(-90))
                 .frame(width: 50, height: 50, alignment: .leading)
                 .padding(.vertical, 4)
                 
@@ -80,7 +82,7 @@ struct RingWidget: Widget {
         StaticConfiguration(kind: "kind-gs-rg", provider: Provider()) { entry in
             ContentView(entry: entry)
         }
-        .supportedFamilies([.systemMedium, .systemSmall])
+        .supportedFamilies([.systemSmall])
         .configurationDisplayName("Expenses")
         .description("Show my expenses by category")
     }

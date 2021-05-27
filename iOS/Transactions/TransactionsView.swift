@@ -20,6 +20,7 @@ struct TransactionsView: View {
 
     private let backcolor = Colors.background
     private let systemBackground = Colors.background
+    private let loader = ContentLoader()
 
     public private(set) var monthNames: [String] = {
         DateFormatter.day.shortStandaloneMonthSymbols
@@ -163,8 +164,12 @@ struct TransactionsView: View {
                     UserDefaults.standard.synchronize()
 
                 }.onAppear {
-                    self.loadDataSource()
-                    self.weekendViewModel.marked = Service.summaryOf(month: weekendViewModel.selected)
+                    Logger.info("on Appear", type(of: self))
+                    if case  .idle = loader.status {
+                        self.loadDataSource()
+                        self.weekendViewModel.marked = Service.summaryOf(month: weekendViewModel.selected)
+                        self.loader.status = .loaded
+                    }
                 }
                 .navigationBarTitle("", displayMode: .inline)
                 .navigationBarItems(leading: currentMonthView, trailing: showCalendarButton)

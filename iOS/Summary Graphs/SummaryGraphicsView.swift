@@ -18,7 +18,6 @@ struct SummaryGraphicsView: View {
 
     var body: some View {
         NavigationView {
-
             ScrollView {
                 VStack(alignment: .leading) {
 
@@ -31,6 +30,9 @@ struct SummaryGraphicsView: View {
                         SpendByGroupChartView(groupBy: \.category, title: "Category")
                         SpendByGroupChartView(groupBy: \.wallet, title: "Wallet", showTotal: false)
                     }.cardView()
+                    
+                    BudgetChartView()
+                        .cardView()
 
                     TagsChartView()
                         .cardView()
@@ -43,6 +45,9 @@ struct SummaryGraphicsView: View {
             .background(Colors.background)
 
         } // Bottones de navegacion
+        .onAppear {
+            Logger.info("on Appear nav", type(of: self))
+        }
     }
 }
 

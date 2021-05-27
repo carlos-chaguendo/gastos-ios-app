@@ -12,41 +12,49 @@ struct BudgetView: View {
     
     @State var budget:  Double = 0.0
     @State var expense: Double = 0.0
+    @State var values: [Catagory] = []
     
-    @State var values: [Catagory] = [] {
-        didSet {
-            budget = values.map { $0.budget }.reduce(0.0, +)
-            expense = values.map { $0.value}.reduce(0, +)
+    let loader = ContentLoader()
+    
+    
+    private let columns = [
+        //      GridItem(.adaptive(minimum: 80)),
+        GridItem(.flexible()),
+        GridItem(.flexible())
+        // GridItem(.flexible()),
+    ]
+    
+    
+    var header: some View {
+        HStack(alignment: .center) {
+            CircularChart(lineWidth: 4, [
+                .init(color: Color(Colors.primary), value: 0.333),
+            ])
+            .frame(width: 20, height: 20)
+            
+            
+            (
+                Text("\(NumberFormatter.currency.string(from: NSNumber(value: expense)) ?? "n/a") ") +
+                    Text("of") +
+                    Text(" \(NumberFormatter.currency.string(from: NSNumber(value: budget)) ?? "n/a") ") +
+                    Text("planificado")
+                
+            )
+            .foregroundColor(Colors.subtitle)
         }
     }
     
-
     var body: some View {
         NavigationView {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 20) {
                     
-                    HStack(alignment: .center) {
-                        CircularChart(lineWidth: 4, [
-                            .init(color: Color.primary, value: 0.333),
-                        ])
-                        .frame(width: 20, height: 20)
-                        
-                        
-                        (
-                            Text("\(NumberFormatter.currency.string(from: NSNumber(value: expense)) ?? "n/a") ") +
-                                Text("of") +
-                                Text(" \(NumberFormatter.currency.string(from: NSNumber(value: budget)) ?? "n/a") ") +
-                                Text("planificado")
-                            
-                        )
-                        .foregroundColor(Colors.subtitle)
-                        
-                        
-                    }.padding(.top, 2)
+                    header
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                        .padding(.top, 2)
                     
                     ForEach(values, id: \.self) { category in
-                        
                         VStack(alignment: .leading) {
                             
                             HStack {
@@ -76,34 +84,39 @@ struct BudgetView: View {
                                 .font(.system(size: 14))
                                 .foregroundColor(color)
                             
-                        }
-                        
-                        .cardView()
+                        }.cardView()
                         
                     }
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
                     
                 }
-                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal)
                 
-            }
-            .background(Colors.background)
+            } // Scroll View
             .navigationBarTitle("Budget", displayMode: .large)
+            .background(Colors.background)
             .navigationBarItems(
                 trailing: PresentLinkView(destination: BudgetFormView()) {
                     Image(systemName: "plus")
-                    imageScale(.large)
+                        .imageScale(.large)
                 })
-            .onAppear {
-                if values.isEmpty {
-                    values = Service.getBudget()
-                }
-            }.onReceive(Publishers.MergeMany(Publishers.didEditCategories, Publishers.didEditBudget)) { _ in
-                values = Service.getBudget()
-            }
             
         }
+        .onAppear {
+            Logger.info("on Appear nav", type(of: self))
+            if case  .idle = loader.status {
+                values = Service.getBudget()
+                budget = values.map { $0.budget }.reduce(0.0, +)
+                expense = values.map { $0.value}.reduce(0, +)
+                loader.status = .loaded
+            }
+        }.onReceive(Publishers.MergeMany(Publishers.didEditCategories, Publishers.didEditBudget)) { _ in
+            values = Service.getBudget()
+            budget = values.map { $0.budget }.reduce(0.0, +)
+            expense = values.map { $0.value}.reduce(0, +)
+        }
     }
+    
 }
 
 struct BudgetView_Previews: PreviewProvider {

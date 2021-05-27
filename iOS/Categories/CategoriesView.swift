@@ -49,7 +49,9 @@ struct CategoriesView: View {
         .navigationTitle("Categories")
         .navigationBarItems(trailing: PresentLinkView(destination: CategoryFormView()) {
             Image(systemName: "plus")
+                .imageScale(.large)
         }).onAppear {
+            Logger.info("on Appear nav", type(of: self))
             if values.isEmpty {
                 values = Service.getAll(Catagory.self).sorted { $0.name < $1.name }
             }

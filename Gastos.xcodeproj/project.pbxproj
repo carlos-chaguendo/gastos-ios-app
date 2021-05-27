@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2F0BF055263A051300D68C03 /* CircularChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0BF054263A051300D68C03 /* CircularChart.swift */; };
 		2F0BF056263A051300D68C03 /* CircularChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0BF054263A051300D68C03 /* CircularChart.swift */; };
+		2F113BB726602F2000FA0281 /* WidgetKit.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2F113BB526602E5900FA0281 /* WidgetKit.intentdefinition */; };
+		2F113BB82660301000FA0281 /* WidgetKit.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2F113BB526602E5900FA0281 /* WidgetKit.intentdefinition */; };
 		2F1E1A10263B79FB00BB6398 /* SegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1E1A0F263B79FB00BB6398 /* SegmentedView.swift */; };
 		2F23CA4E263B89B40047B482 /* SegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1E1A0F263B79FB00BB6398 /* SegmentedView.swift */; };
 		2F2FB8A32613E44E00CE3E9E /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2FB8A22613E44E00CE3E9E /* Service.swift */; };
@@ -104,6 +106,10 @@
 		2FAA439B265ECC4A0076F377 /* ExportCSVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA439A265ECC4A0076F377 /* ExportCSVView.swift */; };
 		2FAA439E265ED2F00076F377 /* BudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA439D265ED2F00076F377 /* BudgetView.swift */; };
 		2FAA43A0265EE1C30076F377 /* BudgetFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA439F265EE1C30076F377 /* BudgetFormView.swift */; };
+		2FAA43A2265F01580076F377 /* ContentLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA43A1265F01580076F377 /* ContentLoader.swift */; };
+		2FAA43A4265F1B000076F377 /* BudgetChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA43A3265F1B000076F377 /* BudgetChartView.swift */; };
+		2FAA43A6265F1FE80076F377 /* BudgetWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA43A5265F1FE80076F377 /* BudgetWidget.swift */; };
+		2FAA43A7265F21570076F377 /* BudgetWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA43A5265F1FE80076F377 /* BudgetWidget.swift */; };
 		2FB5935D25FC012B005A1B93 /* PropertyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */; };
 		2FB7D01A264AF9890026C189 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB7D019264AF9890026C189 /* CategoriesView.swift */; };
 		2FB7D01C264AFF2E0026C189 /* CategoryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB7D01B264AFF2D0026C189 /* CategoryFormView.swift */; };
@@ -152,6 +158,7 @@
 
 /* Begin PBXFileReference section */
 		2F0BF054263A051300D68C03 /* CircularChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularChart.swift; sourceTree = "<group>"; };
+		2F113BB526602E5900FA0281 /* WidgetKit.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = WidgetKit.intentdefinition; sourceTree = "<group>"; };
 		2F1E1A0F263B79FB00BB6398 /* SegmentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedView.swift; sourceTree = "<group>"; };
 		2F2FB8A22613E44E00CE3E9E /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		2F2FB8A62613E50200CE3E9E /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
@@ -223,6 +230,9 @@
 		2FAA439A265ECC4A0076F377 /* ExportCSVView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportCSVView.swift; sourceTree = "<group>"; };
 		2FAA439D265ED2F00076F377 /* BudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetView.swift; sourceTree = "<group>"; };
 		2FAA439F265EE1C30076F377 /* BudgetFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetFormView.swift; sourceTree = "<group>"; };
+		2FAA43A1265F01580076F377 /* ContentLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentLoader.swift; path = ../../../../ContentLoader.swift; sourceTree = "<group>"; };
+		2FAA43A3265F1B000076F377 /* BudgetChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetChartView.swift; sourceTree = "<group>"; };
+		2FAA43A5265F1FE80076F377 /* BudgetWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWidget.swift; sourceTree = "<group>"; };
 		2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyBuilder.swift; sourceTree = "<group>"; };
 		2FB5936325FC1231005A1B93 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		2FB7D019264AF9890026C189 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
@@ -333,6 +343,7 @@
 				2F8BADEC2633961400567E4B /* ButtonStyleFormLarge.swift */,
 				2F5D669326390BDE00819EC9 /* DocumentInteractionController.swift */,
 				2F1E1A0F263B79FB00BB6398 /* SegmentedView.swift */,
+				2FAA43A1265F01580076F377 /* ContentLoader.swift */,
 			);
 			path = "Views Components";
 			sourceTree = "<group>";
@@ -371,6 +382,7 @@
 				2F89BA38261F8EC80009EA03 /* SpendChartView.swift */,
 				2F816D64261D26E7009FB091 /* SummaryGraphicsView.swift */,
 				2F5479A62629049E00730F13 /* TagsChartView.swift */,
+				2FAA43A3265F1B000076F377 /* BudgetChartView.swift */,
 			);
 			path = "Summary Graphs";
 			sourceTree = "<group>";
@@ -426,6 +438,8 @@
 				2F8BAE4A263468D800567E4B /* Info.plist */,
 				2F8BAE46263468D800567E4B /* WidgetKit.swift */,
 				2FB95DAF263B28AD006765E4 /* RingWidget.swift */,
+				2FAA43A5265F1FE80076F377 /* BudgetWidget.swift */,
+				2F113BB526602E5900FA0281 /* WidgetKit.intentdefinition */,
 			);
 			path = WidgetKit;
 			sourceTree = "<group>";
@@ -683,6 +697,7 @@
 				2F98CE71261569330004F1B2 /* Wallet.swift in Sources */,
 				2FE51A2625FBE485004518A0 /* DateFormatter.swift in Sources */,
 				2F54798F2628DBB000730F13 /* Promise.swift in Sources */,
+				2FAA43A2265F01580076F377 /* ContentLoader.swift in Sources */,
 				2F89BA30261F8DB30009EA03 /* MaximunDailyExpendingGraphView.swift in Sources */,
 				2F8BADED2633961400567E4B /* ButtonStyleFormLarge.swift in Sources */,
 				2F8BADFA2633BD8600567E4B /* DailyReminderView.swift in Sources */,
@@ -703,6 +718,7 @@
 				2F98CE5B26154EF50004F1B2 /* Catagory.swift in Sources */,
 				2F89BA1E261EB43A0009EA03 /* Stack.swift in Sources */,
 				2FBEBC02260D0DBE001C4FCD /* Array.swift in Sources */,
+				2FAA43A6265F1FE80076F377 /* BudgetWidget.swift in Sources */,
 				2FAA43A0265EE1C30076F377 /* BudgetFormView.swift in Sources */,
 				2F9500E42604061500C9ABFC /* View++.swift in Sources */,
 				2F6B073525F9791C00A1D516 /* FlexibleView.swift in Sources */,
@@ -711,6 +727,7 @@
 				2F91537C26018FED0092033E /* TabBar.swift in Sources */,
 				2F90F3BE2656FDF800754F5C /* DebugView.swift in Sources */,
 				2F1E1A10263B79FB00BB6398 /* SegmentedView.swift in Sources */,
+				2F113BB82660301000FA0281 /* WidgetKit.intentdefinition in Sources */,
 				2F6B076825FA613900A1D516 /* KeyboardHeightPublisher.swift in Sources */,
 				2F98CE7C261589DE0004F1B2 /* CategorySelectionView.swift in Sources */,
 				2FB5935D25FC012B005A1B93 /* PropertyBuilder.swift in Sources */,
@@ -731,6 +748,7 @@
 				2FA938BE26332103006F1905 /* iCloudBackupView.swift in Sources */,
 				2F6B075925F99C8100A1D516 /* Colors.swift in Sources */,
 				2F54798726288CE800730F13 /* StackChart.swift in Sources */,
+				2FAA43A4265F1B000076F377 /* BudgetChartView.swift in Sources */,
 				2F9500E02603E38600C9ABFC /* WeekView.swift in Sources */,
 				2F816D2A261CF072009FB091 /* CurrencyTextField.swift in Sources */,
 				2F98CE7626156B620004F1B2 /* SelectorList.swift in Sources */,
@@ -760,6 +778,7 @@
 				2F8BAE6626346AA400567E4B /* BackupService.swift in Sources */,
 				2F8BAE6126346A9F00567E4B /* Service+Publishers.swift in Sources */,
 				2F8BAEA426346E3200567E4B /* Numbers.swift in Sources */,
+				2F113BB726602F2000FA0281 /* WidgetKit.intentdefinition in Sources */,
 				2F8BAE8F26346CFC00567E4B /* FlexibleView.swift in Sources */,
 				2F8BAE9E26346DA400567E4B /* Chart.swift in Sources */,
 				2FB95DB1263B28DF006765E4 /* RingChart.swift in Sources */,
@@ -783,6 +802,7 @@
 				2F8BAE9726346D6500567E4B /* NumberFormatter.swift in Sources */,
 				2F8BAE7726346AA900567E4B /* Tag.swift in Sources */,
 				2FB95DB0263B28AD006765E4 /* RingWidget.swift in Sources */,
+				2FAA43A7265F21570076F377 /* BudgetWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

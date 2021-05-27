@@ -17,9 +17,10 @@ struct SettingsView: View, WithRows {
                 Row(title: "Methods of payment", destination: Text("Métodos de pago"))
                 Row(title: "Export CSV", destination: ExportCSVView())
                 
-                
+                #if DEBUG
                 Row(title: "Debug", destination: DebugView())
                     .padding(.vertical, 60)
+                #endif
                 
                 Spacer()
             }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)

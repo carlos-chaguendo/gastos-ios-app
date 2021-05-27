@@ -157,8 +157,10 @@ public class Service {
     /// - Parameter date: El mes el cual se quiere consultar
     /// - Returns: description
     static func summaryOf(month date: Date) -> [Date] {
-        realm.objects(ExpenseItem.self)
-            .filter { Calendar.current.isDate($0.date, equalTo: date, toGranularity: .month)  }
+        let start = date.withStart(of: .month)
+        let end = date.withEnd(of: .month)
+        return realm.objects(ExpenseItem.self)
+            .filter("date BETWEEN %@ ", [start, end])
             .map {  Calendar.current.dateInterval(of: .day, for: $0.date)!.start  }
             .uniq
     }
@@ -166,8 +168,10 @@ public class Service {
     /// Cuenta el numero detos por dia
     /// - Returns: Numero de gastos por dia en un mes
     static func countEventsIn(month date: Date) -> [Date: Int] {
-        realm.objects(ExpenseItem.self)
-            .filter { Calendar.current.isDate($0.date, equalTo: date, toGranularity: .month)  }
+        let start = date.withStart(of: .month)
+        let end = date.withEnd(of: .month)
+        return realm.objects(ExpenseItem.self)
+            .filter("date BETWEEN %@ ", [start, end])
             .map {  Calendar.current.dateInterval(of: .day, for: $0.date)!.start  }
             .countBy { $0 }
     }
@@ -176,8 +180,10 @@ public class Service {
     /// - Parameter date: Fecha
     /// - Returns: Dicionario de costos diarios, solo las fechas que tiene datos
     static func sumEventsIn(month date: Date) -> [Date: Double] {
-        realm.objects(ExpenseItem.self)
-            .filter { $0.date.isSame(.month, to: date) }
+        let start = date.withStart(of: .month)
+        let end = date.withEnd(of: .month)
+        return realm.objects(ExpenseItem.self)
+            .filter("date BETWEEN %@ ", [start, end])
             .groupBy { $0.date.withStart(of: .day) }
             .mapValues { $0.map { $0.value}.reduce(0, +) }
     }
@@ -188,13 +194,13 @@ public class Service {
     ///   - date: la fecha en la cual se requiere buscar
     /// - Returns: datos por dia, Zero si en una fecha no hay transaciones
     static func expenses(in componet: Calendar.Component, of date: Date) -> [Date: Double] {
+        let start = date.withStart(of: componet)
+        let end = date.withEnd(of: componet)
         let expensesByDay = realm.objects(ExpenseItem.self)
-            .filter { $0.date.isSame(componet, to: date) }
+            .filter("date BETWEEN %@ ", [start, end])
             .groupBy { $0.date.withStart(of: .day) }
             .mapValues { $0.map { $0.value}.reduce(0, +) }
         
-        let start = date.withStart(of: componet)
-        let end = date.withEnd(of: componet)
         let dates = start.enumerate(.day, until: end)
         
         var result: [Date: Double] = [:]
@@ -210,8 +216,10 @@ public class Service {
     /// - Parameter date: Dia
     /// - Returns: las transacciones que se realizaron en un dia especificado
     static func getItems(in date: Date) -> [ExpenseItem] {
-        realm.objects(ExpenseItem.self)
-            .filter { Calendar.current.isDate($0.date, equalTo: date, toGranularity: .day) }
+        let start = date.withStart(of: .day)
+        let end = date.withEnd(of: .day)
+        return realm.objects(ExpenseItem.self)
+            .filter("date BETWEEN %@ ", [start, end])
             .detached
             .sorted(by: {$0.id > $1.id })
     }
@@ -227,9 +235,14 @@ public class Service {
                                                                         _ category: Group, in componet: Calendar.Component,
                                                                         of date: Date
     ) -> [ExpenseItem] {
-        realm.objects(ExpenseItem.self)
-            .filter { $0.date.isSame(componet, to: date) && $0[keyPath: group].id == category.id }
+        
+        let start = date.withStart(of: componet)
+        let end = date.withEnd(of: componet)
+        
+        return realm.objects(ExpenseItem.self)
+            .filter("date BETWEEN %@ ", [start, end])
             .detached
+            .filter { $0[keyPath: group].id == category.id }
             .sorted(by: {$0.id > $1.id })
     }
     
@@ -244,8 +257,12 @@ public class Service {
                                                                    of date: Date) -> [Group] {
         
         setColorsIfNeeded(to: Group.self)
+        
+        let start = date.withStart(of: componet)
+        let end = date.withEnd(of: componet)
+        
         let expenses = realm.objects(ExpenseItem.self)
-            .filter { $0.date.isSame(componet, to: date) }
+            .filter("date BETWEEN %@ ", [start, end])
             .detached
             .groupBy { $0[keyPath: group].id }
         
@@ -269,13 +286,17 @@ public class Service {
     static func getBudget( in componet: Calendar.Component = .month,
                            of date: Date = Date()) -> [Catagory] {
         
-        let expensesByCategoryId = realm.objects(ExpenseItem.self)
-            .filter { $0.date.isSame(componet, to: date) && $0.category.budget > 0 }
+        let start = date.withStart(of: componet)
+        let end = date.withEnd(of: componet)
+        
+        let expensesByCategoryId = realm
+            .objects(ExpenseItem.self)
+            .filter("category.budget > %@ AND date BETWEEN %@ ", 0.0, [start, end])
             .groupBy { $0.category.id }
             .mapValues { $0.map { $0.value }.reduce(0, +) }
         
         return realm.objects(Catagory.self)
-            .filter { $0.budget > 0.0 }
+            .filter("budget > %@", 0.0)
             .detached
             .map {
                 $0.value = expensesByCategoryId[$0.id] ?? 0.0

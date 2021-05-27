@@ -63,12 +63,12 @@ struct GastosApp: App {
                         .tabBarItem {
                             TabBar.Page.Item(systemIconName: "rectangle.3.offgrid", tabName: "Dashboard")
                         }
-                    
+
                     TransactionsView()
                         .tabBarItem {
-                            TabBar.Page.Item(systemIconName: "homekit", tabName: "Home")
+                            TabBar.Page.Item(systemIconName: "list.bullet", tabName: "Transactions")
                         }
-                    
+
                     EmptyView()
                         .tabBarItem {
                             plusButton.offset(y: -20)
@@ -76,7 +76,7 @@ struct GastosApp: App {
                     
                     BudgetView()
                         .tabBarItem {
-                            TabBar.Page.Item(systemIconName: "homepod.fill", tabName: "Categories")
+                            TabBar.Page.Item(systemIconName: "chart.bar", tabName: "Budget")
                         }
                     
                     SettingsView()

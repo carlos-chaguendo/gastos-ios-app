@@ -29,7 +29,9 @@ struct TagsChartView: View {
                     .padding(2)
             }
         }.onAppear {
-            self.tags = Service.getAll(Tag.self).sorted { $0.name > $1.name }
+            if  self.tags.isEmpty {
+                self.tags = Service.getAll(Tag.self).sorted { $0.name > $1.name }
+            }
         }
     }
 }

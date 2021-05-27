@@ -16,10 +16,11 @@ struct WidgetsBundle: WidgetBundle {
 
     @WidgetBundleBuilder
     var body: some Widget {
-        WalletWidget()
-        CategoryWidget()
-        RingWidget()
-        ExpensStackChartWidget()
+//        WalletWidget()
+//        CategoryWidget()
+//        RingWidget()
+//        ExpensStackChartWidget()
+        BudgetWidget()
     }
 
 }
