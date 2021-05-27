@@ -146,11 +146,11 @@ struct iCloudRestoreView: View {
                     }
                 } receiveValue: { metadata in
                     
-                    Logger.info("Listo para descargar")
+                    Logger.info("Listo para descargar", metadata.url)
                     self.date = metadata.value(forKey: "kMDItemFSContentChangeDate") as? Date
                     self.fileSize = metadata.value(forAttribute: "kMDItemFSSize") as? Double ?? 0.0
                     self.status = .found
-                    self.url = metadata.value(forAttribute: NSMetadataItemURLKey) as? URL
+                    self.url = metadata.url
                     
                 }.store(in: &cancellables)
                 

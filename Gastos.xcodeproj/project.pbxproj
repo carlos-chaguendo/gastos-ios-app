@@ -10,7 +10,11 @@
 		2F0BF055263A051300D68C03 /* CircularChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0BF054263A051300D68C03 /* CircularChart.swift */; };
 		2F0BF056263A051300D68C03 /* CircularChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0BF054263A051300D68C03 /* CircularChart.swift */; };
 		2F113BB726602F2000FA0281 /* WidgetKit.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2F113BB526602E5900FA0281 /* WidgetKit.intentdefinition */; };
-		2F113BB82660301000FA0281 /* WidgetKit.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2F113BB526602E5900FA0281 /* WidgetKit.intentdefinition */; };
+		2F113BD2266033F000FA0281 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F113BBE2660326000FA0281 /* Intents.framework */; };
+		2F113BD5266033F000FA0281 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F113BD4266033F000FA0281 /* IntentHandler.swift */; };
+		2F113BD9266033F000FA0281 /* SiriKit.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2F113BD1266033F000FA0281 /* SiriKit.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2F113BDD2660341700FA0281 /* WidgetKit.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2F113BB526602E5900FA0281 /* WidgetKit.intentdefinition */; };
+		2F113BDF2660345000FA0281 /* BudgetConfigurationIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F113BDE2660345000FA0281 /* BudgetConfigurationIntentHandler.swift */; };
 		2F1E1A10263B79FB00BB6398 /* SegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1E1A0F263B79FB00BB6398 /* SegmentedView.swift */; };
 		2F23CA4E263B89B40047B482 /* SegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1E1A0F263B79FB00BB6398 /* SegmentedView.swift */; };
 		2F2FB8A32613E44E00CE3E9E /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2FB8A22613E44E00CE3E9E /* Service.swift */; };
@@ -108,7 +112,6 @@
 		2FAA43A0265EE1C30076F377 /* BudgetFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA439F265EE1C30076F377 /* BudgetFormView.swift */; };
 		2FAA43A2265F01580076F377 /* ContentLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA43A1265F01580076F377 /* ContentLoader.swift */; };
 		2FAA43A4265F1B000076F377 /* BudgetChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA43A3265F1B000076F377 /* BudgetChartView.swift */; };
-		2FAA43A6265F1FE80076F377 /* BudgetWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA43A5265F1FE80076F377 /* BudgetWidget.swift */; };
 		2FAA43A7265F21570076F377 /* BudgetWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA43A5265F1FE80076F377 /* BudgetWidget.swift */; };
 		2FB5935D25FC012B005A1B93 /* PropertyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */; };
 		2FB7D01A264AF9890026C189 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB7D019264AF9890026C189 /* CategoriesView.swift */; };
@@ -121,6 +124,8 @@
 		2FBEBC0A260D2ACA001C4FCD /* WeekView+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBEBC09260D2ACA001C4FCD /* WeekView+Model.swift */; };
 		2FBEBC33260E309D001C4FCD /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 2FBEBC32260E309D001C4FCD /* Realm */; };
 		2FBEBC35260E309D001C4FCD /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2FBEBC34260E309D001C4FCD /* RealmSwift */; };
+		2FC170BC2660445000A86837 /* EnviromentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC170BB2660445000A86837 /* EnviromentValues.swift */; };
+		2FC170BD2660445000A86837 /* EnviromentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC170BB2660445000A86837 /* EnviromentValues.swift */; };
 		2FCE71182641B40C00A272B7 /* DocumentInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5D669326390BDE00819EC9 /* DocumentInteractionController.swift */; };
 		2FE51A2625FBE485004518A0 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A2525FBE485004518A0 /* DateFormatter.swift */; };
 		2FE51A2D25FBE4AA004518A0 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A2C25FBE4AA004518A0 /* Font.swift */; };
@@ -133,6 +138,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2F113BD7266033F000FA0281 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2F6B070B25F976D800A1D516 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2F113BD0266033F000FA0281;
+			remoteInfo = SiriKit;
+		};
 		2F8BAE4B263468D800567E4B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2F6B070B25F976D800A1D516 /* Project object */;
@@ -149,6 +161,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				2F113BD9266033F000FA0281 /* SiriKit.appex in Embed App Extensions */,
 				2F8BAE4D263468D800567E4B /* WidgetKitExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -159,6 +172,11 @@
 /* Begin PBXFileReference section */
 		2F0BF054263A051300D68C03 /* CircularChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularChart.swift; sourceTree = "<group>"; };
 		2F113BB526602E5900FA0281 /* WidgetKit.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = WidgetKit.intentdefinition; sourceTree = "<group>"; };
+		2F113BBE2660326000FA0281 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		2F113BD1266033F000FA0281 /* SiriKit.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SiriKit.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F113BD4266033F000FA0281 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		2F113BD6266033F000FA0281 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F113BDE2660345000FA0281 /* BudgetConfigurationIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetConfigurationIntentHandler.swift; sourceTree = "<group>"; };
 		2F1E1A0F263B79FB00BB6398 /* SegmentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedView.swift; sourceTree = "<group>"; };
 		2F2FB8A22613E44E00CE3E9E /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		2F2FB8A62613E50200CE3E9E /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
@@ -242,6 +260,7 @@
 		2FBEBC01260D0DBE001C4FCD /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		2FBEBC05260D2527001C4FCD /* AnyTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyTransition.swift; sourceTree = "<group>"; };
 		2FBEBC09260D2ACA001C4FCD /* WeekView+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeekView+Model.swift"; sourceTree = "<group>"; };
+		2FC170BB2660445000A86837 /* EnviromentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnviromentValues.swift; sourceTree = "<group>"; };
 		2FE51A2525FBE485004518A0 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		2FE51A2C25FBE4AA004518A0 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		2FE51A3125FBE4C6004518A0 /* NumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatter.swift; sourceTree = "<group>"; };
@@ -253,6 +272,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2F113BCE266033F000FA0281 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F113BD2266033F000FA0281 /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2F6B071425F976DA00A1D516 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -277,6 +304,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F113BD3266033F000FA0281 /* SiriKit */ = {
+			isa = PBXGroup;
+			children = (
+				2F113BD4266033F000FA0281 /* IntentHandler.swift */,
+				2F113BD6266033F000FA0281 /* Info.plist */,
+				2F113BDE2660345000FA0281 /* BudgetConfigurationIntentHandler.swift */,
+			);
+			path = SiriKit;
+			sourceTree = "<group>";
+		};
 		2F6B070A25F976D800A1D516 = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +323,7 @@
 				2F6B070F25F976D900A1D516 /* Shared */,
 				2F6B071925F976DA00A1D516 /* iOS */,
 				2F8BAE45263468D800567E4B /* WidgetKit */,
+				2F113BD3266033F000FA0281 /* SiriKit */,
 				2F8BAE022634636800567E4B /* Frameworks */,
 				2F6B071825F976DA00A1D516 /* Products */,
 			);
@@ -307,6 +345,7 @@
 			children = (
 				2F6B071725F976DA00A1D516 /* Gastos.app */,
 				2F8BAE42263468D800567E4B /* WidgetKitExtension.appex */,
+				2F113BD1266033F000FA0281 /* SiriKit.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -425,6 +464,7 @@
 				2F90F3C1265707D400754F5C /* CloudKit.framework */,
 				2F8BAE032634636800567E4B /* WidgetKit.framework */,
 				2F8BAE052634636800567E4B /* SwiftUI.framework */,
+				2F113BBE2660326000FA0281 /* Intents.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -452,6 +492,7 @@
 				2FE51A3125FBE4C6004518A0 /* NumberFormatter.swift */,
 				2F9500E32604061500C9ABFC /* View++.swift */,
 				2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */,
+				2FC170BB2660445000A86837 /* EnviromentValues.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -554,6 +595,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2F113BD0266033F000FA0281 /* SiriKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F113BDA266033F000FA0281 /* Build configuration list for PBXNativeTarget "SiriKit" */;
+			buildPhases = (
+				2F113BCD266033F000FA0281 /* Sources */,
+				2F113BCE266033F000FA0281 /* Frameworks */,
+				2F113BCF266033F000FA0281 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SiriKit;
+			productName = SiriKit;
+			productReference = 2F113BD1266033F000FA0281 /* SiriKit.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		2F6B071625F976DA00A1D516 /* Gastos (iOS) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2F6B072B25F976DA00A1D516 /* Build configuration list for PBXNativeTarget "Gastos (iOS)" */;
@@ -568,6 +626,7 @@
 			);
 			dependencies = (
 				2F8BAE4C263468D800567E4B /* PBXTargetDependency */,
+				2F113BD8266033F000FA0281 /* PBXTargetDependency */,
 			);
 			name = "Gastos (iOS)";
 			packageProductDependencies = (
@@ -605,9 +664,12 @@
 		2F6B070B25F976D800A1D516 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1240;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
+					2F113BD0266033F000FA0281 = {
+						CreatedOnToolsVersion = 12.5;
+					};
 					2F6B071625F976DA00A1D516 = {
 						CreatedOnToolsVersion = 12.4;
 					};
@@ -635,11 +697,19 @@
 			targets = (
 				2F6B071625F976DA00A1D516 /* Gastos (iOS) */,
 				2F8BAE41263468D800567E4B /* WidgetKitExtension */,
+				2F113BD0266033F000FA0281 /* SiriKit */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2F113BCF266033F000FA0281 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2F6B071525F976DA00A1D516 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -680,6 +750,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2F113BCD266033F000FA0281 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F113BDF2660345000FA0281 /* BudgetConfigurationIntentHandler.swift in Sources */,
+				2F113BD5266033F000FA0281 /* IntentHandler.swift in Sources */,
+				2F113BDD2660341700FA0281 /* WidgetKit.intentdefinition in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2F6B071325F976DA00A1D516 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -699,6 +779,7 @@
 				2F54798F2628DBB000730F13 /* Promise.swift in Sources */,
 				2FAA43A2265F01580076F377 /* ContentLoader.swift in Sources */,
 				2F89BA30261F8DB30009EA03 /* MaximunDailyExpendingGraphView.swift in Sources */,
+				2FC170BC2660445000A86837 /* EnviromentValues.swift in Sources */,
 				2F8BADED2633961400567E4B /* ButtonStyleFormLarge.swift in Sources */,
 				2F8BADFA2633BD8600567E4B /* DailyReminderView.swift in Sources */,
 				2F816D65261D26E8009FB091 /* SummaryGraphicsView.swift in Sources */,
@@ -718,7 +799,6 @@
 				2F98CE5B26154EF50004F1B2 /* Catagory.swift in Sources */,
 				2F89BA1E261EB43A0009EA03 /* Stack.swift in Sources */,
 				2FBEBC02260D0DBE001C4FCD /* Array.swift in Sources */,
-				2FAA43A6265F1FE80076F377 /* BudgetWidget.swift in Sources */,
 				2FAA43A0265EE1C30076F377 /* BudgetFormView.swift in Sources */,
 				2F9500E42604061500C9ABFC /* View++.swift in Sources */,
 				2F6B073525F9791C00A1D516 /* FlexibleView.swift in Sources */,
@@ -727,7 +807,6 @@
 				2F91537C26018FED0092033E /* TabBar.swift in Sources */,
 				2F90F3BE2656FDF800754F5C /* DebugView.swift in Sources */,
 				2F1E1A10263B79FB00BB6398 /* SegmentedView.swift in Sources */,
-				2F113BB82660301000FA0281 /* WidgetKit.intentdefinition in Sources */,
 				2F6B076825FA613900A1D516 /* KeyboardHeightPublisher.swift in Sources */,
 				2F98CE7C261589DE0004F1B2 /* CategorySelectionView.swift in Sources */,
 				2FB5935D25FC012B005A1B93 /* PropertyBuilder.swift in Sources */,
@@ -800,6 +879,7 @@
 				2F8BAE7A26346AB800567E4B /* Logger.swift in Sources */,
 				2F8BAE6526346AA400567E4B /* Service.swift in Sources */,
 				2F8BAE9726346D6500567E4B /* NumberFormatter.swift in Sources */,
+				2FC170BD2660445000A86837 /* EnviromentValues.swift in Sources */,
 				2F8BAE7726346AA900567E4B /* Tag.swift in Sources */,
 				2FB95DB0263B28AD006765E4 /* RingWidget.swift in Sources */,
 				2FAA43A7265F21570076F377 /* BudgetWidget.swift in Sources */,
@@ -809,6 +889,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2F113BD8266033F000FA0281 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2F113BD0266033F000FA0281 /* SiriKit */;
+			targetProxy = 2F113BD7266033F000FA0281 /* PBXContainerItemProxy */;
+		};
 		2F8BAE4C263468D800567E4B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2F8BAE41263468D800567E4B /* WidgetKitExtension */;
@@ -829,6 +914,49 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2F113BDB266033F000FA0281 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5NWXU54BBD;
+				INFOPLIST_FILE = SiriKit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mayorgafirm.Gastos.SiriKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2F113BDC266033F000FA0281 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5NWXU54BBD;
+				INFOPLIST_FILE = SiriKit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mayorgafirm.Gastos.SiriKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		2F6B072925F976DA00A1D516 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1045,6 +1173,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2F113BDA266033F000FA0281 /* Build configuration list for PBXNativeTarget "SiriKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F113BDB266033F000FA0281 /* Debug */,
+				2F113BDC266033F000FA0281 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2F6B070E25F976D800A1D516 /* Build configuration list for PBXProject "Gastos" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

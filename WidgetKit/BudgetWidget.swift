@@ -16,6 +16,8 @@ struct BudgetWidget: Widget {
         var budget:  Double = 0.0
         var expense: Double = 0.0
         
+        var displayAvailable = false
+        
     }
     
     struct Provider: IntentTimelineProvider {
@@ -37,7 +39,8 @@ struct BudgetWidget: Widget {
             let entry = Entry(
                 date: Date(),
                 budget: values.map { $0.budget }.reduce(0.0, +),
-                expense: values.map { $0.value}.reduce(0, +)
+                expense: values.map { $0.value}.reduce(0, +),
+                displayAvailable: configuration.displayAvalilable?.boolValue ?? false
             )
             completion(Timeline(entries: [entry], policy: .never))
         }
@@ -55,9 +58,10 @@ struct BudgetWidget: Widget {
                 let available = NumberFormatter.currency.string(from: NSNumber(value: entry.budget - entry.expense)) ?? "n/a"
                 let color = Color(Colors.primary)
                 
-                
-                let percent = ((entry.expense * 100)/entry.budget/100)
-                
+                let expenditure = ((entry.expense * 100)/entry.budget/100)
+                let percent = entry.displayAvailable ?  1.0 - expenditure : expenditure
+
+
                 ZStack {
                     CircularChart(animatable: false, lineBackGround: color , [
                         .init(color: color, value: CGFloat(percent))
@@ -66,10 +70,8 @@ struct BudgetWidget: Widget {
                     Text("\((percent * 100).rounded(toPlaces: 0).cleanValue)%")
                         .font(.caption2)
                         .foregroundColor(Colors.subtitle)
-                    
-     
+
                 }
-                
                 .frame(width: 48, height: 48, alignment: .leading)
                 .padding(.vertical, 4)
                 
@@ -80,15 +82,12 @@ struct BudgetWidget: Widget {
                 
                 Text(expe)
                     .font(.headline)
-                    .foregroundColor(color)
-                
-                
+                    .foregroundColor(entry.displayAvailable ?  Color(Colors.subtitle) : color)
+
                 Text(available)
                     .font(.headline)
-                    .foregroundColor(Colors.subtitle)
-                
-                
-                
+                    .foregroundColor(entry.displayAvailable ? color : Color(Colors.subtitle))
+
             }
             
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
@@ -101,7 +100,7 @@ struct BudgetWidget: Widget {
     var body: some WidgetConfiguration {
         
         IntentConfiguration(kind: "kind-gs-rg2", intent: BudgetConfigurationIntent.self, provider: Provider()) { entry in
-//        StaticConfiguration(kind: "kind-gs-rg2", provider: Provider()) { entry in
+            //        StaticConfiguration(kind: "kind-gs-rg2", provider: Provider()) { entry in
             
             ContentView(entry: entry)
         }

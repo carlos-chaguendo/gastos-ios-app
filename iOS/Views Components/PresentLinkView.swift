@@ -28,7 +28,6 @@ struct PresentLinkView<Label: View, Destination: View>: View {
         } label: {
             label
         }.sheet(isPresented: $isPresented) {
-
             if addNavigation {
                 NavigationView {
                     destination()

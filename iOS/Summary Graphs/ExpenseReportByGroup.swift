@@ -12,7 +12,7 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
     public var title: LocalizedStringKey?
 
     @ObservedObject var datasource: SpendByGroupChartView<Group>.DataSource
-
+    @Namespace private var namespace
     @State var points: [CGPoint] = []
 
     init(title: LocalizedStringKey, group: KeyPath<ExpenseItem, Group>) {
@@ -114,6 +114,7 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                                     .foregroundColor(.quaternaryLabel)
                             }
                         }.padding(.vertical)
+                        .matchedGeometryEffect(id: "category-\(category.id)", in: namespace)
 
                     }
 

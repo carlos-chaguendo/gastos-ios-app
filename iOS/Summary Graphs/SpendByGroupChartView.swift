@@ -11,9 +11,8 @@ import Combine
 struct SpendByGroupChartView<Group: Entity & ExpensePropertyWithValue>: View {
 
     @ObservedObject var datasource: DataSource
-
     @State public var cancellables = Set<AnyCancellable>()
-
+    
     public var title: LocalizedStringKey?
     public var showTotal = true
     public var showNavigation = true

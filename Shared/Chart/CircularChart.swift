@@ -17,6 +17,8 @@ struct CircularChart: View {
     }
     
     var percents: [Entry] = []
+    
+    @Environment(\.isPreview) var isPreview
     @State var setPercents: Bool = false
     @State var setPercents2: Bool = false
     
@@ -54,7 +56,7 @@ struct CircularChart: View {
                 let entry = percents[i]
                 // let previous = CGFloat(percents[safe: i - 1 ]?.value ?? 0)
 
-                let includeAnimation = animatable ? setPercents : true
+                let includeAnimation = animatable && !isPreview ? setPercents : true
                 
                 Circle()
                     .trim(from: includeAnimation ? entry.previous : 0, to: includeAnimation ? entry.value + entry.previous - lineSpacing : 0)

@@ -259,4 +259,8 @@ extension NSMetadataItem {
         value(forAttribute: NSMetadataUbiquitousItemIsUploadedKey) as? Bool
     }
     
+    var url: URL? {
+        value(forAttribute: NSMetadataItemURLKey) as? URL
+    }
+    
 }
