@@ -19,7 +19,8 @@ struct SettingsView: View, WithRows {
                 
                 #if DEBUG
                 Row(title: "Debug", destination: DebugView())
-                    .padding(.vertical, 60)
+                    .padding(.top, 60)
+                Row(title: "icloud restore", destination: iCloudRestoreView(restorationTerminated: .constant(false)))
                 #endif
                 
                 Spacer()
@@ -29,15 +30,15 @@ struct SettingsView: View, WithRows {
             .navigationBarTitle("Settings", displayMode: .inline)
         }
     }
-
+    
 }
 
 protocol WithRows {
-
+    
 }
 
 extension WithRows {
-
+    
     func Row<Destination: View>(title: LocalizedStringKey, destination: Destination) -> some View {
         NavigationLink(destination: destination) {
             VStack(spacing: 20) {
@@ -45,15 +46,15 @@ extension WithRows {
                     Text(title)
                         .font(.body)
                         .foregroundColor(Colors.title)
-
+                    
                     Spacer()
                     Image(systemName: "chevron.right")
                         .foregroundColor(.gray)
                 }
-
+                
                 Color.gray.frame(height: 1).opacity(0.2)
             }
-
+            
         }
         .frame(height: 60, alignment: .center)
     }

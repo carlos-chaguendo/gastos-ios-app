@@ -14,7 +14,7 @@ class BackupService {
     
     private init() { }
 
-    private static func downloadFile(fileURL: URL, for query: NSMetadataQuery, subject: PassthroughSubject<Double, NSError>) {
+    private static func downloadFile(destination fileURL: URL, for query: NSMetadataQuery, subject: PassthroughSubject<Double, NSError>) {
 
         let fileName = fileURL.lastPathComponent
 
@@ -60,9 +60,9 @@ class BackupService {
     /// Description
     /// - Parameters:
     ///   - fileName: fileName description
-    ///   - fileURL: fileURL description
+    ///   - destination: fileURL description
     /// - Returns: description
-    static func restoreBackup(named fileName: String, fileURL: URL) -> AnyPublisher<Double, NSError> {
+    static func restoreBackup(named fileName: String, destination fileURL: URL) -> AnyPublisher<Double, NSError> {
 
         // let fileName = fileURL.lastPathComponent
         let query = NSMetadataQuery.init()
@@ -76,15 +76,15 @@ class BackupService {
 
         let subject = PassthroughSubject<Double, NSError>()
         NotificationCenter.default.addObserver(forName: .NSMetadataQueryDidStartGathering, object: query, queue: query.operationQueue) { _ in
-            self.downloadFile(fileURL: fileURL, for: query, subject: subject)
+            self.downloadFile(destination: fileURL, for: query, subject: subject)
         }
 
         NotificationCenter.default.addObserver(forName: .NSMetadataQueryGatheringProgress, object: query, queue: query.operationQueue) { _ in
-            self.downloadFile(fileURL: fileURL, for: query, subject: subject)
+            self.downloadFile(destination: fileURL, for: query, subject: subject)
         }
 
         NotificationCenter.default.addObserver(forName: .NSMetadataQueryDidUpdate, object: query, queue: query.operationQueue) { _ in
-            self.downloadFile(fileURL: fileURL, for: query, subject: subject)
+            self.downloadFile(destination: fileURL, for: query, subject: subject)
         }
 
         return subject.eraseToAnyPublisher()
@@ -96,11 +96,29 @@ class BackupService {
     static func searchBackup(fileName: String) -> AnyPublisher<NSMetadataItem, NSError> {
         return Deferred {
             Future<NSMetadataItem, NSError> { seal in
+                
+                guard let container = FileManager.default.url(forUbiquityContainerIdentifier: nil) else {
+                    let error = NSError(domain: "search", code: 1, userInfo: [NSLocalizedDescriptionKey: " The App Not Have Access to iCloud"])
+                    seal(.failure(error))
+                    return
+                }
+        
                 Logger.info("Buscando...", fileName)
                 let query = NSMetadataQuery.init()
                 query.operationQueue = .main
                 query.searchScopes = [NSMetadataQueryUbiquitousDataScope]
                 query.predicate = NSPredicate(format: "%K LIKE %@", NSMetadataItemFSNameKey, fileName)
+                
+                
+                #if DEBUG
+                    let fileItemURL = container.appendingPathComponent(fileName)
+                    do {
+                        try FileManager.default.startDownloadingUbiquitousItem(at: fileItemURL)
+                    } catch {
+                        seal(.failure(error as NSError))
+                    }
+                #endif
+                
 
                 NotificationCenter.default.addObserver(forName: NSNotification.Name.NSMetadataQueryDidFinishGathering, object: query, queue: query.operationQueue) { (_) in
                     defer {
@@ -179,7 +197,7 @@ class BackupService {
             } receiveValue: { _ in
                 guard
                     let fileItem = query.resultsFor(fileName: fileName),
-                    let fileItemURL = fileItem.value(forAttribute: NSMetadataItemURLKey) as? URL
+                    let fileItemURL = fileItem.url
                 else {
                     subject.send(0)
                     return
