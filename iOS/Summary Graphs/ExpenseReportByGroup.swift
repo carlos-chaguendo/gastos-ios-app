@@ -114,15 +114,17 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                                     .foregroundColor(.quaternaryLabel)
                             }
                         }.padding(.vertical)
-                        .matchedGeometryEffect(id: "category-\(category.id)", in: namespace)
+                        //.matchedGeometryEffect(id: "category-\(category.id)", in: namespace)
 
                     }
 
-                }.padding(.horizontal)
+                }
+                .padding(.horizontal)
 
             }
             .padding(.vertical)
             .background(Colors.background)
+
 
         }.onAppear {
 

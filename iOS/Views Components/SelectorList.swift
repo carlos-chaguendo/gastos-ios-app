@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: View>: View {
 
@@ -14,12 +15,17 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
     var selected: Binding<Set<Value>>
     var destination: Destination?
     var content: (Value) -> Content
-
+    
     @Environment(\.presentationMode) private var presentation
     @State private var addNew = false
+    
+    /// Se usa selected identifiers para no sincronizar las vistas con el bindig
+    /// solo se sincronizan cuando finaliza el usuario con los botones de done
     @State private var selectedIdentifiers = Set<Value.ID>()
 
     var allowMultipleSelection = false
+    
+  
 
     var body: some View {
 
@@ -63,13 +69,13 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
                             }
                         }
                     }
-                }
+                }.listRowBackground(Color(Colors.background))
             }
         }
         //        .environment(\.editMode, .constant(allowMultipleSelection ? .active : .inactive))
         .navigationBarTitle(title)
         .listStyle(PlainListStyle())
-
+        .background(Colors.background)
         .navigationBarItems(leading: Button {
             self.presentation.wrappedValue.dismiss()
         } label: {
@@ -98,7 +104,7 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
     @ViewBuilder var footerView: some View {
         if let addNew = destination {
             VStack {
-                NavigationLink(destination: addNew) {
+                PresentLinkView(destination: addNew) {
                     Text("Add New")
                         // .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0,idealHeight: 40, maxHeight: .infinity)
                         // .background(Color(Colors.primary))
@@ -106,7 +112,7 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
                         .cornerRadius(3)
                 }
 
-            }
+            }.listRowBackground(Color(Colors.background))
         } else {
             EmptyView()
         }

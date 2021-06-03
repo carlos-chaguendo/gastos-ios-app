@@ -14,7 +14,7 @@ struct SettingsView: View, WithRows {
                 Row(title: "Backup copy", destination: iCloudBackupView())
                 Row(title: "Daily reminder", destination: DailyReminderView())
                 Row(title: "Categories", destination: CategoriesView())
-                Row(title: "Methods of payment", destination: Text("Métodos de pago"))
+                Row(title: "Methods of payment", destination: PaymentsView())
                 Row(title: "Export CSV", destination: ExportCSVView())
                 
                 #if DEBUG

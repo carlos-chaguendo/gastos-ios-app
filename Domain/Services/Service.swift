@@ -23,7 +23,7 @@ public class Service {
         
         let config = Realm.Configuration(
             fileURL: fileURL,
-            schemaVersion: 6,
+            schemaVersion: 7,
             migrationBlock: { _, oldSchemaVersion in
                 
                 if oldSchemaVersion < 1 {
@@ -52,7 +52,7 @@ public class Service {
             local.date = item.date
             
             if local.realm == nil {
-                local.id = item.date.description
+                local.id = UUID().description
             }
             
             local.category = realm.findBy(id: item.category.id)
@@ -109,6 +109,23 @@ public class Service {
     }
     
     @discardableResult
+    static func removeBudget(for item: Catagory.ID) -> Catagory {
+        guard  let local: Catagory = realm.findBy(id: item) else {
+            preconditionFailure()
+        }
+        
+        realm.rwrite {
+            local.budget = 0
+            realm.add(local)
+        }
+        
+        let sender = local.detached()
+        NotificationCenter.default.post(name: .didEditBudget, object: sender)
+        return sender
+    }
+    
+    
+    @discardableResult
     static func addBudget(_ item: Catagory) -> Catagory {
         guard  let local: Catagory = realm.findBy(id: item.id) else {
             preconditionFailure()
@@ -131,13 +148,72 @@ public class Service {
         }
     }
     
+    @discardableResult
     static func addWallet(_ item: Wallet) -> Wallet {
+        let local: Wallet = realm.findBy(id: item.id) ?? item
         realm.rwrite {
-            item.id = UUID().description
-            realm.add(item)
+            local.name = item.name
+            local.color = item.color
+            if local.realm == nil {
+                local.id = UUID().description
+            }
+            realm.add(local)
+        }
+
+        let sender = local.detached()
+        NotificationCenter.default.post(name: .didEditWallet, object: sender)
+        return sender
+    }
+    
+    @discardableResult
+    static func removeWallet(_ item: Wallet) throws -> Wallet {
+        guard let local = realm.object(ofType: Wallet.self, forPrimaryKey: item.id) else {
+            preconditionFailure()
         }
         
-        return item.detached()
+        let count = realm.objects(ExpenseItem.self)
+            .filter("wallet.id = %@ ", item.id)
+            .count
+        
+        if count > 0 {
+            throw NSError(domain: "service", code: 1, userInfo: [NSLocalizedFailureReasonErrorKey : ""])
+        }
+        
+        let sender = local.detached()
+        realm.rwrite {
+            if !local.isInvalidated {
+                realm.delete(local)
+            }
+            Logger.info("Eliminando", local)
+        }
+        NotificationCenter.default.post(name: .didEditWallet, object: sender)
+        return sender
+    }
+    
+    
+    @discardableResult
+    static func removeCategory(_ item: Catagory) throws -> Catagory {
+        guard let local = realm.object(ofType: Catagory.self, forPrimaryKey: item.id) else {
+            preconditionFailure()
+        }
+        
+        let count = realm.objects(ExpenseItem.self)
+            .filter("category.id = %@ ", item.id)
+            .count
+        
+        if count > 0 {
+            throw NSError(domain: "service", code: 1, userInfo: [NSLocalizedFailureReasonErrorKey : ""])
+        }
+        
+        let sender = local.detached()
+        realm.rwrite {
+            if !local.isInvalidated {
+                realm.delete(local)
+            }
+            Logger.info("Eliminando", local)
+        }
+        NotificationCenter.default.post(name: .didEditCategories, object: sender)
+        return sender
     }
     
     static func remove(_ item: ExpenseItem) {
@@ -291,17 +367,19 @@ public class Service {
         
         let expensesByCategoryId = realm
             .objects(ExpenseItem.self)
-            .filter("category.budget > %@ AND date BETWEEN %@ ", 0.0, [start, end])
+            .filter("date BETWEEN %@ ", [start, end])
             .groupBy { $0.category.id }
             .mapValues { $0.map { $0.value }.reduce(0, +) }
         
         return realm.objects(Catagory.self)
-            .filter("budget > %@", 0.0)
             .detached
             .map {
                 $0.value = expensesByCategoryId[$0.id] ?? 0.0
                 return $0
-            }.sorted { $0.name > $1.name }
+            }
+            /// Solo se incluyen las categorias con almenos una transacion o con un [resupuesto configurado
+            .filter { $0.value > 0.0 || $0.budget > 0.0 }
+            .sorted { $0.name > $1.name }
     }
     
     /// Obtiene todos los elemntos de una entidad
@@ -336,6 +414,16 @@ public class Service {
             return ApplicationData()
         }
         return local.detached()
+    }
+    
+    
+    static func toggleHidden<Item: Entity & EntityWithName>( value: Item) {
+        guard let local = realm.object(ofType: Item.self, forPrimaryKey: value.id) else {
+            preconditionFailure()
+        }
+        realm.rwrite {
+            local.isHidden = !local.isHidden
+        }
     }
     
 }

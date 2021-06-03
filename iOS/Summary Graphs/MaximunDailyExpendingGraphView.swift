@@ -73,7 +73,6 @@ struct MaximunDailyExpendingGraphView: View {
         Promise {
              Service.sumEventsIn(month: weekendViewModel.selected)
         }
-        .receive(on: DispatchQueue.main)
         .sink { events in
             guard eventCount.count == 0 else {
                 return

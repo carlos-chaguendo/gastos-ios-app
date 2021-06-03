@@ -25,7 +25,7 @@ struct StackChart<Group: Entity & ExpensePropertyWithValue>: View {
                         
                         Color(UIColor.from(hex: UInt32(category.color)))
                             .frame(width: reader.size.width * CGFloat(percent))
-                            .matchedGeometryEffect(id: "stack-\(category.id)", in: namespace)
+                            //.matchedGeometryEffect(id: "stack-\(category.id)", in: namespace)
                         
                     }
                 }

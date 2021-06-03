@@ -30,7 +30,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        print("Your code here")
+        Logger.info("Your code here")
   
         
         #if !os(macOS)
@@ -85,9 +85,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
 
         
-        
-
-        
 //        CKContainer.default().privateCloudDatabase.fetchAllSubscriptions { suscriptions, error in
 //            Logger.info("suscriptions ", suscriptions)
 //            Logger.info("Error", error)
@@ -116,7 +113,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 //        }
         
  
-
+        Logger.info("RReturn true code here")
         return true
     }
     

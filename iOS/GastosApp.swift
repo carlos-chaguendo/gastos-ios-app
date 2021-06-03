@@ -58,32 +58,26 @@ struct GastosApp: App {
             } else {
                 
                 TabBar {
-                    
-                    SummaryGraphicsView()
-                        .tabBarItem {
-                            TabBar.Page.Item(systemIconName: "rectangle.3.offgrid", tabName: "Dashboard")
-                        }
-
                     TransactionsView()
                         .tabBarItem {
                             TabBar.Page.Item(systemIconName: "list.bullet", tabName: "Transactions")
                         }
-
+                    SummaryGraphicsView()
+                        .tabBarItem {
+                            TabBar.Page.Item(systemIconName: "rectangle.3.offgrid", tabName: "Dashboard")
+                        }
                     EmptyView()
                         .tabBarItem {
                             plusButton.offset(y: -20)
                         }
-                    
                     BudgetView()
                         .tabBarItem {
                             TabBar.Page.Item(systemIconName: "chart.bar", tabName: "Budget")
                         }
-                    
                     SettingsView()
                         .tabBarItem {
                             TabBar.Page.Item(systemIconName: "gearshape", tabName: "Settings")
                         }
-                    
                 }
                 .selectedIndex($selected)
                 .set(\.background, Color(Colors.background))
@@ -103,6 +97,10 @@ struct GastosApp: App {
                 }.onReceive(Publishers.didAddNewTransaction) { _ in
                     WidgetCenter.shared.reloadAllTimelines()
                 }.onReceive(Publishers.didEditTransaction) { _ in
+                    WidgetCenter.shared.reloadAllTimelines()
+                }.onReceive(Publishers.didEditCategories) { _ in
+                    WidgetCenter.shared.reloadAllTimelines()
+                }.onReceive(Publishers.didEditBudget) { _ in
                     WidgetCenter.shared.reloadAllTimelines()
                 }
             }

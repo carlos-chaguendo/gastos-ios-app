@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2F0BF055263A051300D68C03 /* CircularChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0BF054263A051300D68C03 /* CircularChart.swift */; };
-		2F0BF056263A051300D68C03 /* CircularChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0BF054263A051300D68C03 /* CircularChart.swift */; };
 		2F113BB726602F2000FA0281 /* WidgetKit.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2F113BB526602E5900FA0281 /* WidgetKit.intentdefinition */; };
 		2F113BD2266033F000FA0281 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F113BBE2660326000FA0281 /* Intents.framework */; };
 		2F113BD5266033F000FA0281 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F113BD4266033F000FA0281 /* IntentHandler.swift */; };
@@ -127,6 +126,11 @@
 		2FC170BC2660445000A86837 /* EnviromentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC170BB2660445000A86837 /* EnviromentValues.swift */; };
 		2FC170BD2660445000A86837 /* EnviromentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC170BB2660445000A86837 /* EnviromentValues.swift */; };
 		2FCE71182641B40C00A272B7 /* DocumentInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5D669326390BDE00819EC9 /* DocumentInteractionController.swift */; };
+		2FD288AC26694D0100928595 /* ArrayBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F915372260185010092033E /* ArrayBuilder.swift */; };
+		2FD288AD26694D0200928595 /* ArrayBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F915372260185010092033E /* ArrayBuilder.swift */; };
+		2FD288AE26694D6500928595 /* CircularChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0BF054263A051300D68C03 /* CircularChart.swift */; };
+		2FD288B12669621900928595 /* PaymentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD288B02669621900928595 /* PaymentsView.swift */; };
+		2FD288B3266964A600928595 /* PaymentFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD288B2266964A600928595 /* PaymentFormView.swift */; };
 		2FE51A2625FBE485004518A0 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A2525FBE485004518A0 /* DateFormatter.swift */; };
 		2FE51A2D25FBE4AA004518A0 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A2C25FBE4AA004518A0 /* Font.swift */; };
 		2FE51A3225FBE4C6004518A0 /* NumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A3125FBE4C6004518A0 /* NumberFormatter.swift */; };
@@ -261,6 +265,8 @@
 		2FBEBC05260D2527001C4FCD /* AnyTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyTransition.swift; sourceTree = "<group>"; };
 		2FBEBC09260D2ACA001C4FCD /* WeekView+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeekView+Model.swift"; sourceTree = "<group>"; };
 		2FC170BB2660445000A86837 /* EnviromentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnviromentValues.swift; sourceTree = "<group>"; };
+		2FD288B02669621900928595 /* PaymentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsView.swift; sourceTree = "<group>"; };
+		2FD288B2266964A600928595 /* PaymentFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentFormView.swift; sourceTree = "<group>"; };
 		2FE51A2525FBE485004518A0 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		2FE51A2C25FBE4AA004518A0 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		2FE51A3125FBE4C6004518A0 /* NumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatter.swift; sourceTree = "<group>"; };
@@ -353,6 +359,7 @@
 		2F6B071925F976DA00A1D516 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				2FD288AF2669620100928595 /* Payment */,
 				2FB7D018264AF5E10026C189 /* App */,
 				2FAA439C265ED2DD0076F377 /* Budget */,
 				2F98CE7A261589C50004F1B2 /* Categories */,
@@ -487,6 +494,7 @@
 		2F8BAE8A26346CCF00567E4B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2F915372260185010092033E /* ArrayBuilder.swift */,
 				2FBEBC05260D2527001C4FCD /* AnyTransition.swift */,
 				2F54798E2628DBB000730F13 /* Promise.swift */,
 				2FE51A3125FBE4C6004518A0 /* NumberFormatter.swift */,
@@ -581,12 +589,20 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
+		2FD288AF2669620100928595 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				2FD288B02669621900928595 /* PaymentsView.swift */,
+				2FD288B2266964A600928595 /* PaymentFormView.swift */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
 		2FE51A2425FBE472004518A0 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				2FE51A2525FBE485004518A0 /* DateFormatter.swift */,
 				2FE51A2C25FBE4AA004518A0 /* Font.swift */,
-				2F915372260185010092033E /* ArrayBuilder.swift */,
 				2FBEBC01260D0DBE001C4FCD /* Array.swift */,
 			);
 			path = Extensions;
@@ -757,6 +773,7 @@
 				2F113BDF2660345000FA0281 /* BudgetConfigurationIntentHandler.swift in Sources */,
 				2F113BD5266033F000FA0281 /* IntentHandler.swift in Sources */,
 				2F113BDD2660341700FA0281 /* WidgetKit.intentdefinition in Sources */,
+				2FD288AD26694D0200928595 /* ArrayBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -797,6 +814,7 @@
 				2F8BADE926336F5700567E4B /* iCloudRestoreView.swift in Sources */,
 				2F5479A72629049E00730F13 /* TagsChartView.swift in Sources */,
 				2F98CE5B26154EF50004F1B2 /* Catagory.swift in Sources */,
+				2FD288B12669621900928595 /* PaymentsView.swift in Sources */,
 				2F89BA1E261EB43A0009EA03 /* Stack.swift in Sources */,
 				2FBEBC02260D0DBE001C4FCD /* Array.swift in Sources */,
 				2FAA43A0265EE1C30076F377 /* BudgetFormView.swift in Sources */,
@@ -828,6 +846,7 @@
 				2F6B075925F99C8100A1D516 /* Colors.swift in Sources */,
 				2F54798726288CE800730F13 /* StackChart.swift in Sources */,
 				2FAA43A4265F1B000076F377 /* BudgetChartView.swift in Sources */,
+				2FD288B3266964A600928595 /* PaymentFormView.swift in Sources */,
 				2F9500E02603E38600C9ABFC /* WeekView.swift in Sources */,
 				2F816D2A261CF072009FB091 /* CurrencyTextField.swift in Sources */,
 				2F98CE7626156B620004F1B2 /* SelectorList.swift in Sources */,
@@ -853,6 +872,7 @@
 				2F8BAEA126346DFA00567E4B /* Promise.swift in Sources */,
 				2F8BAE7D26346ADA00567E4B /* Date.swift in Sources */,
 				2F8BAE9C26346DA400567E4B /* StackChart.swift in Sources */,
+				2FD288AE26694D6500928595 /* CircularChart.swift in Sources */,
 				2F8BAE7126346AA900567E4B /* Entity+Detach.swift in Sources */,
 				2F8BAE6626346AA400567E4B /* BackupService.swift in Sources */,
 				2F8BAE6126346A9F00567E4B /* Service+Publishers.swift in Sources */,
@@ -864,7 +884,6 @@
 				2F8BAEA726346E5A00567E4B /* AnyTransition.swift in Sources */,
 				2F8BAE5826346A7E00567E4B /* Stack.swift in Sources */,
 				2F8BAE7326346AA900567E4B /* ExpenseItem.swift in Sources */,
-				2F0BF056263A051300D68C03 /* CircularChart.swift in Sources */,
 				2F8BAE9D26346DA400567E4B /* LinesGraph.swift in Sources */,
 				2F8BAE8726346CB400567E4B /* SpendByGroupChartView.swift in Sources */,
 				2F8BAE47263468D800567E4B /* WidgetKit.swift in Sources */,
@@ -875,6 +894,7 @@
 				2FFE124D26386C9C006F696C /* ExpenseByGroupWidget.swift in Sources */,
 				2F8BAE7226346AA900567E4B /* ApplicationData.swift in Sources */,
 				2FFE12582638718A006F696C /* ExpensStackChartWidget.swift in Sources */,
+				2FD288AC26694D0100928595 /* ArrayBuilder.swift in Sources */,
 				2F8BAE7526346AA900567E4B /* Catagory.swift in Sources */,
 				2F8BAE7A26346AB800567E4B /* Logger.swift in Sources */,
 				2F8BAE6526346AA400567E4B /* Service.swift in Sources */,

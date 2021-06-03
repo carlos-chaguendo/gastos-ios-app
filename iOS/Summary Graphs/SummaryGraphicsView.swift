@@ -30,7 +30,7 @@ struct SummaryGraphicsView: View {
                         SpendByGroupChartView(groupBy: \.category, title: "Category")
                         SpendByGroupChartView(groupBy: \.wallet, title: "Wallet", showTotal: false)
                     }.cardView()
-                    
+
                     BudgetChartView()
                         .cardView()
 

@@ -18,10 +18,17 @@ public class ExpenseItemFormViewModel: ObservableObject {
     @Published var wallets = Set<Wallet>()
     @Published var tags = Set<Tag>()
     @Published var categories = Set<Catagory>()
+    @Published var category: Catagory?
+
 
     init() {
         if let current = UserDefaults.standard.value(forKey: "currentDate") as? Date {
             date = current
+        }
+        
+        if let current = UserDefaults.standard.value(forKey: "default-payment-id") as? String,
+           let wallet: Wallet = Service.realm.findBy(id: current) {
+            wallets.insert(wallet)
         }
     }
 
@@ -31,6 +38,7 @@ public class ExpenseItemFormViewModel: ObservableObject {
         self.note = item.title
         self.date = item.date
         self.categories.insert(item.category)
+        self.category = item.category
         item.tags.forEach { self.tags.insert($0) }
         self.wallets.insert(item.wallet)
     }

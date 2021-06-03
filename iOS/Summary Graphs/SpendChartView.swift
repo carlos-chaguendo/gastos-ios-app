@@ -11,7 +11,7 @@ import Combine
 struct SpendChartView: View {
 
     @ObservedObject private var datasource = Datasource()
-    @State var needRefreshPageCache = false
+
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -41,7 +41,7 @@ struct SpendChartView: View {
             .lineLimit(1)
             .padding(.top, -6)
 
-            PageView(continuePage: true, needsRefresh: $needRefreshPageCache, currentPage: $datasource.date) { _ in
+            PageView(continuePage: true, needsRefresh: $datasource.needRefreshPageCache, currentPage: $datasource.date) { _ in
                 Chart.Lines(datasource: [
                     // Chart.DataSet(points: self.datasource.points(of: Calendar.gregorian.date(byAdding: .month, value: -1, to: date)!), color: Color(UIColor.systemGroupedBackground)),
                     Chart.DataSet(points: datasource.points, color: Color(Colors.primary).opacity(0.8))
@@ -55,7 +55,7 @@ struct SpendChartView: View {
         .onChange(of: datasource.mode) { value in
             Logger.info("Modeo2", value)
             withAnimation {
-                self.needRefreshPageCache.toggle()
+                self.datasource.needRefreshPageCache.toggle()
             }
         }
         .onReceive(datasource.$date) { nex in
@@ -78,6 +78,7 @@ extension SpendChartView {
         @Published var points: [CGPoint] = []
         @Published var numbers: Int = 0
         @Published var total: Double = 0.0
+        @Published var needRefreshPageCache = false
         @Published var mode = "W" {
             didSet {
                 Logger.info("Cambio el modo a ", mode)
@@ -95,7 +96,11 @@ extension SpendChartView {
         var calendarComponent: Calendar.Component { mode == "M" ? .month: .weekOfMonth }
 
         init() {
-            reloadDatasource()
+            Promise {
+                self.reloadDatasource()
+            }.sink { _ in
+                self.needRefreshPageCache.toggle()
+            }.store(in: &cancellables)
         }
 
          func reloadDatasource() {
@@ -136,12 +141,8 @@ extension SpendChartView {
         }
 
         func getPoints(of date: Date) -> AnyPublisher<[CGPoint], Never> {
-            Deferred {
-                Future { promise in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        promise(.success(self.points(of: date)))
-                    }
-                }
+            Promise {
+               self.points(of: date)
             }.eraseToAnyPublisher()
         }
 

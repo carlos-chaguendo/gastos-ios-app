@@ -120,6 +120,7 @@ extension SpendByGroupChartView {
         @Published var total: Double = 0.0
         @Published var categories: [Group] = []
         @Published var cancellables = Set<AnyCancellable>()
+        @Published var isLoading = false
         
         let id =  Int.random(in: 0...100)
 
@@ -139,14 +140,14 @@ extension SpendByGroupChartView {
         }
 
         func getValuesGrouped(code: Int = 0) {
+            isLoading = true
             Promise {
                 Service.expenses(by: self.groupBy, in: self.calendarComponent, of: self.date)
             }
-            .receive(on: DispatchQueue.main)
             .sink { values in
 
                 Logger.info("Obteneiendo resultados[\(self.id)] \(self.mode) \(self.date)", self.groupBy)
-
+                self.isLoading = false
                 self.interval = self.getInterval(mode: self.mode, date: self.date)
                 self.categories = values
                 self.total = values.map { $0.value }.reduce(0, +)

@@ -33,9 +33,9 @@ open class Entity: Object, Identifiable {
         "id"
     }
     
-    deinit {
-        Logger.info("Eliminando", type(of: self))
-    }
+//    deinit {
+//        Logger.info("Eliminando", type(of: self))
+//    }
 
 }
 

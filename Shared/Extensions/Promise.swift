@@ -10,17 +10,20 @@ import Combine
 
 func Promise<Output>( block: @escaping () -> Output) -> AnyPublisher<Output, Never> {
 
-    #if DEBUG
-    return Just(block()).eraseToAnyPublisher()
-    #else
-    return Deferred {
+//    #if !DEBUG
+//    return Just(block()).eraseToAnyPublisher()
+//    #else
+    return
+        Deferred {
         Future<Output, Never> { seal in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1 ) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2 ) {
                 seal(Result.success(block()))
             }
         }
-    }.eraseToAnyPublisher()
-    #endif
+    }
+    .receive(on: DispatchQueue.main)
+    .eraseToAnyPublisher()
+//    #endif
 
 }
 

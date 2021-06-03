@@ -13,12 +13,11 @@ struct CircularChart: View {
         let color: Color
         let value: CGFloat
         var previous: CGFloat = 0.0
-        
     }
     
     var percents: [Entry] = []
     
-    @Environment(\.isPreview) var isPreview
+    @Environment(\.isForXcocePreview) var isPreview
     @State var setPercents: Bool = false
     @State var setPercents2: Bool = false
     
@@ -26,6 +25,16 @@ struct CircularChart: View {
     var lineWidth: CGFloat = 8
     var lineSpacing: CGFloat = 0.04
     var lineBackGround: Color = Color.secondary
+    
+    init(animatable: Bool = true, lineWidth: CGFloat = 8, lineSpacing: CGFloat = 0.04, lineBackGround: Color = .secondary, @ArrayBuilder<Entry> make: () -> [Entry]) {
+        self.init(
+            animatable: animatable,
+            lineWidth: lineWidth,
+            lineSpacing: lineSpacing,
+            lineBackGround: lineBackGround,
+            make()
+        )
+    }
     
     init(animatable: Bool = true, lineWidth: CGFloat = 8, lineSpacing: CGFloat = 0.04, lineBackGround: Color = .secondary, _ percents: [Entry]) {
         self.setPercents = animatable

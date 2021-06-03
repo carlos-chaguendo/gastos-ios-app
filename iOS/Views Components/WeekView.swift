@@ -20,7 +20,7 @@ public struct WeekView: View {
     @State private var isAnimatingPageChanged = false
     @State private var offset: CGFloat = 0
     @State private var dayOffset: CGFloat = 0
-
+    @Namespace private var namespace
     @ObservedObject private var viewModel: WeekendViewModel
 
     /// La altura de los dias de la semana, segun el tipo de fuente `caption`

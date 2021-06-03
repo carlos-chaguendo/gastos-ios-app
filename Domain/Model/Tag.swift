@@ -9,6 +9,7 @@ import Foundation
 
 class Tag: Entity, EntityWithName {
 
+    @objc public dynamic var isHidden = false
     @objc public dynamic var name: String = ""
     @objc public dynamic var color = "0xCE0755"
 

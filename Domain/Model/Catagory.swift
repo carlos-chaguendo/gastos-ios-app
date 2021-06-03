@@ -9,6 +9,7 @@ import Foundation
 
 protocol EntityWithName: AnyObject {
     var name: String { get set }
+    var isHidden: Bool { get set }
 }
 
 protocol ExpensePropertyWithValue: EntityWithName {
@@ -23,6 +24,8 @@ class Catagory: Entity, EntityWithName, ExpensePropertyWithValue {
     
     /// -1 para egresos. +1 para ingresos
     @objc public dynamic var sign: Int = -1
+    
+    @objc public dynamic var isHidden = false
     
     public var value: Double = 0.0
     public var count: Int = 0

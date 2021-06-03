@@ -11,12 +11,10 @@ import Combine
 struct TransactionsView: View {
 
     @State private var total: Double = 0.0
-
     @State private var datasource: [ExpenseItem] = []
-
     @ObservedObject private var weekendViewModel: WeekendViewModel
-
     @Environment(\.colorScheme) var colorScheme
+    @AppStorage("calendar-mode") private var calendarMode:  WeekView.Mode  = .weekend
 
     private let backcolor = Colors.background
     private let systemBackground = Colors.background
@@ -30,7 +28,9 @@ struct TransactionsView: View {
         /// Siempres e debe caragr el calendario en el dia de hoy
         let date = Date()
         UserDefaults.standard.setValue(date, forKey: "currentDate")
-        weekendViewModel = WeekendViewModel(date: date, mode: .weekend)
+        
+       let preferredMode = WeekView.Mode(rawValue: UserDefaults.standard.integer(forKey: "calendar-mode")) ?? .weekend
+        weekendViewModel = WeekendViewModel(date: date, mode: preferredMode)
     }
 
     private var currentMonthView: some View {
@@ -38,7 +38,6 @@ struct TransactionsView: View {
             Text(DateFormatter.longMonth.string(from: weekendViewModel.selected).capitalized)
                 .font(.body)
                 .fontWeight(.semibold)
-
             Text(DateFormatter.year.string(from: weekendViewModel.selected))
                 .font(.body)
                 .fontWeight(.semibold)
@@ -47,17 +46,19 @@ struct TransactionsView: View {
 
     private var showCalendarButton: some View {
         HStack {
-
             Button("Today") {
                 self.weekendViewModel.selected = Calendar.current.dateInterval(of: .day, for: Date())!.start
                 self.loadDataSource()
             }
-
             Button {
                 withAnimation {
                     switch weekendViewModel.mode {
-                    case.weekend: self.weekendViewModel.mode = .monthly
-                    case .monthly: self.weekendViewModel.mode = .weekend
+                    case.weekend:
+                        self.weekendViewModel.mode = .monthly
+                        self.calendarMode = .monthly
+                    case .monthly:
+                        self.weekendViewModel.mode = .weekend
+                        self.calendarMode = .weekend
                     }
                 }
             } label: {

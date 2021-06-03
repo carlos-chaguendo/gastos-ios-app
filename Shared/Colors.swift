@@ -70,7 +70,7 @@ enum Colors {
 
     struct Tags {
         public static let background: ColorSpace = .color(light: .systemGroupedBackground, dark: Colors.background)
-
+        public static let background3: ColorSpace = .color(light: .systemGroupedBackground, dark: Card.background)
     }
 
     struct Card {
