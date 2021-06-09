@@ -49,6 +49,7 @@ struct ExpenseItemFormView: View {
                         .accentColor(Colors.Form.value)
                         .foregroundColor(Colors.Form.value)
                         .autocapitalization(.words)
+                        .disableAutocorrection(true)
                     
                     /// Date picker
                     HStack {
@@ -144,7 +145,14 @@ struct ExpenseItemFormView: View {
                     self.saveAction()
                 }.foregroundColor(Colors.primary)
                 
-            ).onAppear {
+            ).onReceive(Publishers.textFieldBeginEditing) { field in
+                Logger.info("Field \( field.tag)", field)
+            
+                field.returnKeyType = .continue
+                field.inputAccessoryView = ToolbarInputAccessory(frame: CGRect(origin: .zero, size: CGSize(width: 20, height: 44)))
+                    .set(\.backgroundColor, Colors.background)
+                    .set(\.tintColor, Colors.primary)
+            }.onAppear {
                 self.categories = Service.getAll(Catagory.self)
                     .sorted { $0.name < $1.name }
                     .filter { !$0.isHidden }
@@ -208,7 +216,7 @@ struct ExpenseItemFormView: View {
                         .foregroundColor(Colors.Form.value)
                         .background(
                             RoundedRectangle(cornerRadius: 4)
-                                .fill(Color(.secondarySystemBackground))
+                                .fill(Color(Colors.Tags.background3))
                         )
                 }
             }.padding(.vertical)

@@ -14,7 +14,6 @@ struct BudgetFormView: View {
 
     init(for category: Catagory? = nil) {
         viewModel = .init(for: category)
-        
     }
     
     var body: some View {

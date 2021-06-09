@@ -16,6 +16,7 @@ import BackgroundTasks
 // https://www.hackingwithswift.com/quick-start/swiftui
 // https://github.com/SwiftUIX/SwiftUIX/
 // https://medium.com/@artrmz/creating-your-own-custom-file-header-in-xcode-5009e32bf195
+// https://gist.github.com/jegnux/500b0975375ebd59c7df039c575d51f2  try cath
 @main
 struct GastosApp: App {
     

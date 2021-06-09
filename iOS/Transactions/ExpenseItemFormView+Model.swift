@@ -17,7 +17,6 @@ public class ExpenseItemFormViewModel: ObservableObject {
 
     @Published var wallets = Set<Wallet>()
     @Published var tags = Set<Tag>()
-    @Published var categories = Set<Catagory>()
     @Published var category: Catagory?
 
 
@@ -37,7 +36,6 @@ public class ExpenseItemFormViewModel: ObservableObject {
         self.amount = item.value
         self.note = item.title
         self.date = item.date
-        self.categories.insert(item.category)
         self.category = item.category
         item.tags.forEach { self.tags.insert($0) }
         self.wallets.insert(item.wallet)
@@ -47,7 +45,7 @@ public class ExpenseItemFormViewModel: ObservableObject {
         let selection = item ?? ExpenseItem()
         selection.title = note
         selection.value = amount ?? 00
-        selection.category = categories.first
+        selection.category = category
         selection.tags.append(objectsIn: tags)
         selection.wallet = wallets.first
         selection.date = date

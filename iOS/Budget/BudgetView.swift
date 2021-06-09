@@ -32,8 +32,8 @@ struct BudgetView: View {
             
             VStack(alignment: .leading) {
                 
-//                ( + Text("Budget").font(.system(size: 14)))
-//                    .foregroundColor(Colors.title)
+                //                ( + Text("Budget").font(.system(size: 14)))
+                //                    .foregroundColor(Colors.title)
                 
                 (Text("\(currency(from: datasource.expense)) ") + Text("of") + Text(" \(currency(from: datasource.budget))"))
                     .foregroundColor(Colors.subtitle)
@@ -126,7 +126,7 @@ struct BudgetView: View {
                                 Image(systemName: "text.alignleft")
                                     .imageScale(.large)
                             }
-                
+                            
                         }
                         PresentLinkView(destination: BudgetFormView()) {
                             Image(systemName: "plus")
@@ -138,6 +138,9 @@ struct BudgetView: View {
             
         }
         .onReceive(Publishers.MergeMany(Publishers.didEditCategories, Publishers.didEditBudget)) { _ in
+            datasource.load(refresh: true)
+        }
+        .onReceive(Publishers.MergeMany(Publishers.didEditTransaction, Publishers.didAddNewTransaction)) { _ in
             datasource.load(refresh: true)
         }
         .onAppear {

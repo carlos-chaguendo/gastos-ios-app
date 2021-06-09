@@ -20,6 +20,7 @@ struct CategorySelectionView: View {
                 values: values,
                 selected: $selection,
                 destination: CategoryFormView(),
+                header: EmptyView(),
                 content: {
                     Text($0.name)
                         .foregroundColor(Colors.Form.value)
@@ -42,25 +43,60 @@ struct TagSelectionView: View {
     @State var values: [Tag] = []
     @Binding var selection: Set<Tag>
     
+    @State var name: String = ""
+    
+    @Environment(\.presentationMode) private var presentation
+    
+    @State private var selectedIdentifiers = Set<Tag.ID>()
+    
     var body: some View {
         NavigationView {
             SelectorList(
                 title: "Tags",
                 values: values,
                 selected: $selection,
-                destination: Text("new Tag"),
+                destination: EmptyView(),
+                header: header,
+                addNew: false,
                 content: {
-                    Text($0.name)
-                        .foregroundColor(Colors.Form.value)
+                    AnyView(
+                        Text($0.name)
+                            .foregroundColor(Colors.Form.value)
+                    )
                 }
             )
             .set(\.allowMultipleSelection, true)
-            .onAppear {
-                values = Service.getAll(Tag.self)
-                    .sorted { $0.name < $1.name }
-                    .filter { !$0.isHidden }
-            }
+            
         }
+        .background(Colors.background)
+        .onAppear {
+            values = Service.getAll(Tag.self)
+                .sorted { $0.name < $1.name }
+                .filter { !$0.isHidden }
+            
+        }
+    }
+    
+    @ViewBuilder var header: some View {
+        TextField("New tag", text: $name)
+        { isEditing in
+            print("Editing")
+        } onCommit: {
+            print("onCommit")
+            let new = Service.addTag(Tag {
+                $0.name = self.name
+            })
+            self.name = ""
+            self.values.append(new)
+        }
+        .font(.title)
+        .frame(height: 50)
+        .accentColor(Colors.Form.value)
+        .foregroundColor(Colors.Form.value)
+        .autocapitalization(.words)
+        .padding(.top)
+        .background(Colors.background)
+        .listRowBackground(Color(Colors.background))
     }
     
 }
@@ -77,6 +113,7 @@ struct WalletsSelectionView: View {
                 values: values,
                 selected: $selection,
                 destination: PaymentFormView(),
+                header: EmptyView(),
                 content: {
                     Text($0.name)
                         .foregroundColor(Colors.Form.value)

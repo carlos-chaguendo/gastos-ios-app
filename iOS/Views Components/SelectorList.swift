@@ -8,32 +8,33 @@
 import SwiftUI
 import Combine
 
-struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: View>: View {
+struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: View, Header: View>: View {
 
     var title: LocalizedStringKey
     var values: [Value]
     var selected: Binding<Set<Value>>
     var destination: Destination?
+    var header: Header?
+    var addNew = true
     var content: (Value) -> Content
-    
-    @Environment(\.presentationMode) private var presentation
-    @State private var addNew = false
+
+    @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
+ 
     
     /// Se usa selected identifiers para no sincronizar las vistas con el bindig
     /// solo se sincronizan cuando finaliza el usuario con los botones de done
-    @State private var selectedIdentifiers = Set<Value.ID>()
+    @State var selectedIdentifiers = Set<Value.ID>()
 
     var allowMultipleSelection = false
     
-  
-
     var body: some View {
-
         List(selection: selected) {
+            header
             Section(header: EmptyView(), footer: footerView) {
                 ForEach(values, id: \.id) { item in
                     if allowMultipleSelection {
                         Button {
+                        
                             let inseted = self.selectedIdentifiers.insert(item.id).inserted
                             if inseted == false {
                                 self.selectedIdentifiers.remove(item.id)
@@ -98,11 +99,14 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
             selected.wrappedValue.forEach {
                 selectedIdentifiers.insert($0.id)
             }
+            
+          
+            
         }.foregroundColor(Colors.primary)
     }
 
     @ViewBuilder var footerView: some View {
-        if let addNew = destination {
+        if addNew, let addNew = destination {
             VStack {
                 PresentLinkView(destination: addNew) {
                     Text("Add New")

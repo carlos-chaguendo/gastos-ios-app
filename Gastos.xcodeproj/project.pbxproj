@@ -104,6 +104,7 @@
 		2F98CE7626156B620004F1B2 /* SelectorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F98CE7526156B620004F1B2 /* SelectorList.swift */; };
 		2F98CE7C261589DE0004F1B2 /* CategorySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F98CE7B261589DE0004F1B2 /* CategorySelectionView.swift */; };
 		2F98CE81261640270004F1B2 /* PresentLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F98CE80261640270004F1B2 /* PresentLinkView.swift */; };
+		2FA37F6B26712B2700BE33DC /* ToolbarInputAccessory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA37F6A26712B2700BE33DC /* ToolbarInputAccessory.swift */; };
 		2FA938BA2633158A006F1905 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA938B92633158A006F1905 /* SettingsView.swift */; };
 		2FA938BE26332103006F1905 /* iCloudBackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA938BD26332103006F1905 /* iCloudBackupView.swift */; };
 		2FAA439B265ECC4A0076F377 /* ExportCSVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA439A265ECC4A0076F377 /* ExportCSVView.swift */; };
@@ -247,6 +248,7 @@
 		2F98CE7526156B620004F1B2 /* SelectorList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectorList.swift; sourceTree = "<group>"; };
 		2F98CE7B261589DE0004F1B2 /* CategorySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectionView.swift; sourceTree = "<group>"; };
 		2F98CE80261640270004F1B2 /* PresentLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentLinkView.swift; sourceTree = "<group>"; };
+		2FA37F6A26712B2700BE33DC /* ToolbarInputAccessory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarInputAccessory.swift; sourceTree = "<group>"; };
 		2FA938B92633158A006F1905 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2FA938BD26332103006F1905 /* iCloudBackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudBackupView.swift; sourceTree = "<group>"; };
 		2FAA439A265ECC4A0076F377 /* ExportCSVView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportCSVView.swift; sourceTree = "<group>"; };
@@ -359,12 +361,12 @@
 		2F6B071925F976DA00A1D516 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				2FD288AF2669620100928595 /* Payment */,
 				2FB7D018264AF5E10026C189 /* App */,
 				2FAA439C265ED2DD0076F377 /* Budget */,
 				2F98CE7A261589C50004F1B2 /* Categories */,
 				2FE51A2425FBE472004518A0 /* Extensions */,
 				2F8BADF22633B91600567E4B /* Notifications */,
+				2FD288AF2669620100928595 /* Payment */,
 				2FA938B026331562006F1905 /* Settings */,
 				2F816D63261D26BF009FB091 /* Summary Graphs */,
 				2F91537F2601923D0092033E /* Transactions */,
@@ -390,6 +392,7 @@
 				2F5D669326390BDE00819EC9 /* DocumentInteractionController.swift */,
 				2F1E1A0F263B79FB00BB6398 /* SegmentedView.swift */,
 				2FAA43A1265F01580076F377 /* ContentLoader.swift */,
+				2FA37F6A26712B2700BE33DC /* ToolbarInputAccessory.swift */,
 			);
 			path = "Views Components";
 			sourceTree = "<group>";
@@ -820,6 +823,7 @@
 				2FAA43A0265EE1C30076F377 /* BudgetFormView.swift in Sources */,
 				2F9500E42604061500C9ABFC /* View++.swift in Sources */,
 				2F6B073525F9791C00A1D516 /* FlexibleView.swift in Sources */,
+				2FA37F6B26712B2700BE33DC /* ToolbarInputAccessory.swift in Sources */,
 				2F89BA39261F8EC80009EA03 /* SpendChartView.swift in Sources */,
 				2FE51A3225FBE4C6004518A0 /* NumberFormatter.swift in Sources */,
 				2F91537C26018FED0092033E /* TabBar.swift in Sources */,

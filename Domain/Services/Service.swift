@@ -141,11 +141,13 @@ public class Service {
         return sender
     }
     
-    static func addTag(_ item: Tag) {
+    static func addTag(_ item: Tag) -> Tag {
         realm.rwrite {
             item.id = UUID().description
             realm.add(item)
         }
+        
+        return item
     }
     
     @discardableResult
