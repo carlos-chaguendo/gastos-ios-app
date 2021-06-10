@@ -21,6 +21,9 @@ struct PaymentsView: View {
 
     var body: some View {
         ScrollView {
+            Text("You can archive methods of payment, so that no new transactions can be added to them.")
+                .font(.caption)
+                .foregroundColor(Colors.subtitle)
             LazyVStack {
                 ForEach(viewModel.values, id: \.self) { wallet in
                     PresentLinkView(destination: PaymentFormView(for: wallet)) {
@@ -46,7 +49,6 @@ struct PaymentsView: View {
             }
             .frame(minWidth: 0, maxWidth: .infinity)
             .padding()
-            
         }
         .background(Colors.background)
         .navigationTitle("Methods of payment")

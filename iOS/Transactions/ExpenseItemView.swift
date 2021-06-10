@@ -40,7 +40,7 @@ struct ExpenseItemView: View {
                         .foregroundColor(Colors.Form.value)
                         .background(
                             RoundedRectangle(cornerRadius: 2)
-                                .fill(Color(.secondarySystemBackground))
+                                .fill(Color(Colors.Tags.background3))
                         ).padding(.vertical, 3)
                 }
 

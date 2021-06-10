@@ -36,6 +36,7 @@ struct DailyReminderView: View {
 
             VStack(spacing: 20) {
                 TextField("Introducir las transacciones del dia de hoy", text: $message)
+                    .foregroundColor(Colors.title)
                 Color.gray.frame(height: 1).opacity(0.2)
             }.frame(height: 60, alignment: .center)
 

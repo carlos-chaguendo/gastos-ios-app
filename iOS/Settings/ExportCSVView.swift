@@ -11,6 +11,7 @@ struct ExportCSVView: View {
     
     @State private var start = Date()
     @State private var end = Date()
+    @ObservedObject private var activity = ActivityView.Model()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -19,17 +20,21 @@ struct ExportCSVView: View {
                 content: DatePicker("", selection: $start, displayedComponents: .date)
                     .accentColor(Colors.primary)
             )
-            
             Row(
                 title: "End date",
                 content: DatePicker("", selection: $end, displayedComponents: .date)
                     .accentColor(Colors.primary)
             )
-            
             Button("Export CSV") {
+                let url = Service.exportAsCSV(between: start, and: end)
+                self.activity.url = url
+                self.activity.isPresented = true
                 
+            }.foregroundColor(Colors.primary)
+            
+            ModalView(isPresented: $activity.isPresented) {
+                ActivityView(url: activity.url!)
             }
-            .buttonStyle(ButtonStyleFormLarge())
             
             Spacer()
         }

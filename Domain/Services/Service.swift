@@ -161,7 +161,7 @@ public class Service {
             }
             realm.add(local)
         }
-
+        
         let sender = local.detached()
         NotificationCenter.default.post(name: .didEditWallet, object: sender)
         return sender
@@ -425,6 +425,51 @@ public class Service {
         }
         realm.rwrite {
             local.isHidden = !local.isHidden
+        }
+    }
+    
+    static func exportAsCSV(between start: Date, and end: Date) -> URL {
+        let df = DateFormatter()
+            .set(\.dateFormat, "dd/MM/yyyy HH:mm:ss")
+        
+        let items = realm
+            .objects(ExpenseItem.self)
+            .filter("date BETWEEN %@ ", [start, end])
+            .sorted(byKeyPath: "date", ascending: false)
+        
+        
+        let keys = [
+            "Date",
+            "Category",
+            "Wallet",
+            "Transaction type",
+            "Value",
+            "Description"
+        ]
+        .map { "\"\(NSLocalizedString($0, comment: $0))\"" }
+        .joined(separator: ",")
+        
+        var csvString = "\(keys)\n"
+        
+        for transaction in items {
+            csvString.append("\"\(df.string(from: transaction.date))\",")
+            csvString.append("\"\(transaction.category.name)\",")
+            csvString.append("\"\(transaction.wallet.name)\",")
+            csvString.append("\"\(transaction.category.sign <= 0 ? "Expense" : "Revenues")\",")
+            csvString.append("\"\(NumberFormatter.currency.string(from: NSNumber(value: transaction.value))!)\",")
+            csvString.append("\"\(transaction.title.replacingOccurrences(of: ",", with: " "))\"")
+            csvString.append("\n")
+        }
+        
+        
+        do {
+            let fileURL =  URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+                .appendingPathComponent("Gastos.csv")
+            try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
+            return fileURL
+        } catch {
+            print("error creating file")
+            preconditionFailure()
         }
     }
     

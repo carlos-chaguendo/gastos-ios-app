@@ -28,7 +28,7 @@ public class ToolbarInputAccessory: UIToolbar {
     
      /// Finaliza el estado de edicion de la vista, generando el cierre del teclado
     @objc final func toolbarActionDone() {
-        UIApplication.shared.keyWindow?.endEditing(true)
+        UIApplication.shared.windows.first { $0.isKeyWindow }?.endEditing(true)
     }
 }
 #endif

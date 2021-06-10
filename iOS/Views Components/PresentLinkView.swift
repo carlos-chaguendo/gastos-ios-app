@@ -73,3 +73,34 @@ struct FullScreenCover<Label: View, Destination: View>: View {
     }
 
 }
+
+
+struct ModalView<Label: View>: View {
+    
+    enum Mode {
+        case sheet
+        case fullScreen
+    }
+    
+    var mode: Mode
+    var isPresented: Binding<Bool>
+    var label: () -> Label
+    
+    init(mode: Mode = .sheet, isPresented: Binding<Bool>,  @ViewBuilder label: @escaping () -> Label) {
+        self.label = label
+        self.isPresented = isPresented
+        self.mode = mode
+    }
+   
+    
+    var body: some View {
+       EmptyView()
+        .if(mode == .sheet) {
+            $0.sheet(isPresented: isPresented) {
+                label()
+            }
+        }
+    }
+
+}
+

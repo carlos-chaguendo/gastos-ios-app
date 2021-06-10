@@ -15,6 +15,9 @@ struct CategoriesView: View {
     var body: some View {
         ScrollView {
             LazyVStack {
+                Text("You can archive categories, so that no new transactions can be added to them.")
+                    .font(.caption)
+                    .foregroundColor(Colors.subtitle)
                 ForEach(viewModel.values, id: \.self) { category in
                     PresentLinkView(destination: CategoryFormView(for: category)) {
                         HStack {
@@ -40,7 +43,6 @@ struct CategoriesView: View {
                         Button("Remove", action: self.remove(category))
                         Button(category.isHidden ? "Unarchive" : "Archive", action: self.toggleHidden(category))
                     }
-                    
                 }
             }
             .frame(minWidth: 0, maxWidth: .infinity)

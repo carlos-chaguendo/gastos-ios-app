@@ -207,9 +207,6 @@ class BackupService {
 
                 if let fileUploaded = fileItem.value(forAttribute: NSMetadataUbiquitousItemIsUploadedKey) as? Bool, fileUploaded == true, fileValues?.ubiquitousItemIsUploading == false {
                     print("backup upload complete")
-                    subject.send(100)
-                    subject.send(completion: .finished)
-
                     /// Crear el registro en la base de datos local
                     query.disableUpdates()
                     query.operationQueue?.addOperation {
@@ -218,6 +215,8 @@ class BackupService {
 
                     DispatchQueue.main.async {
                         Service.registreNewBackup()
+                        subject.send(100)
+                        subject.send(completion: .finished)
                     }
 
                 } else if let error = fileValues?.ubiquitousItemUploadingError {
@@ -264,9 +263,8 @@ extension Publishers {
 extension NSMetadataQuery {
 
     func resultsFor(fileName name: String) -> NSMetadataItem? {
-        results
-            .compactMap { $0 as? NSMetadataItem }
-            .first {   $0.value(forAttribute: NSMetadataItemFSNameKey) as? String == name }
+        results.compactMap { $0 as? NSMetadataItem }
+            .first { $0.value(forAttribute: NSMetadataItemFSNameKey) as? String == name }
     }
 
 }

@@ -204,6 +204,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
 }
 
+// MARK: - User Notification Center Delegate
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
