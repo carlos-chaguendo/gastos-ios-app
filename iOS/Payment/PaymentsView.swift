@@ -8,8 +8,6 @@
 import SwiftUI
 import Combine
 
-
-
 class ListViewModel<Element>: ObservableObject {
     @Published var values: [Element] = []
     @Published var showError = false

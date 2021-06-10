@@ -96,7 +96,6 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                                         .font(.caption2)
                                         .foregroundColor(Colors.subtitle)
                                 }
-              
 
                                 Spacer()
                                 
@@ -114,7 +113,7 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
                                     .foregroundColor(.quaternaryLabel)
                             }
                         }.padding(.vertical)
-                        //.matchedGeometryEffect(id: "category-\(category.id)", in: namespace)
+                        // .matchedGeometryEffect(id: "category-\(category.id)", in: namespace)
 
                     }
 
@@ -124,7 +123,6 @@ struct ExpenseReportByGroup<Group: Entity & ExpensePropertyWithValue>: View {
             }
             .padding(.vertical)
             .background(Colors.background)
-
 
         }.onAppear {
 

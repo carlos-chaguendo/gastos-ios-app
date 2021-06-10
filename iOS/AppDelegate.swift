@@ -31,7 +31,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         Logger.info("Your code here")
-  
         
         #if !os(macOS)
         
@@ -69,7 +68,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
         self.pprint("app start \(Date())")
         
-        
         CKContainer.default().fetchUserRecordID { (userRecordID, error) in
             if let userID = userRecordID {
                 print("We've got a user ID: \(userID.recordName)")
@@ -81,9 +79,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         CKContainer.default().discoverAllIdentities { identy, error in
             print("identy: \(identy)", error)
         }
-        
-        
-
         
 //        CKContainer.default().privateCloudDatabase.fetchAllSubscriptions { suscriptions, error in
 //            Logger.info("suscriptions ", suscriptions)
@@ -111,7 +106,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 //            }
 //
 //        }
-        
  
         Logger.info("RReturn true code here")
         return true
@@ -215,21 +209,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         Logger.info("didRegisterForRemoteNotificationsWithDeviceToken")
     }
     
-    
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
         if let notification = CKNotification(fromRemoteNotificationDictionary: userInfo) {
             
-            
             Logger.info("notification", notification)
-            
             
             let center = UNUserNotificationCenter.current()
 
             let request = UNNotificationRequest(
                 identifier: "daily-remember",
                 content: UNMutableNotificationContent()
-                    .set(\.sound,  UNNotificationSound.default )
+                    .set(\.sound, UNNotificationSound.default )
                     .set(\.categoryIdentifier, NotificationsCategory.dailyReminder.rawValue)
                     .set(\.body, "Nuevo record")
                     .set(\.userInfo, [
@@ -250,18 +241,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                     Logger.info("Recordtoria agregado")
                 }
             }
-      
             
             print("CloudKit database changed")
             completionHandler(.newData)
             return
         }
         
-        
         pprint("Remote notification")
         completionHandler(.noData)
     }
-    
     
     func userNotificationCenter( _ center: UNUserNotificationCenter,
                                  didReceive response: UNNotificationResponse,

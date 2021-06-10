@@ -21,7 +21,6 @@ extension Publishers {
             .eraseToAnyPublisher()
     }
     
-    
     static var textFieldBeginEditing: AnyPublisher<UITextField, Never> {
         NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)
             .map { $0.object as! UITextField }

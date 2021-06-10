@@ -19,7 +19,6 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
     var content: (Value) -> Content
 
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
- 
     
     /// Se usa selected identifiers para no sincronizar las vistas con el bindig
     /// solo se sincronizan cuando finaliza el usuario con los botones de done
@@ -99,8 +98,6 @@ struct SelectorList<Content: View, Value: Hashable & Identifiable, Destination: 
             selected.wrappedValue.forEach {
                 selectedIdentifiers.insert($0.id)
             }
-            
-          
             
         }.foregroundColor(Colors.primary)
     }

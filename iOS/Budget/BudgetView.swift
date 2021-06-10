@@ -29,7 +29,6 @@ struct BudgetView: View {
             .frame(width: 70, height: 70)
             .padding(.vertical, 3)
             
-            
             VStack(alignment: .leading) {
                 
                 //                ( + Text("Budget").font(.system(size: 14)))
@@ -86,7 +85,7 @@ struct BudgetView: View {
                                         .foregroundColor(Colors.subtitle)
                                         .matchedGeometryEffect(id: "subtitle\(category.id)", in: namespace)
                                 }
-                                LinearProgressView(tint: color, value:  min( category.value,  category.budget), total: category.budget)
+                                LinearProgressView(tint: color, value: min( category.value, category.budget), total: category.budget)
                                     .matchedGeometryEffect(id: "linear-\(category.id)", in: namespace)
                                 (Text("\(available) ") + Text("remaining"))
                                     .font(.system(size: 14))
@@ -99,7 +98,6 @@ struct BudgetView: View {
                             }
                         }
                     }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                    
                     
                 }.if(self.showAsList) {
                     $0.cardView()
@@ -160,7 +158,7 @@ extension BudgetView {
     
     class DataSource: ObservableObject, PropertyBuilder {
         @Published var loader = ContentLoader.Status.idle
-        @Published var budget:  Double = 1.0
+        @Published var budget: Double = 1.0
         @Published var expense: Double = 0.0
         @Published var values: [Catagory] = []
         

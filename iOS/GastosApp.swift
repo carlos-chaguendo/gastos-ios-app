@@ -92,7 +92,6 @@ struct GastosApp: App {
                         Logger.info("respuesta notifica error:", error)
                     }
                     
-                    
                     UIApplication.shared.registerForRemoteNotifications()
                     
                 }.onReceive(Publishers.didAddNewTransaction) { _ in

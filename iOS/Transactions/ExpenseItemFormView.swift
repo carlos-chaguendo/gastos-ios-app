@@ -19,7 +19,7 @@ struct ExpenseItemFormView: View {
     
     @ObservedObject private var viewModel: ExpenseItemFormViewModel
     
-    @State var categories = Array<Catagory>()
+    @State var categories = [Catagory]()
     
     init() {
         viewModel = .init()

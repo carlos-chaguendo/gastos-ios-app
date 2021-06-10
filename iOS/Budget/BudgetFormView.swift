@@ -110,10 +110,7 @@ struct BudgetFormView: View {
         self.presentation.wrappedValue.dismiss()
     }
     
-    
-    
 }
-
 
 extension BudgetFormView {
     class ViewModel: ObservableObject {

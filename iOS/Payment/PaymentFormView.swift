@@ -16,7 +16,7 @@ struct PaymentFormView: View {
         
         var entity: Wallet? {
             didSet {
-                guard let item = entity else  { return }
+                guard let item = entity else { return }
                 name = item.name
                 color = Color(UIColor.from(hex: UInt32(item.color)))
             }
@@ -109,15 +109,9 @@ struct PaymentFormView: View {
         if let defa: Wallet = Service.realm.findBy(id: defaultMethodOfPayment) {
             self.presentation.wrappedValue.dismiss()
             
-            
-            
             NotificationCenter.default.post(name: .didEditWallet, object: defa.detached)
             return
         }
-        
-        
-        
-        
         
         let selection = viewModel.getValues()
         let new = Service.addWallet(selection)
@@ -127,7 +121,6 @@ struct PaymentFormView: View {
         }
     }
 }
-
 
 struct PaymentFormView_Previews: PreviewProvider {
     static var previews: some View {

@@ -25,7 +25,7 @@ struct StackChart<Group: Entity & ExpensePropertyWithValue>: View {
                         
                         Color(UIColor.from(hex: UInt32(category.color)))
                             .frame(width: reader.size.width * CGFloat(percent))
-                            //.matchedGeometryEffect(id: "stack-\(category.id)", in: namespace)
+                            // .matchedGeometryEffect(id: "stack-\(category.id)", in: namespace)
                         
                     }
                 }
@@ -37,7 +37,6 @@ struct StackChart<Group: Entity & ExpensePropertyWithValue>: View {
     }
     
 }
-
 
 struct LinearProgressView<Value: BinaryFloatingPoint>: View {
     
@@ -63,7 +62,6 @@ struct LinearProgressView<Value: BinaryFloatingPoint>: View {
     }
 }
 
-
 struct StackChart_Previews: PreviewProvider {
     static var previews: some View {
         
@@ -73,7 +71,6 @@ struct StackChart_Previews: PreviewProvider {
                
             LinearProgressView(tint: .red, value: 350.0/2, total: 350.0)
             Text("El subtitulo tiene que ir")
-
             
             StackChart<Wallet>(categories: [
                 .init {

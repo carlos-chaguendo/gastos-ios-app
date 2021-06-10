@@ -42,7 +42,6 @@ extension Publishers {
             .eraseToAnyPublisher()
     }
     
-    
     static var didEditBudget: AnyPublisher<Catagory, Never> {
         NotificationCenter.default.publisher(for: Notification.Name.didEditBudget)
             .compactMap { $0.object as? Catagory }

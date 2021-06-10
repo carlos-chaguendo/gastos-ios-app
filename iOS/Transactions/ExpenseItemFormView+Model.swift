@@ -19,7 +19,6 @@ public class ExpenseItemFormViewModel: ObservableObject {
     @Published var tags = Set<Tag>()
     @Published var category: Catagory?
 
-
     init() {
         if let current = UserDefaults.standard.value(forKey: "currentDate") as? Date {
             date = current

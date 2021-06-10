@@ -29,7 +29,7 @@ struct BudgetChartView: View {
                 .font(.system(size: 14))
                 .foregroundColor(Colors.subtitle)
             
-            LinearProgressView(tint: color, value:  min(self.datasource.expense,  self.datasource.budget), total: self.datasource.budget)
+            LinearProgressView(tint: color, value: min(self.datasource.expense, self.datasource.budget), total: self.datasource.budget)
             
             (Text("\(available) ") + Text("remaining"))
                 .font(.system(size: 14))

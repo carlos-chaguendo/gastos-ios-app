@@ -45,7 +45,6 @@ struct ExportCSVView: View {
         }
     }
     
-    
     func Row<Content: View>(title: LocalizedStringKey, content: Content) -> some View {
         VStack(spacing: 20) {
             HStack {

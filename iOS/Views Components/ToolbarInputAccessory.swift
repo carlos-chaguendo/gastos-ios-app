@@ -5,7 +5,6 @@
 //  Created by Carlos Andres Chaguendo Sanchez on 9/06/21.
 //
 
-
 #if canImport(UIKit)
 import UIKit
 
@@ -23,7 +22,7 @@ public class ToolbarInputAccessory: UIToolbar {
     }
     
     private func prepare() {
-        setItems([.flexibleSpace(),  UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(toolbarActionDone))], animated: false)
+        setItems([.flexibleSpace(), UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(toolbarActionDone))], animated: false)
     }
     
      /// Finaliza el estado de edicion de la vista, generando el cierre del teclado

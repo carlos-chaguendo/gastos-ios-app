@@ -124,7 +124,6 @@ public class Service {
         return sender
     }
     
-    
     @discardableResult
     static func addBudget(_ item: Catagory) -> Catagory {
         guard  let local: Catagory = realm.findBy(id: item.id) else {
@@ -178,7 +177,7 @@ public class Service {
             .count
         
         if count > 0 {
-            throw NSError(domain: "service", code: 1, userInfo: [NSLocalizedFailureReasonErrorKey : ""])
+            throw NSError(domain: "service", code: 1, userInfo: [NSLocalizedFailureReasonErrorKey: ""])
         }
         
         let sender = local.detached()
@@ -192,7 +191,6 @@ public class Service {
         return sender
     }
     
-    
     @discardableResult
     static func removeCategory(_ item: Catagory) throws -> Catagory {
         guard let local = realm.object(ofType: Catagory.self, forPrimaryKey: item.id) else {
@@ -204,7 +202,7 @@ public class Service {
             .count
         
         if count > 0 {
-            throw NSError(domain: "service", code: 1, userInfo: [NSLocalizedFailureReasonErrorKey : ""])
+            throw NSError(domain: "service", code: 1, userInfo: [NSLocalizedFailureReasonErrorKey: ""])
         }
         
         let sender = local.detached()
@@ -418,7 +416,6 @@ public class Service {
         return local.detached()
     }
     
-    
     static func toggleHidden<Item: Entity & EntityWithName>( value: Item) {
         guard let local = realm.object(ofType: Item.self, forPrimaryKey: value.id) else {
             preconditionFailure()
@@ -436,7 +433,6 @@ public class Service {
             .objects(ExpenseItem.self)
             .filter("date BETWEEN %@ ", [start, end])
             .sorted(byKeyPath: "date", ascending: false)
-        
         
         let keys = [
             "Date",
@@ -460,7 +456,6 @@ public class Service {
             csvString.append("\"\(transaction.title.replacingOccurrences(of: ",", with: " "))\"")
             csvString.append("\n")
         }
-        
         
         do {
             let fileURL =  URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)

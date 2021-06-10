@@ -78,8 +78,7 @@ struct TagSelectionView: View {
     }
     
     @ViewBuilder var header: some View {
-        TextField("New tag", text: $name)
-        { isEditing in
+        TextField("New tag", text: $name) { _ in
             print("Editing")
         } onCommit: {
             print("onCommit")

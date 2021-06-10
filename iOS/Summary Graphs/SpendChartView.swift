@@ -12,7 +12,6 @@ struct SpendChartView: View {
 
     @ObservedObject private var datasource = Datasource()
 
-
     var body: some View {
         VStack(alignment: .leading) {
 

@@ -30,7 +30,6 @@ class Catagory: Entity, EntityWithName, ExpensePropertyWithValue {
     public var value: Double = 0.0
     public var count: Int = 0
     
-    
     @objc public dynamic var budget: Double = 0.0
 
     override class func ignoredProperties() -> [String] {

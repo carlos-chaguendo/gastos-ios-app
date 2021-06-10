@@ -109,7 +109,6 @@ class BackupService {
                 query.searchScopes = [NSMetadataQueryUbiquitousDataScope]
                 query.predicate = NSPredicate(format: "%K LIKE %@", NSMetadataItemFSNameKey, fileName)
                 
-                
                 #if DEBUG
                     let fileItemURL = container.appendingPathComponent(fileName)
                     do {
@@ -118,7 +117,6 @@ class BackupService {
                         seal(.failure(error as NSError))
                     }
                 #endif
-                
 
                 NotificationCenter.default.addObserver(forName: NSNotification.Name.NSMetadataQueryDidFinishGathering, object: query, queue: query.operationQueue) { (_) in
                     defer {

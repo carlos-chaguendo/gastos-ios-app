@@ -14,7 +14,7 @@ struct TransactionsView: View {
     @State private var datasource: [ExpenseItem] = []
     @ObservedObject private var weekendViewModel: WeekendViewModel
     @Environment(\.colorScheme) var colorScheme
-    @AppStorage("calendar-mode") private var calendarMode:  WeekView.Mode  = .weekend
+    @AppStorage("calendar-mode") private var calendarMode: WeekView.Mode  = .weekend
 
     private let backcolor = Colors.background
     private let systemBackground = Colors.background

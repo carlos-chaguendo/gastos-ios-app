@@ -13,7 +13,7 @@ struct BudgetWidget: Widget {
     struct Entry: TimelineEntry {
         var date: Date
         
-        var budget:  Double = 0.0
+        var budget: Double = 0.0
         var expense: Double = 0.0
         
         var displayAvailable = false
@@ -24,7 +24,6 @@ struct BudgetWidget: Widget {
         
         typealias Entry = BudgetWidget.Entry
         typealias Intent = BudgetConfigurationIntent
-        
         
         func placeholder(in context: Context) -> Entry {
             .init(date: Date(), budget: 4500, expense: 2500)
@@ -61,9 +60,8 @@ struct BudgetWidget: Widget {
                 let expenditure = ((entry.expense * 100)/entry.budget/100)
                 let percent = entry.displayAvailable ?  1.0 - expenditure : expenditure
 
-
                 ZStack {
-                    CircularChart(animatable: false, lineBackGround: color , [
+                    CircularChart(animatable: false, lineBackGround: color, [
                         .init(color: color, value: CGFloat(percent))
                     ]).rotationEffect(Angle.degrees(-90))
                     
@@ -78,7 +76,6 @@ struct BudgetWidget: Widget {
                 Text(budg)
                     .font(.headline)
                     .foregroundColor(Colors.title)
-                
                 
                 Text(expe)
                     .font(.headline)
@@ -95,7 +92,6 @@ struct BudgetWidget: Widget {
             
         }
     }
-    
     
     var body: some WidgetConfiguration {
         

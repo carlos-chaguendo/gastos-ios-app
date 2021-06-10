@@ -13,5 +13,4 @@ class BudgetConfigurationIntentHandler: NSObject, BudgetConfigurationIntentHandl
         completion(.success(with: (intent.displayAvalilable?.boolValue ?? false)))
     }
     
-    
 }

@@ -9,13 +9,10 @@ import UIKit
 
 struct ActivityView: UIViewControllerRepresentable {
     
-    
     class Model: ObservableObject {
         @Published var isPresented: Bool = false
         var url: URL?
     }
-    
-    
     
     let url: URL
     
