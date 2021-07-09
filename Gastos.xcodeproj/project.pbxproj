@@ -11,7 +11,7 @@
 		2F113BB726602F2000FA0281 /* WidgetKit.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2F113BB526602E5900FA0281 /* WidgetKit.intentdefinition */; };
 		2F113BD2266033F000FA0281 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F113BBE2660326000FA0281 /* Intents.framework */; };
 		2F113BD5266033F000FA0281 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F113BD4266033F000FA0281 /* IntentHandler.swift */; };
-		2F113BD9266033F000FA0281 /* SiriKit.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2F113BD1266033F000FA0281 /* SiriKit.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2F113BD9266033F000FA0281 /* SiriKit.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2F113BD1266033F000FA0281 /* SiriKit.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2F113BDD2660341700FA0281 /* WidgetKit.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2F113BB526602E5900FA0281 /* WidgetKit.intentdefinition */; };
 		2F113BDF2660345000FA0281 /* BudgetConfigurationIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F113BDE2660345000FA0281 /* BudgetConfigurationIntentHandler.swift */; };
 		2F1E1A10263B79FB00BB6398 /* SegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1E1A0F263B79FB00BB6398 /* SegmentedView.swift */; };
@@ -57,7 +57,7 @@
 		2F8BAE44263468D800567E4B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F8BAE052634636800567E4B /* SwiftUI.framework */; };
 		2F8BAE47263468D800567E4B /* WidgetKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8BAE46263468D800567E4B /* WidgetKit.swift */; };
 		2F8BAE49263468D800567E4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F8BAE48263468D800567E4B /* Assets.xcassets */; };
-		2F8BAE4D263468D800567E4B /* WidgetKitExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2F8BAE42263468D800567E4B /* WidgetKitExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2F8BAE4D263468D800567E4B /* WidgetKitExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2F8BAE42263468D800567E4B /* WidgetKitExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2F8BAE5826346A7E00567E4B /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F89BA1D261EB43A0009EA03 /* Stack.swift */; };
 		2F8BAE5C26346A9300567E4B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 2F8BAE5B26346A9300567E4B /* Realm */; };
 		2F8BAE5E26346A9500567E4B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2F8BAE5D26346A9500567E4B /* RealmSwift */; };
@@ -919,11 +919,13 @@
 /* Begin PBXTargetDependency section */
 		2F113BD8266033F000FA0281 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 2F113BD0266033F000FA0281 /* SiriKit */;
 			targetProxy = 2F113BD7266033F000FA0281 /* PBXContainerItemProxy */;
 		};
 		2F8BAE4C263468D800567E4B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 2F8BAE41263468D800567E4B /* WidgetKitExtension */;
 			targetProxy = 2F8BAE4B263468D800567E4B /* PBXContainerItemProxy */;
 		};
@@ -946,7 +948,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5NWXU54BBD;
+				DEVELOPMENT_TEAM = LG4SJ9RXM2;
 				INFOPLIST_FILE = SiriKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -958,6 +960,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -967,7 +970,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5NWXU54BBD;
+				DEVELOPMENT_TEAM = LG4SJ9RXM2;
 				INFOPLIST_FILE = SiriKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -979,6 +982,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1106,7 +1110,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Gastos.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5NWXU54BBD;
+				DEVELOPMENT_TEAM = LG4SJ9RXM2;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1117,7 +1121,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mayorgafirm.Gastos;
 				PRODUCT_NAME = Gastos;
 				SDKROOT = iphoneos;
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1131,7 +1135,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Gastos.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5NWXU54BBD;
+				DEVELOPMENT_TEAM = LG4SJ9RXM2;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1142,7 +1146,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mayorgafirm.Gastos;
 				PRODUCT_NAME = Gastos;
 				SDKROOT = iphoneos;
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1156,7 +1160,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = WidgetKitExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5NWXU54BBD;
+				DEVELOPMENT_TEAM = LG4SJ9RXM2;
 				INFOPLIST_FILE = WidgetKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1168,6 +1172,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1180,7 +1185,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = WidgetKitExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5NWXU54BBD;
+				DEVELOPMENT_TEAM = LG4SJ9RXM2;
 				INFOPLIST_FILE = WidgetKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1192,6 +1197,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

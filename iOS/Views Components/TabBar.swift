@@ -10,23 +10,18 @@ import SwiftUI
 struct TabBar: View {
 
     @Binding public var selectedIndex: Int
-
-    var pages: [TabBar.Page] = []
-
     @State private var removal: Edge = .leading
     @State private var insertion: Edge = .trailing
+    @State private var tabIndex = 0
 
+    private var pages: [TabBar.Page] = []
     public var background: Color = .white
     public var selectedColor: Color = .blue
     public var unselectedColor: Color = .gray
 
-    @State private var tabIndex = 0
-
     var body: some View {
         GeometryReader { geometry in
-
             ZStack {
-
                 TabView(selection: $tabIndex) {
                     ForEach(0..<pages.count) { i in
                         pages[i]
@@ -34,33 +29,25 @@ struct TabBar: View {
                             .tabItem { Text("\(i)")}
                     }
                 }
-
                 VStack {
                     Spacer()
-
                     ZStack {
                         HStack(spacing: 0) {
-
                             ForEach(0..<pages.count) { i in
                                 pages[i].tab
                                     .padding(.horizontal, 4)
                                     .frame(width: geometry.size.width/CGFloat(pages.count), height: 40)
                                     .onTapGesture {
-
                                         self.removal = i > selectedIndex ? .leading : .trailing
                                         self.insertion = i > selectedIndex ? .trailing : .leading
-
                                         self.selectedIndex = i
                                         self.tabIndex = i
-                                    }
-                                    .foregroundColor(selectedIndex == i ? selectedColor : unselectedColor)
+                                    }.foregroundColor(selectedIndex == i ? selectedColor : unselectedColor)
                             }
-
                         }
-                        .frame(width: geometry.size.width, height: 54 + UIApplication.shared.keyWindow!.safeAreaInsets.bottom)
+                        .frame(width: geometry.size.width, height: 54 + UIApplication.shared.windows.first { $0.isKeyWindow }!.safeAreaInsets.bottom)
                         .background(self.background.shadow(radius: 2))
                     }
-
                 }
             }.edgesIgnoringSafeArea(.bottom)
         }
