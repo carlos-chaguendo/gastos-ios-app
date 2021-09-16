@@ -30,10 +30,6 @@ struct BudgetView: View {
             .padding(.vertical, 3)
             
             VStack(alignment: .leading) {
-                
-                //                ( + Text("Budget").font(.system(size: 14)))
-                //                    .foregroundColor(Colors.title)
-                
                 (Text("\(currency(from: datasource.expense)) ") + Text("of") + Text(" \(currency(from: datasource.budget))"))
                     .foregroundColor(Colors.subtitle)
                 
@@ -41,6 +37,32 @@ struct BudgetView: View {
                     .foregroundColor(Colors.primary)
                 
             }.foregroundColor(Colors.title)
+        }
+    }
+    
+    var editButton: some View {
+        Button(datasource.isEditing ? "Cancel": "Edit") {
+            withAnimation(.spring()) {
+                self.datasource.isEditing.toggle()
+            }
+        }
+    }
+    
+    /// Realiza el cambio de vista del listado, como cards o como listado
+    var listModeButton: some View {
+        Button {
+            withAnimation(.spring()) {
+                self.showAsList.toggle()
+            }
+        } label: {
+            if showAsList {
+                Image(systemName: "rectangle.grid.1x2")
+                    .font(.system(size: 17, weight: .medium))
+                    .imageScale(.large)
+            } else {
+                Image(systemName: "text.alignleft")
+                    .imageScale(.large)
+            }
         }
     }
     
@@ -57,44 +79,14 @@ struct BudgetView: View {
                 LazyVStack(alignment: .leading, spacing: self.showAsList ? 10: 20) {
                     
                     ForEach(datasource.values, id: \.self) { category in
-                        let expense = NumberFormatter.currency.string(from: NSNumber(value: category.value)) ?? "n/a"
-                        let budget = NumberFormatter.currency.string(from: NSNumber(value: category.budget)) ?? "n/a"
-                        let available = NumberFormatter.currency.string(from: NSNumber(value: category.budget - category.value)) ?? "n/a"
-                        let color = Color(UIColor.from(hex: UInt32(category.color)))
-                        PresentLinkView(destination: BudgetFormView(for: category) ) {
-                            VStack(alignment: .leading, spacing: showAsList ? 2 : nil) {
-                                HStack {
-                                    Text(category.name)
-                                        .foregroundColor(Colors.title)
-                                        .matchedGeometryEffect(id: "title-\(category.id)", in: namespace)
-                                    Spacer()
-                                    if self.showAsList {
-                                        (Text("\(expense) ") + Text("of") + Text(" \(budget) "))
-                                            .font(.system(size: 14))
-                                            .foregroundColor(Colors.subtitle)
-                                            .matchedGeometryEffect(id: "subtitle\(category.id)", in: namespace)
-                                    }
-                                    Image(systemName: "chevron.right.circle.fill")
-                                        .imageScale(.large)
-                                        .foregroundColor(.quaternaryLabel)
-                                        .matchedGeometryEffect(id: "chevron-\(category.id)", in: namespace)
-                                }
-                                if !self.showAsList {
-                                    (Text("\(expense) ") + Text("of") + Text(" \(budget) ") + Text("this month."))
-                                        .font(.system(size: 14))
-                                        .foregroundColor(Colors.subtitle)
-                                        .matchedGeometryEffect(id: "subtitle\(category.id)", in: namespace)
-                                }
-                                LinearProgressView(tint: color, value: min( category.value, category.budget), total: category.budget)
-                                    .matchedGeometryEffect(id: "linear-\(category.id)", in: namespace)
-                                (Text("\(available) ") + Text("remaining"))
-                                    .font(.system(size: 14))
-                                    .foregroundColor(color)
-                                    .matchedGeometryEffect(id: "footer-\(category.id)", in: namespace)
+            
+                        if datasource.isEditing {
+                            PresentLinkView(destination: BudgetFormView(for: category) ) {
+                                self.budgetRowView(by: category)
                             }
-                            .if(!self.showAsList) {
-                                $0.cardView()
-                                    .padding(.horizontal)
+                        } else {
+                            NavigationLink(destination:  TransactionsByGroupView(by: \.category, for: category, in: .month, of: Date() ) ) {
+                                self.budgetRowView(by: category)
                             }
                         }
                     }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
@@ -108,29 +100,24 @@ struct BudgetView: View {
             .navigationBarTitle("Budget", displayMode: .large)
             .background(Colors.background)
             .navigationBarItems(
+                leading: HStack {
+                    if self.datasource.isEditing {
+                        editButton
+                    }
+                },
                 trailing:
                     HStack(spacing: 20) {
-                        Button {
-                            withAnimation(.spring()) {
-                                self.showAsList.toggle()
-                            }
-                        } label: {
-                            
-                            if showAsList {
-                                Image(systemName: "rectangle.grid.1x2")
-                                    .font(.system(size: 17, weight: .medium))
+                        if self.datasource.isEditing {
+                            PresentLinkView(destination: BudgetFormView()) {
+                                Image(systemName: "plus")
                                     .imageScale(.large)
-                            } else {
-                                Image(systemName: "text.alignleft")
-                                    .imageScale(.large)
+                                    .frame(width: 40, height: 40)
                             }
-                            
+                        } else {
+                            editButton
                         }
-                        PresentLinkView(destination: BudgetFormView()) {
-                            Image(systemName: "plus")
-                                .imageScale(.large)
-                                .frame(width: 40, height: 40)
-                        }
+                        
+                        listModeButton
                     }
             )
             
@@ -149,6 +136,49 @@ struct BudgetView: View {
         }
     }
     
+
+    private func budgetRowView(by category: Catagory) -> some View {
+        let expense = NumberFormatter.currency.string(from: NSNumber(value: category.value)) ?? "n/a"
+        let budget = NumberFormatter.currency.string(from: NSNumber(value: category.budget)) ?? "n/a"
+        let available = NumberFormatter.currency.string(from: NSNumber(value: category.budget - category.value)) ?? "n/a"
+        let color = Color(UIColor.from(hex: UInt32(category.color)))
+        
+        return VStack(alignment: .leading, spacing: showAsList ? 2 : nil) {
+            HStack {
+                Text(category.name)
+                    .foregroundColor(Colors.title)
+                    .matchedGeometryEffect(id: "title-\(category.id)", in: namespace)
+                Spacer()
+                if self.showAsList {
+                    (Text("\(expense) ") + Text("of") + Text(" \(budget) "))
+                        .font(.system(size: 14))
+                        .foregroundColor(Colors.subtitle)
+                        .matchedGeometryEffect(id: "subtitle\(category.id)", in: namespace)
+                }
+                Image(systemName: "chevron.right.circle.fill")
+                    .imageScale(.large)
+                    .foregroundColor(.quaternaryLabel)
+                    .matchedGeometryEffect(id: "chevron-\(category.id)", in: namespace)
+            }
+            if !self.showAsList {
+                (Text("\(expense) ") + Text("of") + Text(" \(budget) ") + Text("this month."))
+                    .font(.system(size: 14))
+                    .foregroundColor(Colors.subtitle)
+                    .matchedGeometryEffect(id: "subtitle\(category.id)", in: namespace)
+            }
+            LinearProgressView(tint: color, value: min( category.value, category.budget), total: category.budget)
+                .matchedGeometryEffect(id: "linear-\(category.id)", in: namespace)
+            (Text("\(available) ") + Text("remaining"))
+                .font(.system(size: 14))
+                .foregroundColor(color)
+                .matchedGeometryEffect(id: "footer-\(category.id)", in: namespace)
+        }
+        .if(!self.showAsList) {
+            $0.cardView()
+                .padding(.horizontal)
+        }
+    }
+    
     private func currency(from value: Double) -> String {
         NumberFormatter.currency.string(from: NSNumber(value: value)) ?? "n/a"
     }
@@ -161,6 +191,8 @@ extension BudgetView {
         @Published var budget: Double = 1.0
         @Published var expense: Double = 0.0
         @Published var values: [Catagory] = []
+        
+        @Published var isEditing = false
         
         public var cancellables = Set<AnyCancellable>()
         
