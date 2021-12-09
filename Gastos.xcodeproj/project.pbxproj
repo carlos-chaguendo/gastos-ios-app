@@ -111,7 +111,6 @@
 		2FAA439B265ECC4A0076F377 /* ExportCSVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA439A265ECC4A0076F377 /* ExportCSVView.swift */; };
 		2FAA439E265ED2F00076F377 /* BudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA439D265ED2F00076F377 /* BudgetView.swift */; };
 		2FAA43A0265EE1C30076F377 /* BudgetFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA439F265EE1C30076F377 /* BudgetFormView.swift */; };
-		2FAA43A2265F01580076F377 /* ContentLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA43A1265F01580076F377 /* ContentLoader.swift */; };
 		2FAA43A4265F1B000076F377 /* BudgetChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA43A3265F1B000076F377 /* BudgetChartView.swift */; };
 		2FAA43A7265F21570076F377 /* BudgetWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAA43A5265F1FE80076F377 /* BudgetWidget.swift */; };
 		2FB5935D25FC012B005A1B93 /* PropertyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */; };
@@ -141,6 +140,7 @@
 		2FFE12582638718A006F696C /* ExpensStackChartWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE125026386D0C006F696C /* ExpensStackChartWidget.swift */; };
 		2FFE125D263873EC006F696C /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A2525FBE485004518A0 /* DateFormatter.swift */; };
 		2FFE12692638AE67006F696C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FFE12672638AE67006F696C /* Localizable.strings */; };
+		BA5ACC1927625E5300B5C3EF /* ContentLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5ACC1827625E5300B5C3EF /* ContentLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -256,7 +256,6 @@
 		2FAA439A265ECC4A0076F377 /* ExportCSVView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportCSVView.swift; sourceTree = "<group>"; };
 		2FAA439D265ED2F00076F377 /* BudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetView.swift; sourceTree = "<group>"; };
 		2FAA439F265EE1C30076F377 /* BudgetFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetFormView.swift; sourceTree = "<group>"; };
-		2FAA43A1265F01580076F377 /* ContentLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentLoader.swift; path = ../../../../ContentLoader.swift; sourceTree = "<group>"; };
 		2FAA43A3265F1B000076F377 /* BudgetChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetChartView.swift; sourceTree = "<group>"; };
 		2FAA43A5265F1FE80076F377 /* BudgetWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWidget.swift; sourceTree = "<group>"; };
 		2FB5935C25FC012B005A1B93 /* PropertyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyBuilder.swift; sourceTree = "<group>"; };
@@ -279,6 +278,7 @@
 		2FFE125026386D0C006F696C /* ExpensStackChartWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensStackChartWidget.swift; sourceTree = "<group>"; };
 		2FFE12682638AE67006F696C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2FFE126C2638AE6F006F696C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BA5ACC1827625E5300B5C3EF /* ContentLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -380,6 +380,7 @@
 		2F6B073325F9790A00A1D516 /* Views Components */ = {
 			isa = PBXGroup;
 			children = (
+				BA5ACC1827625E5300B5C3EF /* ContentLoader.swift */,
 				2F6B076025FA610800A1D516 /* View Modifiers */,
 				2FB5936325FC1231005A1B93 /* TabBar.swift */,
 				2F9500DF2603E38600C9ABFC /* WeekView.swift */,
@@ -393,7 +394,6 @@
 				2F8BADEC2633961400567E4B /* ButtonStyleFormLarge.swift */,
 				2F5D669326390BDE00819EC9 /* DocumentInteractionController.swift */,
 				2F1E1A0F263B79FB00BB6398 /* SegmentedView.swift */,
-				2FAA43A1265F01580076F377 /* ContentLoader.swift */,
 				2FA37F6A26712B2700BE33DC /* ToolbarInputAccessory.swift */,
 				2FA37F6C26714BDA00BE33DC /* ActivityViewController.swift */,
 			);
@@ -801,8 +801,8 @@
 				2F98CE71261569330004F1B2 /* Wallet.swift in Sources */,
 				2FE51A2625FBE485004518A0 /* DateFormatter.swift in Sources */,
 				2F54798F2628DBB000730F13 /* Promise.swift in Sources */,
-				2FAA43A2265F01580076F377 /* ContentLoader.swift in Sources */,
 				2F89BA30261F8DB30009EA03 /* MaximunDailyExpendingGraphView.swift in Sources */,
+				BA5ACC1927625E5300B5C3EF /* ContentLoader.swift in Sources */,
 				2FC170BC2660445000A86837 /* EnviromentValues.swift in Sources */,
 				2F8BADED2633961400567E4B /* ButtonStyleFormLarge.swift in Sources */,
 				2F8BADFA2633BD8600567E4B /* DailyReminderView.swift in Sources */,
@@ -948,7 +948,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LG4SJ9RXM2;
+				DEVELOPMENT_TEAM = 5NWXU54BBD;
 				INFOPLIST_FILE = SiriKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -970,7 +970,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LG4SJ9RXM2;
+				DEVELOPMENT_TEAM = 5NWXU54BBD;
 				INFOPLIST_FILE = SiriKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1110,7 +1110,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Gastos.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LG4SJ9RXM2;
+				DEVELOPMENT_TEAM = 5NWXU54BBD;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1135,7 +1135,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Gastos.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LG4SJ9RXM2;
+				DEVELOPMENT_TEAM = 5NWXU54BBD;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1160,7 +1160,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = WidgetKitExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LG4SJ9RXM2;
+				DEVELOPMENT_TEAM = 5NWXU54BBD;
 				INFOPLIST_FILE = WidgetKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1185,7 +1185,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = WidgetKitExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LG4SJ9RXM2;
+				DEVELOPMENT_TEAM = 5NWXU54BBD;
 				INFOPLIST_FILE = WidgetKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
