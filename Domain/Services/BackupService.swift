@@ -241,7 +241,7 @@ class BackupService {
     }
 }
 
-extension Publishers {
+extension Combine.Publishers {
 
     static func icloudFileUploadUpdate(for query: NSMetadataQuery) -> AnyPublisher<[AnyHashable: Any], Never> {
         let center = NotificationCenter.default

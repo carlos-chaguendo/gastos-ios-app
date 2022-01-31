@@ -13,13 +13,13 @@ open class Entity: Object, Identifiable {
 
     @objc public dynamic var id: String = "0x0"
 
-    required public init(realm: RLMRealm, schema: RLMObjectSchema) {
-        super.init(realm: realm, schema: schema)
-    }
-
-    required public init(value: Any, schema: RLMSchema) {
-        super.init(value: value, schema: schema)
-    }
+//    required public init(realm: RLMRealm, schema: RLMObjectSchema) {
+//        super.init(realm: realm, schema: schema)
+//    }
+//
+//    required public init(value: Any, schema: RLMSchema) {
+//        super.init(value: value, schema: schema)
+//    }
 
     public required init() {
         super.init()

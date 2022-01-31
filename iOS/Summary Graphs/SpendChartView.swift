@@ -48,7 +48,7 @@ struct SpendChartView: View {
 
             } next: { Calendar.current.date(byAdding: datasource.calendarComponent, value: 1, to: $0)!
             } prev: { Calendar.current.date(byAdding: datasource.calendarComponent, value: -1, to: $0)!
-            }
+            }.frame(height:60)
 
         }.cardView()
         .onChange(of: datasource.mode) { value in

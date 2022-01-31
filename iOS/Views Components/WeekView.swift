@@ -114,7 +114,7 @@ public struct WeekView: View {
                 }
                 .coordinateSpace(name: "WeekendDayNumbers")
             }
-        }.frame(height: viewModel.rowsHeight + 14)
+        }.frame(height: viewModel.rowsHeight + 54)
     }
 
     /// Ejecuta la animacion de cambiar pagina

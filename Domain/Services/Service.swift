@@ -402,7 +402,7 @@ public class Service {
     
     /// Registra la ultima creacion de un a copia de seguridad
     public static func registreNewBackup() {
-        let local = realm.object(ofType: ApplicationData.self, forPrimaryKey: "-1") ?? ApplicationData()
+        let local = realm.object(ofType: ApplicationData.self, forPrimaryKey: "-1") ?? ApplicationData().set(\.id, "-1")
         realm.rwrite {
             local.lastBackup = Date()
             realm.add(local, update: .all)

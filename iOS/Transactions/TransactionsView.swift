@@ -62,8 +62,11 @@ struct TransactionsView: View {
                     }
                 }
             } label: {
-                Image(systemName: "list.bullet.below.rectangle").font(.title2)
-            }.frame(width: 38, height: 38)
+                Image(systemName: "list.bullet.below.rectangle")
+                    .font(.title2)
+                    .padding(.leading, -8)
+            }
+            .frame(width: 38, height: 38)
             .if(weekendViewModel.mode == .monthly) {
                 $0.background(Colors.primary)
                     .foregroundColor(.white)
