@@ -46,3 +46,24 @@ extension Publisher {
     }
 
 }
+
+
+extension Future {
+    /**
+      Contructor en futuros pendientes que no se resolveran inmediatamanete
+     
+        Una costruccion mas rapida
+     
+        ```
+        let (publisher, resolver) =  Future<String, never>.pending()
+        return publisher
+        ```
+    */
+    class func pending() -> (Future, Future.Promise) {
+        var promise: Future.Promise!
+        let publisher = Future { promise = $0 }
+        return (publisher, promise)
+    }
+    
+}
+

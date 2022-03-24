@@ -140,7 +140,10 @@
 		2FFE12582638718A006F696C /* ExpensStackChartWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFE125026386D0C006F696C /* ExpensStackChartWidget.swift */; };
 		2FFE125D263873EC006F696C /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE51A2525FBE485004518A0 /* DateFormatter.swift */; };
 		2FFE12692638AE67006F696C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FFE12672638AE67006F696C /* Localizable.strings */; };
+		BA39AD4E27B48E9C00F611D6 /* AlertView+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA39AD4D27B48E9C00F611D6 /* AlertView+Modifier.swift */; };
+		BA39AD5027B48EDC00F611D6 /* AlertView+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA39AD4F27B48EDC00F611D6 /* AlertView+Model.swift */; };
 		BA5ACC1927625E5300B5C3EF /* ContentLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5ACC1827625E5300B5C3EF /* ContentLoader.swift */; };
+		BA7AAAFD27B47AD900831C67 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7AAAFC27B47AD900831C67 /* AlertViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -278,8 +281,11 @@
 		2FFE125026386D0C006F696C /* ExpensStackChartWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensStackChartWidget.swift; sourceTree = "<group>"; };
 		2FFE12682638AE67006F696C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2FFE126C2638AE6F006F696C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BA39AD4D27B48E9C00F611D6 /* AlertView+Modifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertView+Modifier.swift"; sourceTree = "<group>"; };
+		BA39AD4F27B48EDC00F611D6 /* AlertView+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertView+Model.swift"; sourceTree = "<group>"; };
 		BA5ACC1827625E5300B5C3EF /* ContentLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentLoader.swift; sourceTree = "<group>"; };
 		BA5ACC1A27626EF500B5C3EF /* SiriKit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SiriKit.entitlements; sourceTree = "<group>"; };
+		BA7AAAFC27B47AD900831C67 /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -382,6 +388,7 @@
 		2F6B073325F9790A00A1D516 /* Views Components */ = {
 			isa = PBXGroup;
 			children = (
+				BA39AD4C27B48E7500F611D6 /* Alert */,
 				BA5ACC1827625E5300B5C3EF /* ContentLoader.swift */,
 				2F6B076025FA610800A1D516 /* View Modifiers */,
 				2FB5936325FC1231005A1B93 /* TabBar.swift */,
@@ -583,6 +590,7 @@
 				2F6B071225F976DA00A1D516 /* Assets.xcassets */,
 				2FFE123E2638676C006F696C /* AppDelegate.swift */,
 				2F90F3BD2656FDF800754F5C /* DebugView.swift */,
+				BA7AAAFC27B47AD900831C67 /* AlertViewController.swift */,
 			);
 			name = App;
 			sourceTree = "<group>";
@@ -614,6 +622,15 @@
 				2FBEBC01260D0DBE001C4FCD /* Array.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		BA39AD4C27B48E7500F611D6 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				BA39AD4D27B48E9C00F611D6 /* AlertView+Modifier.swift */,
+				BA39AD4F27B48EDC00F611D6 /* AlertView+Model.swift */,
+			);
+			path = Alert;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -806,12 +823,14 @@
 				2F89BA30261F8DB30009EA03 /* MaximunDailyExpendingGraphView.swift in Sources */,
 				BA5ACC1927625E5300B5C3EF /* ContentLoader.swift in Sources */,
 				2FC170BC2660445000A86837 /* EnviromentValues.swift in Sources */,
+				BA39AD5027B48EDC00F611D6 /* AlertView+Model.swift in Sources */,
 				2F8BADED2633961400567E4B /* ButtonStyleFormLarge.swift in Sources */,
 				2F8BADFA2633BD8600567E4B /* DailyReminderView.swift in Sources */,
 				2F816D65261D26E8009FB091 /* SummaryGraphicsView.swift in Sources */,
 				2F6B076D25FA615D00A1D516 /* UIResponder+Current.swift in Sources */,
 				2F98CE602615508F0004F1B2 /* DocumentPickerViewController.swift in Sources */,
 				2F5479AB2629E51400730F13 /* BackupService.swift in Sources */,
+				BA39AD4E27B48E9C00F611D6 /* AlertView+Modifier.swift in Sources */,
 				2F98CE6A261559500004F1B2 /* FileImportButton.swift in Sources */,
 				2F6B072525F976DA00A1D516 /* TransactionsView.swift in Sources */,
 				2F89BA412620B12E0009EA03 /* SpendByGroupChartView.swift in Sources */,
@@ -832,6 +851,7 @@
 				2FA37F6B26712B2700BE33DC /* ToolbarInputAccessory.swift in Sources */,
 				2F89BA39261F8EC80009EA03 /* SpendChartView.swift in Sources */,
 				2FE51A3225FBE4C6004518A0 /* NumberFormatter.swift in Sources */,
+				BA7AAAFD27B47AD900831C67 /* AlertViewController.swift in Sources */,
 				2F91537C26018FED0092033E /* TabBar.swift in Sources */,
 				2F90F3BE2656FDF800754F5C /* DebugView.swift in Sources */,
 				2F1E1A10263B79FB00BB6398 /* SegmentedView.swift in Sources */,

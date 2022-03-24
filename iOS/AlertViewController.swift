@@ -5,85 +5,96 @@
 //  Created by Carlos Andres Chaguendo Sanchez on 9/02/22.
 //
 
-import UIKit
+import SwiftUI
+import Combine
 
-class AlertViewController: UITableViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+class TestAlertViewModel: ObservableObject {
+    
+    @Published var alerts = AlertViewController()
+    
+    func showParalleAlertsAction() {
+        alerts.show(title: "Capija", message: "Del sol") {
+            AlertAction.cancel() {
+                
+            }
+            AlertAction("Confirm") {
+                
+            }
+        }
+        
+        alerts.show(title: "La siguiente", message: "Del sol") {
+            AlertAction.cancel() {
+                
+            }
+            AlertAction("Confirm") {
+                
+            }
+        }
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+    
+    func cocateningAlerts() {
+        Task {
+            await alerts.show(title: "Are you sure?",message: "When selecet one tome") {
+                AlertAction("primero") {
+                    
+                }
+            }
+            
+            await alerts.show(title: "Suceeesfull",message: "The employee was remove succefull") {
+                AlertAction("Segundo") {
+                    
+                }
+            }
+            
+        }
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+    
+    func resultDependencyAlerts() {
+        let alert = AlertInfo(title: "Are you sure?",message: "When selecet one tome") {
+            AlertAction.cancel()
+            AlertAction("Confirm", action: confirmElimination)
+            AlertAction("Eliminar") {
+                self.alerts.show(title: "Suceeesfull",message: "The employee was remove succefull") {
+                    AlertAction("Segundo") {
+                        
+                    }
+                }
+            }
+        }
+        alerts.show(alert)
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+    
+    func confirmElimination() {
+        alerts.show(title: "Suceeesfull",message: "The employee was remove succefull") {
+            AlertAction("Segundo") {
+                
+            }
+        }
     }
-    */
+}
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+
+
+
+
+
+
+
+
+struct AlertView: View {
+    
+    @StateObject private var viewModel = TestAlertViewModel()
+    
+    var body: some View {
+        VStack {
+            let _ = print("Update ALer View")
+            Button("Lanzar mutiples al tiempo ", action: viewModel.showParalleAlertsAction)
+                .padding()
+            Button("Cocatening Alert await ", action: viewModel.cocateningAlerts)
+                .padding()
+            Button("Confitional", action: viewModel.resultDependencyAlerts)
+                .padding()
+        }.alert(from: viewModel.alerts)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }

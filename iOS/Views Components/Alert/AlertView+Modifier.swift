@@ -9,20 +9,23 @@ import SwiftUI
 
 struct AlertViewSupport: ViewModifier {
     
-    @StateObject var alertController:AlertViewController
+    @ObservedObject var ctrl: AlertViewController
     
     func body(content: Content) -> some View {
         if #available(iOS 15.0, *) {
-            let ctrl = $alertController
-            content
-                .background(Text(ctrl.present.wrappedValue ? "Si": "No"))
-                .alert("Capija", isPresented:  ctrl.present, presenting: ctrl.alert.wrappedValue) { info in
-                    ForEach(info.actions) { action in
-                        Button(action.id, action: action.action)
+            let _ = Self._printChanges()
+            let title = $ctrl.alert.wrappedValue?.title ?? ""
+            content.alert(title, isPresented: $ctrl.present, presenting: ctrl.alert) { alert in
+                ForEach(alert.actions) { action in
+                    
+                    Button(action.id) {
+                        ctrl.didSelectAction(id: action.id, in: alert.id)
+                        action.action()
                     }
-                } message: { info in
-                    Text(info.message)
                 }
+            } message: { alert in
+                Text(alert.message)
+            }
         } else {
             content
         }
@@ -33,7 +36,7 @@ struct AlertViewSupport: ViewModifier {
 extension View {
     
     func alert(from alertViewController: AlertViewController) -> some View {
-        self.modifier(AlertViewSupport(alertController: alertViewController))
+        self.modifier(AlertViewSupport(ctrl: alertViewController))
     }
     
 }

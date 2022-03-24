@@ -95,6 +95,11 @@ struct DebugView: View {
 
                 }.padding(.vertical)
                 
+                
+                AlertView()
+                
+                let _ = print("Update Debug View")
+                
             }
         }.background(Colors.background)
         .onAppear {
