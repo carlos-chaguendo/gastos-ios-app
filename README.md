@@ -1,3 +1,5 @@
+[![iOS starter workflow](https://github.com/carlos-chaguendo/gastos-ios-app/actions/workflows/ios.yml/badge.svg)](https://github.com/carlos-chaguendo/gastos-ios-app/actions/workflows/ios.yml)
+
 # Gastos
 
 Una aplicacion iOS que permite llevar el control de gastos diarios, escrita con SwiftUI
