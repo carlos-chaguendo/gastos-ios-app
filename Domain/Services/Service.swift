@@ -52,7 +52,7 @@ public class Service {
             local.date = item.date
             
             if local.realm == nil {
-                local.id = UUID().description
+                local.id = "A-\(Date().timeIntervalSince1970)"
             }
             
             local.category = realm.findBy(id: item.category.id)
