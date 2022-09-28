@@ -102,7 +102,12 @@ struct ExpenseItemFormView: View {
                                     ).padding(2)
                                 
                             }
-                            
+                        }
+                        
+                        if viewModel.needSelectCategory && self.viewModel.category?.id == nil {
+                            Text("Select one category")
+                                .font(.caption)
+                                .foregroundColor(.red)
                         }
                     }.padding(.vertical)
                     
@@ -127,7 +132,7 @@ struct ExpenseItemFormView: View {
             }
             .padding([.leading, .top, .trailing])
             .background(Colors.background)
-          
+            
             .navigationBarTitle("Expense", displayMode: .inline)
             .ignoresSafeArea(edges: [.bottom])
             .navigationBarItems(
@@ -137,9 +142,9 @@ struct ExpenseItemFormView: View {
                     Image(systemName: "xmark")
                         .imageScale(.medium)
                 }
-                .frame(width: 30, height: 30)
-                .foregroundColor(Colors.primary)
-                .offset(x: -8, y: 0),
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(Colors.primary)
+                    .offset(x: -8, y: 0),
                 
                 trailing: Button(viewModel.item == nil ? "Create" : "Edit") {
                     self.saveAction()
@@ -147,7 +152,7 @@ struct ExpenseItemFormView: View {
                 
             ).onReceive(Publishers.textFieldBeginEditing) { field in
                 Logger.info("Field \( field.tag)", field)
-            
+                
                 field.returnKeyType = .continue
                 field.inputAccessoryView = ToolbarInputAccessory(frame: CGRect(origin: .zero, size: CGSize(width: 20, height: 44)))
                     .set(\.backgroundColor, Colors.background)
@@ -163,7 +168,10 @@ struct ExpenseItemFormView: View {
     
     private func saveAction() {
         let selection = viewModel.getValues()
-        
+        if selection.category == nil || !selection.category.hasId() {
+            viewModel.needSelectCategory = true
+            return
+        }
         Service.addItem(selection)
         self.presentation.wrappedValue.dismiss()
     }
@@ -211,7 +219,7 @@ struct ExpenseItemFormView: View {
                 FlexibleView(data: items.wrappedValue) { item in
                     Text(verbatim: item.name)
                         .font(.callout)
-                        // .fontWeight(.medium)
+                    // .fontWeight(.medium)
                         .padding(3)
                         .foregroundColor(Colors.Form.value)
                         .background(
