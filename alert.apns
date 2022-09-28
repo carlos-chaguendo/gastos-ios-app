@@ -1,0 +1,21 @@
+{
+   "Simulator Target Bundle":"com.mayorgafirm.Gastos",
+   "code": 111,
+   "payload": {
+       "payrollId": "227",
+       "employeeId": "711",
+       "eventId": "114",
+       "facilityId": "306003663",
+       "referenceDate": "2019-11-26T06:00:00.000-08:00",
+       "authorizationId": "209",
+       "created": "2019-11-26T06:00:00.000-08:00"
+    },
+   "aps":{
+     "category" : "TO_DISPENSE",
+      "alert":{
+         "title":"Push on the simulator",
+         "subtitle":"Test push notification",
+         "body":"This notification will show up in the simulator!"
+      }
+   }
+}
