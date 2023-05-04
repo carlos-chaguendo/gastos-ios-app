@@ -21,9 +21,9 @@ open class Entity: Object, Identifiable {
 //        super.init(value: value, schema: schema)
 //    }
 
-    public required init() {
-        super.init()
-    }
+//    public required override init() {
+//        super.init()
+//    }
 
     func hasId() -> Bool {
         id != "0x0"
