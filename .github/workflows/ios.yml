@@ -14,13 +14,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Set Default Xcode
+        run: |
+          # set xcode version to use for build
+          sudo xcode-select -switch /Applications/Xcode_15.0.1.app
+          # Print used xCode version
+          xcode-select -print-path
+          xcodebuild -version
       - name: Set Default Scheme
         run: |
           scheme_list=$(xcodebuild -list -json | tr -d "\n")
           default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
           echo $default | cat >default
           echo Using default scheme: $default
-          alias xcodebuild="/Applications/Xcode_15.0.1.app/Contents/Developer/usr/bin/xcodebuild"
       - name: Build
         env:
           scheme: ${{ 'default' }}
