@@ -9,11 +9,18 @@ on:
 jobs:
   build:
     name: Build and Test default scheme using any available iPhone simulator
-    runs-on: macos-latest
+    runs-on: macos-13
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Set Default Xcode
+        run: |
+          # set xcode version to use for build
+          sudo xcode-select -switch /Applications/Xcode_15.0.1.app
+          # Print used xCode version
+          xcode-select -print-path
+          xcodebuild -version
       - name: Set Default Scheme
         run: |
           scheme_list=$(xcodebuild -list -json | tr -d "\n")
@@ -24,7 +31,7 @@ jobs:
         env:
           scheme: ${{ 'default' }}
           platform: ${{ 'iOS Simulator' }}
-          devi: ${{ 'iPhone 13 Pro Max' }}
+          devi: ${{ 'iPhone 15 Pro Max' }}
         run: |
           # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
           device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}'`
