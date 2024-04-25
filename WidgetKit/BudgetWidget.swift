@@ -88,8 +88,6 @@ struct BudgetWidget: Widget {
             }
             
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
-            .padding()
-            
         }
     }
     
@@ -99,6 +97,7 @@ struct BudgetWidget: Widget {
             //        StaticConfiguration(kind: "kind-gs-rg2", provider: Provider()) { entry in
             
             ContentView(entry: entry)
+                .widgetBackground(Color.clear)
         }
         .supportedFamilies([.systemSmall])
         .configurationDisplayName("Budget")

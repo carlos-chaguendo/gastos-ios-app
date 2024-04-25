@@ -73,14 +73,13 @@ struct RingWidget: Widget {
                 
             }
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-            .padding()
-            
         }
     }
     
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: "kind-gs-rg", provider: Provider()) { entry in
             ContentView(entry: entry)
+                .widgetBackground(Color.clear)
         }
         .supportedFamilies([.systemSmall])
         .configurationDisplayName("Expenses")

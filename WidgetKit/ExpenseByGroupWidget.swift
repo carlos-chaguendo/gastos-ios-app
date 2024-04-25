@@ -81,6 +81,7 @@ struct WalletWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: "kindx", provider: Provider<Wallet>(groupBy: \.wallet)) { entry in
             WidgetKitEntryView<Wallet>(entry: entry, title: "Wallet")
+                .widgetBackground(Color.clear)
         }
         .supportedFamilies([.systemMedium, .systemSmall])
         .configurationDisplayName("Wallet")
@@ -93,9 +94,22 @@ struct CategoryWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: "kind-gs", provider: Provider<Catagory>(groupBy: \.category)) { entry in
             WidgetKitEntryView<Catagory>(entry: entry, title: "Category")
+                .widgetBackground(Color.clear)
         }
         .supportedFamilies([.systemMedium, .systemSmall])
         .configurationDisplayName("Category")
         .description("Show my expenses by category")
+    }
+}
+
+extension View {
+    func widgetBackground(_ backgroundView: some View) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            return containerBackground(for: .widget) {
+                backgroundView
+            }
+        } else {
+            return background(backgroundView)
+        }
     }
 }

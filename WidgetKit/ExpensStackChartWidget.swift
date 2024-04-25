@@ -95,6 +95,7 @@ struct ExpensStackChartWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: "expoense", provider: Provider()) { entry in
             ContentView(entry: entry)
+                .widgetBackground(Color.clear)
         }
         .supportedFamilies([.systemMedium, .systemSmall])
         .configurationDisplayName("Expense")
